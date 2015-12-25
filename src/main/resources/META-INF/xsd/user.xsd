@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<xs:schema version="1.0" targetNamespace="urn:ddbb-spml-dsml:user"
+           xmlns="http://www.w3.org/2001/XMLSchema" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:spml="urn:oasis:names:tc:SPML:2:0" 
+           elementFormDefault="qualified">
+    <element name="user">
+        <complexType>
+            <sequence>
+                <element name="uid" type="string" minOccurs="1" maxOccurs="1"/>
+                <element name="password" type="string" minOccurs="0" maxOccurs="1"/>
+                <element name="cn" type="string" minOccurs="1" maxOccurs="1"/>
+                <element name="description" type="string" minOccurs="0" maxOccurs="1"/>
+                <element name="role" type="string" minOccurs="0" maxOccurs="unbounded"/>
+            </sequence>
+            <attribute name="disabled" type="date" use="optional"/>
+            <attribute name="enabled" type="date" use="optional"/>
+            <attribute name="expired" type="int" use="optional" default="-1"/>
+        </complexType>
+    </element>
+</xs:schema>
