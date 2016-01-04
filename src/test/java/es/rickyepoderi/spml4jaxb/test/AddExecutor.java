@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -181,7 +181,7 @@ public class AddExecutor extends AsyncSpmlBaseExecutor {
     
     @Override
     public ResponseBuilder realExecute(WorkQueue.WorkItem item) {
-        AddResponseBuilder builder = ResponseBuilder.builderForAdd().requestId(item.getId());
+        AddResponseBuilder builder = ResponseBuilder.builderForAdd().requestId(item.getId()).success();
         AddRequestAccessor req = item.getRequestAccessor().asAdd();
         try {
             User u = new User();
@@ -206,7 +206,6 @@ public class AddExecutor extends AsyncSpmlBaseExecutor {
                         .unsupportedIdentifierType()
                         .errorMessage("Invalid targetID!");
             }
-            builder.success();
         } catch (InvalidUserException e) {
             builder.failure()
                     .malformedRequest()

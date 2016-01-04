@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveResponseType;
 
 /**
@@ -24,6 +25,11 @@ public class ActiveResponseAccessor extends ResponseAccessor<ActiveResponseType>
     
     public boolean isActive() {
         return isSuccess() && response.isActive();
+    }
+    
+    @Override
+    public ResponseBuilder toBuilder() {
+        return ResponseBuilder.builderForActive().fromResponse(this.response);
     }
     
     @Override

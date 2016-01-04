@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -24,10 +24,12 @@ import java.util.UUID;
  */
 public class IterateExecutor implements SpmlExecutor {
 
+    private WorkQueue queue = null;
     private int iteratorSize = -1;
     
-    public IterateExecutor(int iteratorSize) {
+    public IterateExecutor(WorkQueue queue, int iteratorSize) {
         this.iteratorSize = iteratorSize;
+        this.queue = queue;
     }
     
     @Override
@@ -47,20 +49,22 @@ public class IterateExecutor implements SpmlExecutor {
                     if (wrap.number < wrap.psos.length) {
                         builder.iteratorId(iterId);
                     }
-                    return builder.success();
+                    builder.success();
                 } else {
-                    return builder.failure().invalidIdentifier()
+                    builder.failure().invalidIdentifier()
                         .errorMessage("The iterator id is not saved.");
                 }
             } else {
-                return builder.failure().invalidIdentifier()
+                builder.failure().invalidIdentifier()
                         .errorMessage("The iterator id should not be null.");
             }
         } else {
-            return builder.failure()
+            builder.failure()
                     .unsupportedExecutionMode()
                     .errorMessage("Iterate should be synchronous by the standard");
         }
+        queue.finish(new WorkQueue.WorkItem(id, req), builder);
+        return builder;
     }
     
 }

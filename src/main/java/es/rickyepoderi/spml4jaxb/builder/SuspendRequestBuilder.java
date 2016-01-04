@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -55,6 +55,13 @@ public class SuspendRequestBuilder extends RequestBuilder<SuspendRequestType, Su
     public RequestAccessor asAccessor() {
         request.setPsoID(pso);
         return super.asAccessor().asSuspend();
+    }
+
+    @Override
+    public SuspendRequestBuilder fromRequest(SuspendRequestType request) {
+        this.request = request;
+        this.pso = request.getPsoID();
+        return this;
     }
     
 }

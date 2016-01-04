@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -105,6 +105,14 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
         request.setReturnData(returnData);
         request.setPsoID(pso);
         return super.asAccessor().asAdd();
+    }
+
+    @Override
+    public AddRequestBuilder fromRequest(AddRequestType request) {
+        this.request = request;
+        this.returnData = request.getReturnData();
+        this.pso = request.getPsoID();
+        return this;
     }
 
 }

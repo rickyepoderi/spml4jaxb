@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -39,6 +39,13 @@ public class ExpirePasswordRequestBuilder extends RequestBuilder<ExpirePasswordR
     public RequestAccessor asAccessor() {
         request.setPsoID(pso);
         return super.asAccessor().asExpirePassword();
+    }
+
+    @Override
+    public ExpirePasswordRequestBuilder fromRequest(ExpirePasswordRequestType request) {
+        this.request = request;
+        this.pso = request.getPsoID();
+        return this;
     }
     
 }

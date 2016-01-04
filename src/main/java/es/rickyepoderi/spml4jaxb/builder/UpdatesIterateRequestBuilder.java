@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -40,6 +40,12 @@ public class UpdatesIterateRequestBuilder extends RequestBuilder<IterateRequestT
     @Override
     public RequestAccessor asAccessor() {
         return super.asAccessor().asUpdatesIterate();
+    }
+
+    @Override
+    public UpdatesIterateRequestBuilder fromRequest(IterateRequestType request) {
+        this.request = request;
+        return this;
     }
     
 }

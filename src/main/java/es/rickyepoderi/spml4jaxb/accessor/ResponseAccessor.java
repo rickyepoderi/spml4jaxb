@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.async.CancelResponseType;
 import es.rickyepoderi.spml4jaxb.msg.async.StatusResponseType;
 import es.rickyepoderi.spml4jaxb.msg.batch.BatchResponseType;
@@ -28,6 +29,7 @@ import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordResponseType;
 import es.rickyepoderi.spml4jaxb.msg.search.SearchResponseType;
 import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveResponseType;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdatesResponseType;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +53,20 @@ public class ResponseAccessor<R extends ResponseType> {
     
     static public ResponseAccessor accessorForResponse(ResponseType response) {
         return new ResponseAccessor(response, null);
+    }
+    
+    static public ResponseAccessor accessorForResponse(ResponseType response, Class<? extends ResponseAccessor> accessor) {
+        try {
+            Constructor cons = accessor.getDeclaredConstructor(response.getClass());
+            cons.setAccessible(true);
+            return (ResponseAccessor) cons.newInstance(response);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+    
+    public ResponseBuilder toBuilder() {
+        throw new IllegalStateException("You should never use the accessor at this level");
     }
     
     public Class getResponseClass() {
@@ -228,6 +244,78 @@ public class ResponseAccessor<R extends ResponseType> {
     public AddResponseAccessor asAdd() {
         if (response instanceof AddResponseType) {
             return new AddResponseAccessor((AddResponseType) response);
+        } else {
+            return null;
+        }
+    }
+    
+    public DeleteResponseAccessor asDelete() {
+        if (response instanceof ResponseType) {
+            return new DeleteResponseAccessor((ResponseType) response);
+        } else {
+            return null;
+        }
+    }
+    
+    public ExpirePasswordResponseAccessor asExpirePassword() {
+        if (response instanceof ResponseType) {
+            return new ExpirePasswordResponseAccessor((ResponseType) response);
+        } else {
+            return null;
+        }
+    }
+    
+    public SetPasswordResponseAccessor asSetPassword() {
+        if (response instanceof ResponseType) {
+            return new SetPasswordResponseAccessor((ResponseType) response);
+        } else {
+            return null;
+        }
+    }
+    
+    public SuspendResponseAccessor asSuspend() {
+        if (response instanceof ResponseType) {
+            return new SuspendResponseAccessor((ResponseType) response);
+        } else {
+            return null;
+        }
+    }
+    
+    public ResumeResponseAccessor asResume() {
+        if (response instanceof ResponseType) {
+            return new ResumeResponseAccessor((ResponseType) response);
+        } else {
+            return null;
+        }
+    }
+    
+    public BulkDeleteResponseAccessor asBulkDelete() {
+        if (response instanceof ResponseType) {
+            return new BulkDeleteResponseAccessor((ResponseType) response);
+        } else {
+            return null;
+        }
+    }
+    
+    public BulkModifyResponseAccessor asBulkModify() {
+        if (response instanceof ResponseType) {
+            return new BulkModifyResponseAccessor((ResponseType) response);
+        } else {
+            return null;
+        }
+    }
+    
+    public UpdatesCloseIteratorResponseAccessor asUpdatesCloseIterator() {
+        if (response instanceof ResponseType) {
+            return new UpdatesCloseIteratorResponseAccessor((ResponseType) response);
+        } else {
+            return null;
+        }
+    }
+    
+    public CloseIteratorResponseAccessor asCloseIterator() {
+        if (response instanceof ResponseType) {
+            return new CloseIteratorResponseAccessor((ResponseType) response);
         } else {
             return null;
         }

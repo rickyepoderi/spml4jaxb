@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -11,8 +11,12 @@
 package es.rickyepoderi.spml4jaxb.client;
 
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
@@ -25,15 +29,19 @@ public abstract class SpmlClient implements Closeable, SpmlRequestor {
     protected JAXBContext ctx = null;
     
     public SpmlClient() throws SpmlException {
-        // default for DSML
-        this(es.rickyepoderi.spml4jaxb.msg.dsmlv2.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.core.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.spmldsml.ObjectFactory.class);
+        this(true);
     }
     
-    public SpmlClient(Class... factories) throws SpmlException {
+    public SpmlClient(boolean append, Class... factories) throws SpmlException {
         try {
-            ctx = JAXBContext.newInstance(factories);
+            if (append) {
+                Set<Class> facts = new HashSet();
+                facts.addAll(Arrays.asList(RequestBuilder.getAllSpmlv2ObjectFactoryClasses()));
+                facts.addAll(Arrays.asList(factories));
+                ctx = JAXBContext.newInstance(facts.toArray(new Class[0]));
+            } else {
+                ctx = JAXBContext.newInstance(factories);
+            }
         } catch(JAXBException e) {
             throw new SpmlException(e);
         }

@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -10,6 +10,8 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
+import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.bulk.BulkModifyRequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationType;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlModification;
@@ -63,10 +65,21 @@ public class BulkModifyRequestAccessor extends ModificationRequestAccessor<BulkM
         }
     }
     
+    
+    @Override
+    public ResponseBuilder responseBuilder() {
+        return ResponseBuilder.builderForBulkModify();
+    }
+    
+    @Override
+    public RequestBuilder toBuilder() {
+        return RequestBuilder.builderForBulkModify().fromRequest(this.request);
+    }
+    
     @Override
     public String toString(Class clazz) {
         String nl = System.getProperty("line.separator");
-        StringBuilder sb = new StringBuilder(super.toString());
+        StringBuilder sb = new StringBuilder(super.toString(clazz));
         sb.append("  query: ").append(getQuery());
         return sb.toString();
     }

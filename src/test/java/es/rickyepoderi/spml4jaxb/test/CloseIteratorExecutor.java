@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -23,6 +23,12 @@ import java.util.UUID;
  */
 public class CloseIteratorExecutor implements SpmlExecutor {
 
+    private WorkQueue queue = null;
+    
+    public CloseIteratorExecutor(WorkQueue queue) {
+        this.queue = queue;
+    }
+    
     @Override
     public ResponseBuilder execute(RequestAccessor request) {
         CloseIteratorRequestAccessor req = request.asCloseIterator();
@@ -33,16 +39,18 @@ public class CloseIteratorExecutor implements SpmlExecutor {
             if (iterId != null) {
                 boolean removed = SearchExecutor.removeSearch(iterId);
                 if (removed) {
-                    return builder.success();
+                    builder.success();
                 } else {
-                    return builder.failure().invalidIdentifier().errorMessage("The iterator id is not saved.");
+                    builder.failure().invalidIdentifier().errorMessage("The iterator id is not saved.");
                 }
             } else {
-                return builder.failure().invalidIdentifier().errorMessage("The iterator id should not be null.");
+                builder.failure().invalidIdentifier().errorMessage("The iterator id should not be null.");
             }
         } else {
-            return builder.failure().unsupportedExecutionMode().errorMessage("CloseIterator should be synchronous by the standard");
+            builder.failure().unsupportedExecutionMode().errorMessage("CloseIterator should be synchronous by the standard");
         }
+        queue.finish(new WorkQueue.WorkItem(id, req), builder);
+        return builder;
     }
     
 }

@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -49,8 +49,8 @@ public class SOAPClient extends SpmlClient {
         }
     }
     
-    public SOAPClient(String url, Class... factories) throws SpmlException {
-        super(factories);
+    public SOAPClient(String url, boolean appendFactories, Class... factories) throws SpmlException {
+        super(appendFactories, factories);
         init(url);
     }
     

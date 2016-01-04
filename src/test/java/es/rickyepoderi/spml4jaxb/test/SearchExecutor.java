@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -63,7 +63,7 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         return searches.remove(id) != null;
     }
             
-    static public Map<String, DsmlAttr> filterAttributes(Map<String, DsmlAttr> attrs, 
+    static protected Map<String, DsmlAttr> filterAttributes(Map<String, DsmlAttr> attrs, 
             Set<String> returnAttrsSet) {
         if (returnAttrsSet == null) {
             return attrs;
@@ -77,7 +77,7 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         return res;
     }
     
-    static boolean matchEquals(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
+    protected static boolean matchEquals(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
         String name = filter.getName();
         DsmlAttr attr = attrs.get(name);
         if (attr == null) {
@@ -95,7 +95,7 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         }
     }
     
-    static boolean matchGreaterOrEqual(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
+    protected static boolean matchGreaterOrEqual(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
         String name = filter.getName();
         DsmlAttr attr = attrs.get(name);
         if (attr == null) {
@@ -113,7 +113,7 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         }
     }
     
-    static boolean matchLessOrEqual(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
+    protected static boolean matchLessOrEqual(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
         String name = filter.getName();
         DsmlAttr attr = attrs.get(name);
         if (attr == null) {
@@ -131,7 +131,7 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         }
     }
     
-    static boolean matchStartsWith(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
+    protected static boolean matchStartsWith(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
         String name = filter.getName();
         DsmlAttr attr = attrs.get(name);
         if (attr == null) {
@@ -149,7 +149,7 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         }
     }
     
-    static boolean matchEndsWith(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
+    protected static boolean matchEndsWith(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
         String name = filter.getName();
         DsmlAttr attr = attrs.get(name);
         if (attr == null) {
@@ -167,7 +167,7 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         }
     }
     
-    static boolean matchContains(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
+    protected static boolean matchContains(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
         String name = filter.getName();
         DsmlAttr attr = attrs.get(name);
         if (attr == null) {
@@ -185,11 +185,11 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         }
     }
     
-    static boolean matchApprox(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
+    protected static boolean matchApprox(Map<String, DsmlAttr> attrs, AttributeValueAssertion filter) {
         return matchEquals(attrs, filter);
     }
     
-    static boolean matchPresent(Map<String, DsmlAttr> attrs, AttributeDescription filter) {
+    protected static boolean matchPresent(Map<String, DsmlAttr> attrs, AttributeDescription filter) {
         String name = filter.getName();
         DsmlAttr attr = attrs.get(name);
         if (attr == null) {
@@ -199,7 +199,7 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         }
     }
     
-    static String mapSQLName(String name) throws ManagerException {
+    protected static String mapSQLName(String name) throws ManagerException {
         if (null != name) {
             switch (name) {
                 case "uid":
@@ -218,7 +218,7 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         }
     }
     
-    static String xpath2SQL(String xpath) throws ManagerException, XPathExpressionException {
+    protected static String xpath2SQL(String xpath) throws ManagerException, XPathExpressionException {
         // check is a valid XPath (exception is thrown)
         if (xpath == null || xpath.isEmpty()) {
             return null;
@@ -249,7 +249,7 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         }
     }
     
-    static void filter2SQL(FilterAccessor filter, StringBuilder sb) throws ManagerException {
+    protected static void filter2SQL(FilterAccessor filter, StringBuilder sb) throws ManagerException {
         if (filter != null) {
             if (filter.isEquals()) {
                 AttributeValueAssertion ava = filter.getEquals();
@@ -300,13 +300,13 @@ public class SearchExecutor extends AsyncSpmlBaseExecutor {
         }
     }
     
-    static String filter2SQL(FilterAccessor filter) throws ManagerException {
+    protected static String filter2SQL(FilterAccessor filter) throws ManagerException {
         StringBuilder sb = new StringBuilder();
         filter2SQL(filter, sb);
         return sb.toString();
     }
     
-    static boolean matchFilter(Map<String, DsmlAttr> attrs, FilterAccessor filter, SearchRequestAccessor req) {
+    protected static boolean matchFilter(Map<String, DsmlAttr> attrs, FilterAccessor filter, SearchRequestAccessor req) {
         if (filter == null) {
             // return all
             return true;

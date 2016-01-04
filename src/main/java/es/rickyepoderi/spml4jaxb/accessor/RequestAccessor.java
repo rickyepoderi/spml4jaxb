@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.async.CancelRequestType;
 import es.rickyepoderi.spml4jaxb.msg.async.StatusRequestType;
@@ -38,6 +39,7 @@ import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveRequestType;
 import es.rickyepoderi.spml4jaxb.msg.suspend.ResumeRequestType;
 import es.rickyepoderi.spml4jaxb.msg.suspend.SuspendRequestType;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdatesRequestType;
+import java.lang.reflect.Constructor;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
@@ -71,6 +73,16 @@ public class RequestAccessor<R extends RequestType> {
     
     static public RequestAccessor accessorForRequest(RequestType request) {
         return new RequestAccessor(request, null, null);
+    }
+    
+    static public RequestAccessor accessorForRequest(RequestType request, Class<? extends RequestAccessor> accessor) {
+        try {
+            Constructor cons = accessor.getDeclaredConstructor(request.getClass());
+            cons.setAccessible(true);
+            return (RequestAccessor) cons.newInstance(request);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
     }
     
     static public SearchQueryAccessor accessorForSearchQuery(SearchQueryType query) {
@@ -173,6 +185,10 @@ public class RequestAccessor<R extends RequestType> {
     }
     
     public ResponseBuilder responseBuilder() {
+        throw new IllegalStateException("You should never use the accessor at this level");
+    }
+    
+    public RequestBuilder toBuilder() {
         throw new IllegalStateException("You should never use the accessor at this level");
     }
     

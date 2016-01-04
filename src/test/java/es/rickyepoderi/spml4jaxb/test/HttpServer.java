@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -27,12 +27,16 @@ public class HttpServer extends Thread {
     private TestFactory factory;
     private List<WorkExecutor> asyncExecs;
 
-    public HttpServer(String path, int port, int numAsyncExecs, Class... factories) throws SpmlException {
+    public HttpServer(String path, int port, int numAsyncExecs) throws SpmlException {
+        this(path, port, numAsyncExecs, true);
+    }
+    
+    public HttpServer(String path, int port, int numAsyncExecs, boolean append, Class... factories) throws SpmlException {
         try {
             asyncExecs = new ArrayList<>(numAsyncExecs);
             factory = new TestFactory();
             server = com.sun.net.httpserver.HttpServer.create(new InetSocketAddress(port), 1024);
-            server.createContext(path, new HandlerImpl(factory, factories));
+            server.createContext(path, new HandlerImpl(factory, append, factories));
             server.setExecutor(null);
             for (int i = 0; i < numAsyncExecs; i++) {
                 asyncExecs.add(new WorkExecutor(factory));
@@ -74,16 +78,5 @@ public class HttpServer extends Thread {
         this.asyncExecs.add(exec);
         exec.start();
     }
-
-    static public void main(String[] args) throws Exception {
-        // create the http server
-        HttpServer s = new HttpServer("/rpcrouter2", 8000, 0,
-                es.rickyepoderi.spml4jaxb.msg.dsmlv2.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.core.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.spmldsml.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.async.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.user.ObjectFactory.class);
-        s.start();
-        //s.addAsyncExecutor();
-    }
+    
 }

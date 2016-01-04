@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.ListTargetsRequestBuilder;
+import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ListTargetsRequestType;
 
@@ -39,6 +40,11 @@ public class ListTargetsRequestAccessor extends RequestAccessor<ListTargetsReque
     @Override
     public ResponseBuilder responseBuilder() {
         return ResponseBuilder.builderForListTargets();
+    }
+    
+    @Override
+    public RequestBuilder toBuilder() {
+        return RequestBuilder.builderForListTargets().fromRequest(this.request);
     }
     
     @Override

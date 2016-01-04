@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdateKindType;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdateType;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdatesResponseType;
@@ -128,6 +129,11 @@ public class UpdatesResponseAccessor extends ResponseAccessor<UpdatesResponseTyp
         sb.append("  iteratorId: ").append(getIteratorId()).append(nl);
         sb.append("  updates: ").append(response.getUpdate().size()).append(nl);
         return sb.toString();
+    }
+    
+    @Override
+    public ResponseBuilder toBuilder() {
+        return ResponseBuilder.builderForUpdates().fromResponse(this.response);
     }
     
 }

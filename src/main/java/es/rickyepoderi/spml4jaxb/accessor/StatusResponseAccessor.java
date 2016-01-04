@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.async.StatusResponseType;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import java.util.ArrayList;
@@ -68,5 +69,10 @@ public class StatusResponseAccessor extends ResponseAccessor<StatusResponseType>
             sb.append(res);
         }
         return sb.toString();
+    }
+    
+    @Override
+    public ResponseBuilder toBuilder() {
+        return ResponseBuilder.builderForStatus().fromResponse(this.response);
     }
 }

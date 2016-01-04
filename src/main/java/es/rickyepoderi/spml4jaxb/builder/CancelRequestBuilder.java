@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -37,6 +37,12 @@ public class CancelRequestBuilder extends RequestBuilder<CancelRequestType, Canc
     @Override
     public RequestAccessor asAccessor() {
         return super.asAccessor().asCancel();
+    }
+
+    @Override
+    public CancelRequestBuilder fromRequest(CancelRequestType request) {
+        this.request = request;
+        return this;
     }
     
 }

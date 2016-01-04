@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -95,9 +95,9 @@ public class RequestMsgTest {
                 .requestId()
                 .onErrorResume()
                 .processingParallel()
-                .nestedResponse(addBuilder)
-                .nestedResponse(setPassBuilder)
-                .nestedResponse(suspendBuilder)
+                .nestedRequest(addBuilder)
+                .nestedRequest(setPassBuilder)
+                .nestedRequest(suspendBuilder)
                 .build();
         BatchRequestAccessor req = parse(el).asBatch();
         Assert.assertTrue(req.isSynchronous());

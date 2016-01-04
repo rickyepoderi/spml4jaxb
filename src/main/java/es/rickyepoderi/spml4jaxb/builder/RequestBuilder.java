@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -15,7 +15,6 @@ import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ExecutionModeType;
-import es.rickyepoderi.spml4jaxb.msg.core.ObjectFactory;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
 import es.rickyepoderi.spml4jaxb.msg.core.RequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ReturnDataType;
@@ -176,11 +175,71 @@ public abstract class RequestBuilder<R extends RequestType, B extends RequestBui
         return new UpdatesCloseIteratorRequestBuilder();
     }
     
+    static public Class getCoreObjectFactoryClass() {
+        return coreObjectFactory.getClass();
+    }
+
+    static public Class getPasswordObjectFactoryClass() {
+        return passwordObjectFactory.getClass();
+    }
+
+    static public Class getSuspendObjectFactoryClass() {
+        return suspendObjectFactory.getClass();
+    }
+
+    static public Class getBatchObjectFactoryClass() {
+        return batchObjectFactory.getClass();
+    }
+
+    static public Class getAsyncObjectFactoryClass() {
+        return asyncObjectFactory.getClass();
+    }
+
+    static public Class getBulkObjectFactoryClass() {
+        return bulkObjectFactory.getClass();
+    }
+
+    static public Class getReferenceObjectFactoryClass() {
+        return referenceObjectFactory.getClass();
+    }
+
+    static public Class getSearchObjectFactoryClass() {
+        return searchObjectFactory.getClass();
+    }
+
+    static public Class getUpdatesObjectFactoryClass() {
+        return updatesObjectFactory.getClass();
+    }
+    
+    static public Class getSpmldsmlObjectFactoryClass() {
+        return spmldsmlObjectFactory.getClass();
+    }
+    
+    static public Class getDsmlv2ObjectFactoryClass() {
+        return dsmlv2ObjectFactory.getClass();
+    }
+    
+    static public Class[] getAllSpmlv2ObjectFactoryClasses() {
+        return new Class[]{
+            getCoreObjectFactoryClass(),
+            getPasswordObjectFactoryClass(),
+            getSuspendObjectFactoryClass(),
+            getBatchObjectFactoryClass(),
+            getAsyncObjectFactoryClass(),
+            getBulkObjectFactoryClass(),
+            getReferenceObjectFactoryClass(),
+            getSearchObjectFactoryClass(),
+            getUpdatesObjectFactoryClass(),
+            getSpmldsmlObjectFactoryClass(),
+            getDsmlv2ObjectFactoryClass()
+        };
+}
+    
     //
     // Object Builders
     //
 
-    public static ObjectFactory getCoreObjectFactory() {
+    protected es.rickyepoderi.spml4jaxb.msg.core.ObjectFactory getCoreObjectFactory() {
         return coreObjectFactory;
     }
 
@@ -222,6 +281,11 @@ public abstract class RequestBuilder<R extends RequestType, B extends RequestBui
     
     protected es.rickyepoderi.spml4jaxb.msg.dsmlv2.ObjectFactory getDsmlv2ObjectFactory() {
         return dsmlv2ObjectFactory;
+    }
+    
+    public B fromRequest(R request) {
+        this.request = request;
+        return (B) this;
     }
     
     //

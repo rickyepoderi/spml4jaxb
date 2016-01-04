@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -34,5 +34,12 @@ public class LookupResponseBuilder extends ResponseBuilder<LookupResponseType, L
     public ResponseAccessor asAccessor() {
         response.setPso(pso);
         return super.asAccessor().asLookup();
+    }
+    
+    @Override
+    public LookupResponseBuilder fromResponse(LookupResponseType response) {
+        this.response = response;
+        this.pso = response.getPso();
+        return this;
     }
 }

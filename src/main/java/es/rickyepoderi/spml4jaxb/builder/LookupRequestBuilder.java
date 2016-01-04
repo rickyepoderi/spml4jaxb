@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -36,6 +36,14 @@ public class LookupRequestBuilder extends RequestBuilder<LookupRequestType, Look
         request.setPsoID(pso);
         request.setReturnData(returnData);
         return super.asAccessor().asLookup();
+    }
+
+    @Override
+    public LookupRequestBuilder fromRequest(LookupRequestType request) {
+        this.request = request;
+        this.pso = request.getPsoID();
+        this.returnData = request.getReturnData();
+        return this;
     }
     
 }

@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -15,7 +15,6 @@ import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import static es.rickyepoderi.spml4jaxb.builder.RequestBuilder.coreObjectFactory;
 import es.rickyepoderi.spml4jaxb.msg.core.ErrorCode;
 import es.rickyepoderi.spml4jaxb.msg.core.ExtensibleType;
-import es.rickyepoderi.spml4jaxb.msg.core.ObjectFactory;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOType;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
@@ -120,15 +119,28 @@ public abstract class ResponseBuilder<R extends ResponseType, B extends Response
         return new UpdatesResponseBuilder();
     }
     
+    static public BulkDeleteResponseBuilder builderForBulkDelete() {
+        return new BulkDeleteResponseBuilder();
+    }
+    
+    static public BulkModifyResponseBuilder builderForBulkModify() {
+        return new BulkModifyResponseBuilder();
+    }
+    
     static public UpdatesCloseIteratorResponseBuilder builderForUpdatesCloseIterator() {
         return new UpdatesCloseIteratorResponseBuilder();
     }
 
+    public B fromResponse(R response) {
+        this.response = response;
+        return (B) this;
+    }
+    
     //
     // Object Builders
     //
 
-    public static ObjectFactory getCoreObjectFactory() {
+    protected es.rickyepoderi.spml4jaxb.msg.core.ObjectFactory getCoreObjectFactory() {
         return coreObjectFactory;
     }
 

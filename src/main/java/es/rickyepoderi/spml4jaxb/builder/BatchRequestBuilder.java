@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -97,7 +97,7 @@ public class BatchRequestBuilder extends RequestBuilder<BatchRequestType, BatchR
      * @param req
      * @return 
      */
-    public BatchRequestBuilder nestedResponse(RequestBuilder req) {
+    public BatchRequestBuilder nestedRequest(RequestBuilder req) {
         Class requestClass = req.asAccessor().getRequestClass();
         if (NON_BATCHABLE_REQUESTS.contains(requestClass)) {
             throw new IllegalAccessError("This request is not batchable.");
@@ -114,6 +114,12 @@ public class BatchRequestBuilder extends RequestBuilder<BatchRequestType, BatchR
     @Override
     public RequestAccessor asAccessor() {
         return super.asAccessor().asBatch();
+    }
+
+    @Override
+    public BatchRequestBuilder fromRequest(BatchRequestType request) {
+        this.request = request;
+        return this;
     }
     
 }

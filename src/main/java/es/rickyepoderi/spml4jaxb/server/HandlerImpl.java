@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -13,12 +13,16 @@ package es.rickyepoderi.spml4jaxb.server;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
 import es.rickyepoderi.spml4jaxb.msg.core.RequestType;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -39,10 +43,21 @@ public class HandlerImpl implements HttpHandler {
     protected Map<Class, SpmlExecutor> mapper = null;
     protected MessageFactory factory = null;
     
-    public HandlerImpl(SpmlMapperExecutorFactory fact, Class... factories) throws SpmlException {
+    public HandlerImpl(SpmlMapperExecutorFactory fact) throws SpmlException {
+        this(fact, true);
+    }
+    
+    public HandlerImpl(SpmlMapperExecutorFactory fact, boolean append, Class... factories) throws SpmlException {
         try {
             this.factory = MessageFactory.newInstance();
-            ctx = JAXBContext.newInstance(factories);
+            if (append) {
+                Set<Class> facts = new HashSet();
+                facts.addAll(Arrays.asList(RequestBuilder.getAllSpmlv2ObjectFactoryClasses()));
+                facts.addAll(Arrays.asList(factories));
+                ctx = JAXBContext.newInstance(facts.toArray(new Class[0]));
+            } else {
+                ctx = JAXBContext.newInstance(factories);
+            }
             this.mapper = fact.createMapper(ctx);
         } catch (JAXBException | SOAPException e) {
             throw new SpmlException(e);

@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2015 rickyepoderi <rickyepoderi@yahoo.es>
+ * Copyright (c) 2015 ricky <https://github.com/rickyepoderi/spml4jaxb>
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -467,24 +467,10 @@ public class RealCommTest {
     
     @BeforeClass
     public static void setUpClass() throws Exception {
-        server = new HttpServer("/rpcrouter2", 8000, 1,
-                es.rickyepoderi.spml4jaxb.msg.dsmlv2.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.core.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.spmldsml.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.async.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.password.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.suspend.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.search.ObjectFactory.class,
+        server = new HttpServer("/rpcrouter2", 8000, 1, true,
                 es.rickyepoderi.spml4jaxb.user.ObjectFactory.class);
         server.start();
-        client = new SOAPClient("http://localhost:8000/rpcrouter2",
-                es.rickyepoderi.spml4jaxb.msg.dsmlv2.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.core.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.spmldsml.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.async.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.password.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.suspend.ObjectFactory.class,
-                es.rickyepoderi.spml4jaxb.msg.search.ObjectFactory.class,
+        client = new SOAPClient("http://localhost:8000/rpcrouter2", true,
                 es.rickyepoderi.spml4jaxb.user.ObjectFactory.class);
         // create a user
         targetXsdId = RequestBuilder.builderForListTargets()
