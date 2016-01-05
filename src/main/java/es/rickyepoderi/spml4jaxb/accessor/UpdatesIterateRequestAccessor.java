@@ -12,13 +12,14 @@ package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.UpdatesIterateRequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.updates.IterateRequestType;
 
 /**
  *
  * @author ricky
  */
-public class UpdatesIterateRequestAccessor extends RequestAccessor<IterateRequestType> {
+public class UpdatesIterateRequestAccessor extends RequestAccessor<IterateRequestType, UpdatesIterateRequestBuilder> {
 
     public UpdatesIterateRequestAccessor(IterateRequestType request) {
         super(request, null, null);
@@ -38,7 +39,7 @@ public class UpdatesIterateRequestAccessor extends RequestAccessor<IterateReques
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public UpdatesIterateRequestBuilder toBuilder() {
         return RequestBuilder.builderForUpdatesIterate().fromRequest(this.request);
     }
     

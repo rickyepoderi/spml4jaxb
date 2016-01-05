@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.ResumeRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.suspend.ResumeRequestType;
 import javax.xml.bind.JAXBElement;
 import java.util.Date;
@@ -21,7 +22,7 @@ import java.util.GregorianCalendar;
  *
  * @author ricky
  */
-public class ResumeRequestBuilder extends RequestBuilder<ResumeRequestType, ResumeRequestBuilder> {
+public class ResumeRequestBuilder extends RequestBuilder<ResumeRequestType, ResumeRequestBuilder, ResumeRequestAccessor> {
 
     public ResumeRequestBuilder() {
         super(new ResumeRequestType());
@@ -51,9 +52,9 @@ public class ResumeRequestBuilder extends RequestBuilder<ResumeRequestType, Resu
     }
     
     @Override
-    public RequestAccessor asAccessor() {
+    public ResumeRequestAccessor asAccessor() {
         request.setPsoID(pso);
-        return super.asAccessor().asResume();
+        return RequestAccessor.accessorForRequest(request).asResume();
     }
 
     @Override

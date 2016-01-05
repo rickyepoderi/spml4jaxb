@@ -11,13 +11,14 @@
 package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.ValidatePasswordResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordResponseType;
 
 /**
  *
  * @author ricky
  */
-public class ValidatePasswordResponseAccessor extends ResponseAccessor<ValidatePasswordResponseType> {
+public class ValidatePasswordResponseAccessor extends ResponseAccessor<ValidatePasswordResponseType, ValidatePasswordResponseBuilder> {
 
     protected ValidatePasswordResponseAccessor(ValidatePasswordResponseType response) {
         super(response, null);
@@ -36,7 +37,7 @@ public class ValidatePasswordResponseAccessor extends ResponseAccessor<ValidateP
     }
     
     @Override
-    public ResponseBuilder toBuilder() {
+    public ValidatePasswordResponseBuilder toBuilder() {
         return ResponseBuilder.builderForValidatePassword().fromResponse(this.response);
     }
     

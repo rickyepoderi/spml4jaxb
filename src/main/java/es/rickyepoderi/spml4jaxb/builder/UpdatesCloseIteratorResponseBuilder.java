@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.UpdatesCloseIteratorResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
 
@@ -18,7 +19,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class UpdatesCloseIteratorResponseBuilder extends ResponseBuilder<ResponseType, UpdatesCloseIteratorResponseBuilder> {
+public class UpdatesCloseIteratorResponseBuilder extends ResponseBuilder<ResponseType, UpdatesCloseIteratorResponseBuilder, UpdatesCloseIteratorResponseAccessor> {
 
     public UpdatesCloseIteratorResponseBuilder() {
         super(new ResponseType());
@@ -30,8 +31,8 @@ public class UpdatesCloseIteratorResponseBuilder extends ResponseBuilder<Respons
     }
     
     @Override
-    public ResponseAccessor asAccessor() {
-        return super.asAccessor().asUpdatesCloseIterator();
+    public UpdatesCloseIteratorResponseAccessor asAccessor() {
+        return ResponseAccessor.accessorForResponse(response).asUpdatesCloseIterator();
     }
     
 }

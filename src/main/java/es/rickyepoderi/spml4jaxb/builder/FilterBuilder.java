@@ -23,11 +23,11 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class FilterBuilder implements Builder<JAXBElement<Filter>> {
+public class FilterBuilder implements Builder<JAXBElement<Filter>, FilterAccessor> {
     
     protected Filter filter = null;
     
-    protected FilterBuilder(Filter filter) {
+    public FilterBuilder(Filter filter) {
         this.filter = filter;
     }
     
@@ -160,6 +160,11 @@ public class FilterBuilder implements Builder<JAXBElement<Filter>> {
     
     public FilterBuilder not() {
         return FilterBuilder.not(this);
+    }
+
+    @Override
+    public FilterAccessor asAccessor() {
+        return new FilterAccessor(filter);
     }
     
 }

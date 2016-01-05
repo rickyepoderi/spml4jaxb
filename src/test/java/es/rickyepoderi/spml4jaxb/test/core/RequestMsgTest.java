@@ -16,7 +16,9 @@ import es.rickyepoderi.spml4jaxb.accessor.DeleteRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ListTargetsRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.LookupRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ModifyRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.PsoIdentifierAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.builder.PsoIdentifierBuilder;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationType;
 import es.rickyepoderi.spml4jaxb.msg.core.RequestType;
@@ -98,15 +100,35 @@ public class RequestMsgTest {
                 .asynchronous()
                 .requestId("request-lookup")
                 .returnIdentifier()
-                .psoId("testlookupid")
-                .psoTargetId("testtargetid")
+                .psoIdentifier(RequestBuilder.builderForPsoIdentifier()
+                        .id("testlookupid-1")
+                        .targetId("testtargetid-1")
+                        .container(RequestBuilder.builderForPsoIdentifier()
+                                .id("testlookupid-2")
+                                .targetId("testtargetid-2")
+                                .container(RequestBuilder.builderForPsoIdentifier()
+                                        .id("testlookupid-3")
+                                        .targetId("testtargetid-3")
+                                )
+                        )
+                )
                 .build();
         LookupRequestAccessor req = parse(el).asLookup();
         Assert.assertTrue(req.isAsynchronous());
         Assert.assertTrue(req.isReturnIdentifier());
         Assert.assertEquals("request-lookup", req.getRequestId());
-        Assert.assertEquals("testlookupid", req.getPsoId());
-        Assert.assertEquals("testtargetid", req.getPsoTargetId());
+        PsoIdentifierAccessor psoId = req.getPsoAccessor();
+        Assert.assertNotNull(psoId);
+        Assert.assertEquals(psoId.getId(), "testlookupid-1");
+        Assert.assertEquals(psoId.getTargetId(), "testtargetid-1");
+        psoId = psoId.getContainer();
+        Assert.assertNotNull(psoId);
+        Assert.assertEquals(psoId.getId(), "testlookupid-2");
+        Assert.assertEquals(psoId.getTargetId(), "testtargetid-2");
+        psoId = psoId.getContainer();
+        Assert.assertNotNull(psoId);
+        Assert.assertEquals(psoId.getId(), "testlookupid-3");
+        Assert.assertEquals(psoId.getTargetId(), "testtargetid-3");
     }
     
     //
@@ -128,7 +150,7 @@ public class RequestMsgTest {
         Assert.assertEquals("testdeleteid", req.getPsoId());
         Assert.assertEquals("testtargetid", req.getPsoTargetId());
     }
-
+    
     //
     // ADD
     //

@@ -15,6 +15,7 @@ import es.rickyepoderi.spml4jaxb.accessor.AddResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ListTargetsResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.LookupResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ModifyResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.PsoIdentifierAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SchemaAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.TargetAccessor;
@@ -279,18 +280,38 @@ public class ResponseMsgTest {
     @Test
     public void testResponseDsmlLookup() throws JAXBException {
         JAXBElement el = ResponseBuilder.builderForLookup()
-                .requestId("request-lookup")
+                .requestId("response-lookup")
                 .success()
-                .psoId("psoid")
-                .psoTargetId("targetid")
+                .psoIdentifier(ResponseBuilder.builderForPsoIdentifier()
+                        .id("testlookupid-1")
+                        .targetId("testtargetid-1")
+                        .container(ResponseBuilder.builderForPsoIdentifier()
+                                .id("testlookupid-2")
+                                .targetId("testtargetid-2")
+                                .container(ResponseBuilder.builderForPsoIdentifier()
+                                        .id("testlookupid-3")
+                                        .targetId("testtargetid-3")
+                                )
+                        )
+                )
                 .dsmlAttribute("name1", "value11", "value12", "value13")
                 .dsmlAttribute("name2", "value21")
                 .dsmlAttribute("name3", "value31", "value32")
                 .build();
         LookupResponseAccessor res = parse(el).asLookup();
-        Assert.assertEquals(res.getRequestId(), "request-lookup");
-        Assert.assertEquals(res.getPsoId(), "psoid");
-        Assert.assertEquals(res.getPsoTargetId(), "targetid");
+        Assert.assertEquals(res.getRequestId(), "response-lookup");
+        PsoIdentifierAccessor psoId = res.getPsoAccessor();
+        Assert.assertNotNull(psoId);
+        Assert.assertEquals(psoId.getId(), "testlookupid-1");
+        Assert.assertEquals(psoId.getTargetId(), "testtargetid-1");
+        psoId = psoId.getContainer();
+        Assert.assertNotNull(psoId);
+        Assert.assertEquals(psoId.getId(), "testlookupid-2");
+        Assert.assertEquals(psoId.getTargetId(), "testtargetid-2");
+        psoId = psoId.getContainer();
+        Assert.assertNotNull(psoId);
+        Assert.assertEquals(psoId.getId(), "testlookupid-3");
+        Assert.assertEquals(psoId.getTargetId(), "testtargetid-3");
         Assert.assertNull(res.getError());
         Assert.assertTrue(res.isSuccess());
         Assert.assertEquals(res.getErrorMessages().length, 0);

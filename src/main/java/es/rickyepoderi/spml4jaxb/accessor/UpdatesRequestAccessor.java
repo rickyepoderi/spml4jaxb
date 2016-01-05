@@ -12,6 +12,7 @@ package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.UpdatesRequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.search.SearchQueryType;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdatesRequestType;
 import java.util.Date;
@@ -20,7 +21,7 @@ import java.util.Date;
  *
  * @author ricky
  */
-public class UpdatesRequestAccessor extends RequestAccessor<UpdatesRequestType> {
+public class UpdatesRequestAccessor extends RequestAccessor<UpdatesRequestType, UpdatesRequestBuilder> {
 
     protected UpdatesRequestAccessor(UpdatesRequestType request) {
         super(request, null, null);
@@ -61,7 +62,7 @@ public class UpdatesRequestAccessor extends RequestAccessor<UpdatesRequestType> 
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public UpdatesRequestBuilder toBuilder() {
         return RequestBuilder.builderForUpdates().fromRequest(this.request);
     }
     

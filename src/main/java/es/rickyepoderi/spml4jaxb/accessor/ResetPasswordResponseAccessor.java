@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.ResetPasswordResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordResponseType;
 
@@ -17,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordResponseType;
  *
  * @author ricky
  */
-public class ResetPasswordResponseAccessor extends ResponseAccessor<ResetPasswordResponseType> {
+public class ResetPasswordResponseAccessor extends ResponseAccessor<ResetPasswordResponseType, ResetPasswordResponseBuilder> {
     
     protected ResetPasswordResponseAccessor(ResetPasswordResponseType response) {
         super(response, null);
@@ -36,7 +37,7 @@ public class ResetPasswordResponseAccessor extends ResponseAccessor<ResetPasswor
     }
     
     @Override
-    public ResponseBuilder toBuilder() {
+    public ResetPasswordResponseBuilder toBuilder() {
         return ResponseBuilder.builderForResetPassword().fromResponse(this.response);
     }
 }

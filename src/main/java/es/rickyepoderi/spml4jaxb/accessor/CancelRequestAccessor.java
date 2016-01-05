@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.CancelRequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.async.CancelRequestType;
@@ -18,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.async.CancelRequestType;
  *
  * @author ricky
  */
-public class CancelRequestAccessor extends RequestAccessor<CancelRequestType> {
+public class CancelRequestAccessor extends RequestAccessor<CancelRequestType, CancelRequestBuilder> {
 
     protected CancelRequestAccessor(CancelRequestType request) {
         super(request, null, null);
@@ -38,7 +39,7 @@ public class CancelRequestAccessor extends RequestAccessor<CancelRequestType> {
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public CancelRequestBuilder toBuilder() {
         return RequestBuilder.builderForCancel().fromRequest(this.request);
     }
     

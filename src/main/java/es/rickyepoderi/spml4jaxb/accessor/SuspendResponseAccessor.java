@@ -11,20 +11,21 @@
 package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.SuspendResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 
 /**
  *
  * @author ricky
  */
-public class SuspendResponseAccessor extends ResponseAccessor<ResponseType> {
+public class SuspendResponseAccessor extends ResponseAccessor<ResponseType, SuspendResponseBuilder> {
 
     public SuspendResponseAccessor(ResponseType response) {
         super(response, null);
     }
     
     @Override
-    public ResponseBuilder toBuilder() {
+    public SuspendResponseBuilder toBuilder() {
         return ResponseBuilder.builderForSuspend().fromResponse(this.response);
     }
     

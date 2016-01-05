@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.ModifyResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ModifyResponseType;
 
@@ -17,14 +18,14 @@ import es.rickyepoderi.spml4jaxb.msg.core.ModifyResponseType;
  *
  * @author ricky
  */
-public class ModifyResponseAccessor extends ResponseAccessor<ModifyResponseType> {
+public class ModifyResponseAccessor extends ResponseAccessor<ModifyResponseType, ModifyResponseBuilder> {
 
     protected ModifyResponseAccessor(ModifyResponseType response) {
         super(response, response.getPso());
     }
     
     @Override
-    public ResponseBuilder toBuilder() {
+    public ModifyResponseBuilder toBuilder() {
         return ResponseBuilder.builderForModify().fromResponse(this.response);
     }
     

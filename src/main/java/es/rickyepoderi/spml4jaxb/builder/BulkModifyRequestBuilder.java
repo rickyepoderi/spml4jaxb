@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.BulkModifyRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.bulk.BulkModifyRequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationModeType;
@@ -22,7 +23,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class BulkModifyRequestBuilder extends ModificationRequestBuilder<BulkModifyRequestType, BulkModifyRequestBuilder> {
+public class BulkModifyRequestBuilder extends ModificationRequestBuilder<BulkModifyRequestType, BulkModifyRequestBuilder, BulkModifyRequestAccessor> {
 
     public BulkModifyRequestBuilder() {
         super(new BulkModifyRequestType());
@@ -64,8 +65,8 @@ public class BulkModifyRequestBuilder extends ModificationRequestBuilder<BulkMod
     }
     
     @Override
-    public RequestAccessor asAccessor() {
-        return super.asAccessor().asBulkModify();
+    public BulkModifyRequestAccessor asAccessor() {
+        return RequestAccessor.accessorForRequest(request).asBulkModify();
     }
 
     @Override

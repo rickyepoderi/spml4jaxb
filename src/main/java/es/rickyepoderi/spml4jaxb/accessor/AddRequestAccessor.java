@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.AddRequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.AddRequestType;
@@ -22,7 +23,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class AddRequestAccessor extends RequestAccessor<AddRequestType> {
+public class AddRequestAccessor extends RequestAccessor<AddRequestType, AddRequestBuilder> {
 
     protected AddRequestAccessor(AddRequestType request) {
         super(request, request.getPsoID(), request.getReturnData());
@@ -93,7 +94,7 @@ public class AddRequestAccessor extends RequestAccessor<AddRequestType> {
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public AddRequestBuilder toBuilder() {
         return RequestBuilder.builderForAdd().fromRequest(this.request);
     }
     

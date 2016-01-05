@@ -29,8 +29,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @author ricky
  * @param <R> The request type the builder is about
  * @param <B> The request builder we are creating
+ * @param <A>
  */
-public abstract class RequestBuilder<R extends RequestType, B extends RequestBuilder> implements Builder<JAXBElement<R>> {
+public abstract class RequestBuilder<R extends RequestType, B extends RequestBuilder, A extends RequestAccessor> implements Builder<JAXBElement<R>, A> {
     
     static public final String DSML_PROFILE_URI = "urn:oasis:names:tc:SPML:2:0:DSML";
     static public final String XSD_PROFILE_URI = "urn:oasis:names:tc:SPML:2.0:profiles:XSD";
@@ -149,6 +150,10 @@ public abstract class RequestBuilder<R extends RequestType, B extends RequestBui
     
     static public SearchQueryBuilder builderForQuery() {
         return new SearchQueryBuilder();
+    }
+    
+    static public PsoIdentifierBuilder builderForPsoIdentifier() {
+        return new PsoIdentifierBuilder();
     }
     
     static public BulkModifyRequestBuilder builderForBulkModify() {
@@ -331,6 +336,11 @@ public abstract class RequestBuilder<R extends RequestType, B extends RequestBui
         return (B) this;
     }
     
+    public B psoIdentifier(PsoIdentifierBuilder psoId) {
+        this.pso = psoId.build();
+        return (B) this;
+    }
+    
     //
     // RETURN DATA
     //
@@ -357,7 +367,7 @@ public abstract class RequestBuilder<R extends RequestType, B extends RequestBui
         return client.send(this.build());
     }
     
-    public RequestAccessor asAccessor() {
-        return RequestAccessor.accessorForRequest(request);
-    }
+    @Override
+    abstract public A asAccessor();
+    
 }

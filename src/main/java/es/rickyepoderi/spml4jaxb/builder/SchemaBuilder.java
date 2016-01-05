@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.SchemaAccessor;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
 import es.rickyepoderi.spml4jaxb.msg.core.SchemaEntityRefType;
 import es.rickyepoderi.spml4jaxb.msg.core.SchemaType;
@@ -30,7 +31,7 @@ import org.xml.sax.SAXException;
  *
  * @author ricky
  */
-public class SchemaBuilder implements Builder<SchemaType> {
+public class SchemaBuilder implements Builder<SchemaType, SchemaAccessor> {
     
     protected SchemaType schema;
     protected es.rickyepoderi.spml4jaxb.msg.spmldsml.SchemaType dsmlSchema;
@@ -38,6 +39,11 @@ public class SchemaBuilder implements Builder<SchemaType> {
     protected SchemaBuilder() {
         this.schema = new SchemaType();
         this.dsmlSchema = new es.rickyepoderi.spml4jaxb.msg.spmldsml.SchemaType();
+    }
+    
+    public SchemaBuilder(SchemaType schema, es.rickyepoderi.spml4jaxb.msg.spmldsml.SchemaType dsmlSchema) {
+        this.schema = schema;
+        this.dsmlSchema = dsmlSchema;
     }
     
     public SchemaBuilder supportedSchemaEntity(String... names) {
@@ -171,6 +177,12 @@ public class SchemaBuilder implements Builder<SchemaType> {
             schema.getAny().add(RequestBuilder.spmldsmlObjectFactory.createSchema(dsmlSchema));
         }
         return schema;
+    }
+
+    @Override
+    public SchemaAccessor asAccessor() {
+        build();
+        return new SchemaAccessor(schema);
     }
     
 }

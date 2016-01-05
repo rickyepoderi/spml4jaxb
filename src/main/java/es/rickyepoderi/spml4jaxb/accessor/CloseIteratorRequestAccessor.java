@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.CloseIteratorRequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.search.CloseIteratorRequestType;
@@ -18,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.search.CloseIteratorRequestType;
  *
  * @author ricky
  */
-public class CloseIteratorRequestAccessor extends RequestAccessor<CloseIteratorRequestType> {
+public class CloseIteratorRequestAccessor extends RequestAccessor<CloseIteratorRequestType, CloseIteratorRequestBuilder> {
 
     public CloseIteratorRequestAccessor(CloseIteratorRequestType request) {
         super(request, null, null);
@@ -38,7 +39,7 @@ public class CloseIteratorRequestAccessor extends RequestAccessor<CloseIteratorR
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public CloseIteratorRequestBuilder toBuilder() {
         return RequestBuilder.builderForCloseIterator().fromRequest(this.request);
     }
     

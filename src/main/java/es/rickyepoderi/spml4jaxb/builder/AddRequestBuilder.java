@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.AddRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlAttr;
 import es.rickyepoderi.spml4jaxb.msg.core.AddRequestType;
@@ -22,7 +23,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequestBuilder> {
+public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequestBuilder, AddRequestAccessor> {
 
     protected AddRequestBuilder() {
         super(new AddRequestType());
@@ -101,10 +102,10 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
     }
     
     @Override
-    public RequestAccessor asAccessor() {
+    public AddRequestAccessor asAccessor() {
         request.setReturnData(returnData);
         request.setPsoID(pso);
-        return super.asAccessor().asAdd();
+        return RequestAccessor.accessorForRequest(request).asAdd();
     }
 
     @Override

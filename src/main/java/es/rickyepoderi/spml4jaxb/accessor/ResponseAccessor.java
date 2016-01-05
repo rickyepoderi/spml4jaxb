@@ -41,7 +41,7 @@ import javax.xml.bind.JAXBElement;
  * @author ricky
  * @param <R>
  */
-public class ResponseAccessor<R extends ResponseType> {
+public class ResponseAccessor<R extends ResponseType, B extends ResponseBuilder> implements Accessor<R, B> {
     
     protected R response;
     protected PSOType pso;
@@ -65,7 +65,7 @@ public class ResponseAccessor<R extends ResponseType> {
         }
     }
     
-    public ResponseBuilder toBuilder() {
+    public B toBuilder() {
         throw new IllegalStateException("You should never use the accessor at this level");
     }
     
@@ -163,6 +163,14 @@ public class ResponseAccessor<R extends ResponseType> {
     
     public PSOType getPso() {
         return pso;
+    }
+    
+    public PsoIdentifierAccessor getPsoAccessor() {
+        if (pso != null && pso.getPsoID() != null) {
+            return new PsoIdentifierAccessor(pso.getPsoID());
+        } else {
+            return null;
+        }
     }
     
     public String getPsoId() {
@@ -437,6 +445,11 @@ public class ResponseAccessor<R extends ResponseType> {
     @Override
     public String toString() {
         return toString(null);
+    }
+
+    @Override
+    public R getInternalType() {
+        return response;
     }
     
 }

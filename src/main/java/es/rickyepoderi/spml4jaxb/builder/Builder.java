@@ -10,13 +10,18 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.Accessor;
+
 /**
  *
  * @author ricky
  * @param <T>
+ * @param <A>
  */
-public interface Builder<T> {
+public interface Builder<T, A extends Accessor> {
     
     public T build();
+    
+    public A asAccessor();
     
 }

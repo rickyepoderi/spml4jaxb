@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.UpdatesIterateRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.updates.IterateRequestType;
 import es.rickyepoderi.spml4jaxb.msg.updates.ResultsIteratorType;
 import javax.xml.bind.JAXBElement;
@@ -19,7 +20,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class UpdatesIterateRequestBuilder extends RequestBuilder<IterateRequestType, UpdatesIterateRequestBuilder> {
+public class UpdatesIterateRequestBuilder extends RequestBuilder<IterateRequestType, UpdatesIterateRequestBuilder, UpdatesIterateRequestAccessor> {
 
     public UpdatesIterateRequestBuilder() {
         super(new IterateRequestType());
@@ -38,8 +39,8 @@ public class UpdatesIterateRequestBuilder extends RequestBuilder<IterateRequestT
     }
     
     @Override
-    public RequestAccessor asAccessor() {
-        return super.asAccessor().asUpdatesIterate();
+    public UpdatesIterateRequestAccessor asAccessor() {
+        return RequestAccessor.accessorForRequest(request).asUpdatesIterate();
     }
 
     @Override

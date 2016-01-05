@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.Accessor;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import static es.rickyepoderi.spml4jaxb.builder.RequestBuilder.coreObjectFactory;
@@ -29,8 +30,9 @@ import javax.xml.bind.JAXBElement;
  * @author ricky
  * @param <R>
  * @param <B>
+ * @param <A>
  */
-public abstract class ResponseBuilder<R extends ResponseType, B extends ResponseBuilder> implements Builder<JAXBElement<R>> {
+public abstract class ResponseBuilder<R extends ResponseType, B extends ResponseBuilder, A extends ResponseAccessor> implements Builder<JAXBElement<R>, A> {
 
     protected R response = null;
     protected PSOType pso = null;
@@ -105,6 +107,10 @@ public abstract class ResponseBuilder<R extends ResponseType, B extends Response
     
     static public TargetBuilder builderForTarget() {
         return new TargetBuilder();
+    }
+    
+    static public PsoIdentifierBuilder builderForPsoIdentifier() {
+        return new PsoIdentifierBuilder();
     }
     
     static public SchemaBuilder builderForSchema() {
@@ -299,6 +305,14 @@ public abstract class ResponseBuilder<R extends ResponseType, B extends Response
         return (B) this;
     }
     
+    public B psoIdentifier(PsoIdentifierBuilder psoId) {
+        if (pso == null) {
+            pso = new PSOType();
+        }
+        pso.setPsoID(psoId.build());
+        return (B) this;
+    }
+    
     public B xsdObject(Object o) {
         if (pso == null) {
             pso = new PSOType();
@@ -345,7 +359,7 @@ public abstract class ResponseBuilder<R extends ResponseType, B extends Response
         return (B) this;
     }
     
-    public ResponseAccessor asAccessor() {
-        return ResponseAccessor.accessorForResponse(response);
-    }
+    @Override
+    abstract public A asAccessor();
+    
 }

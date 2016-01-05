@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.ModifyRequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationType;
@@ -23,7 +24,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ModifyRequestAccessor extends ModificationRequestAccessor<ModifyRequestType> {
+public class ModifyRequestAccessor extends ModificationRequestAccessor<ModifyRequestType, ModifyRequestBuilder> {
 
     protected ModifyRequestAccessor(ModifyRequestType request) {
         super(request, request.getPsoID(), request.getReturnData());
@@ -61,7 +62,7 @@ public class ModifyRequestAccessor extends ModificationRequestAccessor<ModifyReq
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public ModifyRequestBuilder toBuilder() {
         return RequestBuilder.builderForModify().fromRequest(this.request);
     }
 }

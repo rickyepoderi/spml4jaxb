@@ -12,13 +12,14 @@ package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.StatusRequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.async.StatusRequestType;
 
 /**
  *
  * @author ricky
  */
-public class StatusRequestAccessor extends RequestAccessor<StatusRequestType> {
+public class StatusRequestAccessor extends RequestAccessor<StatusRequestType, StatusRequestBuilder> {
     
     protected StatusRequestAccessor(StatusRequestType request) {
         super(request, null, null);
@@ -42,7 +43,7 @@ public class StatusRequestAccessor extends RequestAccessor<StatusRequestType> {
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public StatusRequestBuilder toBuilder() {
         return RequestBuilder.builderForStatus().fromRequest(this.request);
     }
     

@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.ModificationRequestAccessor;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationModeType;
 import es.rickyepoderi.spml4jaxb.msg.core.RequestType;
@@ -31,7 +32,7 @@ import org.xml.sax.SAXException;
  * @param <R>
  * @param <B>
  */
-public abstract class ModificationRequestBuilder<R extends RequestType, B extends RequestBuilder> extends RequestBuilder<R, B>  {
+public abstract class ModificationRequestBuilder<R extends RequestType, B extends RequestBuilder, A extends ModificationRequestAccessor> extends RequestBuilder<R, B, A>  {
 
     public ModificationRequestBuilder(R request) {
         super(request);

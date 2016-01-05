@@ -12,6 +12,7 @@ package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.ResumeRequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.suspend.ResumeRequestType;
 import java.util.Date;
 
@@ -19,7 +20,7 @@ import java.util.Date;
  *
  * @author ricky
  */
-public class ResumeRequestAccessor extends RequestAccessor<ResumeRequestType> {
+public class ResumeRequestAccessor extends RequestAccessor<ResumeRequestType, ResumeRequestBuilder> {
 
     public ResumeRequestAccessor(ResumeRequestType request) {
         super(request, request.getPsoID(), null);
@@ -39,7 +40,7 @@ public class ResumeRequestAccessor extends RequestAccessor<ResumeRequestType> {
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public ResumeRequestBuilder toBuilder() {
         return RequestBuilder.builderForResume().fromRequest(this.request);
     }
     

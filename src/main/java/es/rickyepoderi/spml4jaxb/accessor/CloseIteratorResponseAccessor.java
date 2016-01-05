@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.CloseIteratorResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 
@@ -17,14 +18,14 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
  *
  * @author ricky
  */
-public class CloseIteratorResponseAccessor extends ResponseAccessor<ResponseType> {
+public class CloseIteratorResponseAccessor extends ResponseAccessor<ResponseType, CloseIteratorResponseBuilder> {
     
     public CloseIteratorResponseAccessor(ResponseType response) {
         super(response, null);
     }
     
     @Override
-    public ResponseBuilder toBuilder() {
+    public CloseIteratorResponseBuilder toBuilder() {
         return ResponseBuilder.builderForCloseIterator().fromResponse(this.response);
     }
 }

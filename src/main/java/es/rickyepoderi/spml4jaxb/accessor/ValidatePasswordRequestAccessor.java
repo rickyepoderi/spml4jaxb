@@ -12,13 +12,14 @@ package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.ValidatePasswordRequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordRequestType;
 
 /**
  *
  * @author ricky
  */
-public class ValidatePasswordRequestAccessor extends RequestAccessor<ValidatePasswordRequestType> {
+public class ValidatePasswordRequestAccessor extends RequestAccessor<ValidatePasswordRequestType, ValidatePasswordRequestBuilder> {
 
     public ValidatePasswordRequestAccessor(ValidatePasswordRequestType request) {
         super(request, request.getPsoID(), null);
@@ -34,7 +35,7 @@ public class ValidatePasswordRequestAccessor extends RequestAccessor<ValidatePas
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public ValidatePasswordRequestBuilder toBuilder() {
         return RequestBuilder.builderForValidatePassword().fromRequest(this.request);
     }
     

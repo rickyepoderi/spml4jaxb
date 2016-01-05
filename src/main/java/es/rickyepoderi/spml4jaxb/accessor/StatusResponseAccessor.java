@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.StatusResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.async.StatusResponseType;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class StatusResponseAccessor extends ResponseAccessor<StatusResponseType> {
+public class StatusResponseAccessor extends ResponseAccessor<StatusResponseType, StatusResponseBuilder> {
 
     protected StatusResponseAccessor(StatusResponseType response) {
         super(response, null);
@@ -72,7 +73,7 @@ public class StatusResponseAccessor extends ResponseAccessor<StatusResponseType>
     }
     
     @Override
-    public ResponseBuilder toBuilder() {
+    public StatusResponseBuilder toBuilder() {
         return ResponseBuilder.builderForStatus().fromResponse(this.response);
     }
 }

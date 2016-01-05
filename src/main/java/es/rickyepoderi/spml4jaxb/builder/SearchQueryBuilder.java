@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.SearchQueryAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
 import es.rickyepoderi.spml4jaxb.msg.core.SelectionType;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.AttributeDescription;
@@ -21,7 +22,7 @@ import es.rickyepoderi.spml4jaxb.msg.search.SearchQueryType;
  *
  * @author ricky
  */
-public class SearchQueryBuilder implements Builder<SearchQueryType> {
+public class SearchQueryBuilder implements Builder<SearchQueryType, SearchQueryAccessor> {
     
     protected SearchQueryType query = null;
     protected AttributeDescriptions attributes = null;
@@ -29,6 +30,10 @@ public class SearchQueryBuilder implements Builder<SearchQueryType> {
     protected SearchQueryBuilder() {
         query = new SearchQueryType();
         attributes = null;
+    }
+    
+    public SearchQueryBuilder(SearchQueryType query) {
+        this.query = query;
     }
     
     //
@@ -146,5 +151,11 @@ public class SearchQueryBuilder implements Builder<SearchQueryType> {
             query.getAny().add(RequestBuilder.dsmlv2ObjectFactory.createAttributeDescriptions(attributes));
         }
         return query;
+    }
+
+    @Override
+    public SearchQueryAccessor asAccessor() {
+        build();
+        return new SearchQueryAccessor(query);
     }
 }

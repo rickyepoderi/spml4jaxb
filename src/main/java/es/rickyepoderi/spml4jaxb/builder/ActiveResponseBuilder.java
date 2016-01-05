@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.ActiveResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveResponseType;
 import javax.xml.bind.JAXBElement;
@@ -18,7 +19,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ActiveResponseBuilder extends ResponseBuilder<ActiveResponseType, ActiveResponseBuilder> {
+public class ActiveResponseBuilder extends ResponseBuilder<ActiveResponseType, ActiveResponseBuilder, ActiveResponseAccessor> {
     
     protected ActiveResponseBuilder() {
         super(new ActiveResponseType());
@@ -45,7 +46,7 @@ public class ActiveResponseBuilder extends ResponseBuilder<ActiveResponseType, A
     }
     
     @Override
-    public ResponseAccessor asAccessor() {
-        return super.asAccessor().asActive();
+    public ActiveResponseAccessor asAccessor() {
+        return ResponseAccessor.accessorForResponse(response).asActive();
     }
 }

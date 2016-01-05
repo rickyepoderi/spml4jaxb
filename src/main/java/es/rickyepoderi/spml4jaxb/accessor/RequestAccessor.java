@@ -46,8 +46,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
  *
  * @author ricky
  * @param <R>
+ * @param <B>
  */
-public class RequestAccessor<R extends RequestType> {
+public class RequestAccessor<R extends RequestType, B extends RequestBuilder> implements Accessor<R, B>{
     
     static public final String SPML_CAPABILITY_CORE_URI = "urn:oasis:names:tc:SPML:2:0";
     static public final String SPML_CAPABILITY_ASYNC_URI = "urn:oasis:names:tc:SPML:2:0:async";
@@ -184,11 +185,20 @@ public class RequestAccessor<R extends RequestType> {
         }
     }
     
+    public PsoIdentifierAccessor getPsoAccessor() {
+        if (pso != null) {
+            return new PsoIdentifierAccessor(pso);
+        } else {
+            return null;
+        }
+    }
+    
     public ResponseBuilder responseBuilder() {
         throw new IllegalStateException("You should never use the accessor at this level");
     }
     
-    public RequestBuilder toBuilder() {
+    @Override
+    public B toBuilder() {
         throw new IllegalStateException("You should never use the accessor at this level");
     }
     
@@ -388,5 +398,10 @@ public class RequestAccessor<R extends RequestType> {
                 .append(" - ").append(getReturnData()).append(nl)
                 .append("  psoId: ").append(getPsoId()).append(nl)
                 .append("  psoTargetId: ").append(getPsoTargetId()).append(nl).toString();
+    }
+
+    @Override
+    public R getInternalType() {
+        return request;
     }
 }

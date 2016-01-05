@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
+import es.rickyepoderi.spml4jaxb.builder.ResetPasswordRequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordRequestType;
 
@@ -18,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordRequestType;
  *
  * @author ricky
  */
-public class ResetPasswordRequestAccessor extends RequestAccessor<ResetPasswordRequestType> {
+public class ResetPasswordRequestAccessor extends RequestAccessor<ResetPasswordRequestType, ResetPasswordRequestBuilder> {
 
     protected ResetPasswordRequestAccessor(ResetPasswordRequestType request) {
         super(request, request.getPsoID(), null);
@@ -30,7 +31,7 @@ public class ResetPasswordRequestAccessor extends RequestAccessor<ResetPasswordR
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public ResetPasswordRequestBuilder toBuilder() {
         return RequestBuilder.builderForResetPassword().fromRequest(this.request);
     }
     

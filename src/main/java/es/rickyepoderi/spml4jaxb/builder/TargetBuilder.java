@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.TargetAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.CapabilitiesListType;
 import es.rickyepoderi.spml4jaxb.msg.core.CapabilityType;
 import es.rickyepoderi.spml4jaxb.msg.core.SchemaEntityRefType;
@@ -20,12 +21,16 @@ import es.rickyepoderi.spml4jaxb.msg.core.TargetType;
  *
  * @author ricky
  */
-public class TargetBuilder implements Builder<TargetType> {
+public class TargetBuilder implements Builder<TargetType, TargetAccessor> {
     
     protected TargetType target = null;
     
     protected TargetBuilder() {
         this.target = new TargetType();
+    }
+    
+    public TargetBuilder(TargetType target) {
+        this.target = target;
     }
     
     public TargetBuilder targetId(String id) {
@@ -112,6 +117,11 @@ public class TargetBuilder implements Builder<TargetType> {
     @Override
     public TargetType build() {
         return target;
+    }
+
+    @Override
+    public TargetAccessor asAccessor() {
+        return new TargetAccessor(target);
     }
     
 }

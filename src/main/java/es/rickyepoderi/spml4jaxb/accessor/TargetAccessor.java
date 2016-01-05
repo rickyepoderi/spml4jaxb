@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.ListTargetsRequestBuilder;
+import es.rickyepoderi.spml4jaxb.builder.TargetBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.CapabilitiesListType;
 import es.rickyepoderi.spml4jaxb.msg.core.CapabilityType;
 import es.rickyepoderi.spml4jaxb.msg.core.SchemaEntityRefType;
@@ -23,11 +24,11 @@ import java.util.List;
  *
  * @author ricky
  */
-public class TargetAccessor {
+public class TargetAccessor implements Accessor<TargetType, TargetBuilder>{
     
     protected TargetType target;
     
-    protected TargetAccessor(TargetType target) {
+    public TargetAccessor(TargetType target) {
         this.target = target;
     }
     
@@ -130,5 +131,15 @@ public class TargetAccessor {
             sb.append(s);
         }
         return sb.toString();
+    }
+
+    @Override
+    public TargetType getInternalType() {
+        return this.target;
+    }
+
+    @Override
+    public TargetBuilder toBuilder() {
+        return new TargetBuilder(this.target);
     }
 }

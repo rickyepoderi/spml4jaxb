@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.ModifyResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.LookupResponseType;
 import es.rickyepoderi.spml4jaxb.msg.core.ModifyResponseType;
@@ -19,7 +20,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ModifyResponseBuilder extends ResponseBuilder<ModifyResponseType, ModifyResponseBuilder> {
+public class ModifyResponseBuilder extends ResponseBuilder<ModifyResponseType, ModifyResponseBuilder, ModifyResponseAccessor> {
 
     protected ModifyResponseBuilder() {
         super(new ModifyResponseType());
@@ -32,8 +33,8 @@ public class ModifyResponseBuilder extends ResponseBuilder<ModifyResponseType, M
     }
     
     @Override
-    public ResponseAccessor asAccessor() {
-        return super.asAccessor().asModify();
+    public ModifyResponseAccessor asAccessor() {
+        return ResponseAccessor.accessorForResponse(response).asModify();
     }
     
     @Override

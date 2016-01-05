@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.DeleteRequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.DeleteRequestType;
@@ -18,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.DeleteRequestType;
  *
  * @author ricky
  */
-public class DeleteRequestAccessor extends RequestAccessor<DeleteRequestType>{ 
+public class DeleteRequestAccessor extends RequestAccessor<DeleteRequestType, DeleteRequestBuilder>{ 
 
     protected DeleteRequestAccessor(DeleteRequestType request) {
         super(request, request.getPsoID(), null);
@@ -34,7 +35,7 @@ public class DeleteRequestAccessor extends RequestAccessor<DeleteRequestType>{
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public DeleteRequestBuilder toBuilder() {
         return RequestBuilder.builderForDelete().fromRequest(this.request);
     }
     

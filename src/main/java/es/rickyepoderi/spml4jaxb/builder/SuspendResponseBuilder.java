@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.SuspendResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
 
@@ -18,7 +19,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class SuspendResponseBuilder extends ResponseBuilder<ResponseType, SuspendResponseBuilder> {
+public class SuspendResponseBuilder extends ResponseBuilder<ResponseType, SuspendResponseBuilder, SuspendResponseAccessor> {
 
     protected SuspendResponseBuilder() {
         super(new ResponseType());
@@ -30,8 +31,8 @@ public class SuspendResponseBuilder extends ResponseBuilder<ResponseType, Suspen
     }
     
     @Override
-    public ResponseAccessor asAccessor() {
-        return super.asAccessor().asSuspend();
+    public SuspendResponseAccessor asAccessor() {
+        return ResponseAccessor.accessorForResponse(response).asSuspend();
     }
     
 }

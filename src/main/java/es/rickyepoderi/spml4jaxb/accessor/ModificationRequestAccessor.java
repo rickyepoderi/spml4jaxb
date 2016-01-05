@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.ModificationRequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationModeType;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationType;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
@@ -29,8 +30,9 @@ import org.w3c.dom.Node;
  *
  * @author ricky
  * @param <R>
+ * @param <B>
  */
-public abstract class ModificationRequestAccessor<R extends RequestType> extends RequestAccessor<R> {
+public abstract class ModificationRequestAccessor<R extends RequestType, B extends ModificationRequestBuilder> extends RequestAccessor<R, B> {
 
     protected ModificationRequestAccessor(R request, PSOIdentifierType pso, ReturnDataType returnData) {
         super(request, pso, returnData);

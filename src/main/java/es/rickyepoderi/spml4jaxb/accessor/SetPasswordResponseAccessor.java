@@ -11,20 +11,21 @@
 package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.SetPasswordResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 
 /**
  *
  * @author ricky
  */
-public class SetPasswordResponseAccessor extends ResponseAccessor<ResponseType> {
+public class SetPasswordResponseAccessor extends ResponseAccessor<ResponseType, SetPasswordResponseBuilder> {
 
     public SetPasswordResponseAccessor(ResponseType response) {
         super(response, null);
     }
     
     @Override
-    public ResponseBuilder toBuilder() {
+    public SetPasswordResponseBuilder toBuilder() {
         return ResponseBuilder.builderForSetPassword().fromResponse(this.response);
     }
     

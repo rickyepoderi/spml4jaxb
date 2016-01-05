@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.SchemaBuilder;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
 import es.rickyepoderi.spml4jaxb.msg.core.SchemaEntityRefType;
 import es.rickyepoderi.spml4jaxb.msg.core.SchemaType;
@@ -35,11 +36,11 @@ import org.w3c.dom.Element;
  *
  * @author ricky
  */
-public class SchemaAccessor {
+public class SchemaAccessor implements Accessor<SchemaType, SchemaBuilder>{
     
     protected SchemaType schema;
     
-    protected SchemaAccessor(SchemaType schema) {
+    public SchemaAccessor(SchemaType schema) {
         this.schema = schema;
     }
     
@@ -169,5 +170,15 @@ public class SchemaAccessor {
             // no-op
         }
         return sb.toString();
+    }
+
+    @Override
+    public SchemaType getInternalType() {
+        return this.schema;
+    }
+
+    @Override
+    public SchemaBuilder toBuilder() {
+        return new SchemaBuilder(this.schema, this.getDsmlSchema());
     }
 }

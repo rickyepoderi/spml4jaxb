@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.BulkDeleteRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.bulk.BulkDeleteRequestType;
 import javax.xml.bind.JAXBElement;
@@ -18,7 +19,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class BulkDeleteRequestBuilder extends RequestBuilder<BulkDeleteRequestType, BulkDeleteRequestBuilder> {
+public class BulkDeleteRequestBuilder extends RequestBuilder<BulkDeleteRequestType, BulkDeleteRequestBuilder, BulkDeleteRequestAccessor> {
 
     public BulkDeleteRequestBuilder() {
         super(new BulkDeleteRequestType());
@@ -48,8 +49,8 @@ public class BulkDeleteRequestBuilder extends RequestBuilder<BulkDeleteRequestTy
     }
     
     @Override
-    public RequestAccessor asAccessor() {
-        return super.asAccessor().asBulkDelete();
+    public BulkDeleteRequestAccessor asAccessor() {
+        return RequestAccessor.accessorForRequest(request).asBulkDelete();
     }
 
     @Override

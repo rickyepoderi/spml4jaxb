@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.ListTargetsResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ListTargetsResponseType;
 import es.rickyepoderi.spml4jaxb.msg.core.TargetType;
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * @author ricky
  */
-public class ListTargetsResponseAccessor extends ResponseAccessor<ListTargetsResponseType> {
+public class ListTargetsResponseAccessor extends ResponseAccessor<ListTargetsResponseType, ListTargetsResponseBuilder> {
 
     protected ListTargetsResponseAccessor(ListTargetsResponseType response) {
         super(response, null);
@@ -45,7 +46,7 @@ public class ListTargetsResponseAccessor extends ResponseAccessor<ListTargetsRes
     }
     
     @Override
-    public ResponseBuilder toBuilder() {
+    public ListTargetsResponseBuilder toBuilder() {
         return ResponseBuilder.builderForListTargets().fromResponse(this.response);
     }
 }

@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.SearchQueryBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.SelectionType;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.AttributeDescription;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.AttributeDescriptions;
@@ -24,11 +25,11 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class SearchQueryAccessor {
+public class SearchQueryAccessor implements Accessor<SearchQueryType, SearchQueryBuilder> {
     
     protected SearchQueryType query;
     
-    protected SearchQueryAccessor(SearchQueryType query) {
+    public SearchQueryAccessor(SearchQueryType query) {
         this.query = query;
     }
     
@@ -142,5 +143,15 @@ public class SearchQueryAccessor {
             sb.append("  xpath: ").append(getXsdXPathSelection()).append(nl);
         }
         return sb.toString();
+    }
+
+    @Override
+    public SearchQueryType getInternalType() {
+        return this.query;
+    }
+
+    @Override
+    public SearchQueryBuilder toBuilder() {
+        return new SearchQueryBuilder(query).dsmlAttributes(this.getDsmlAttributes());
     }
 }

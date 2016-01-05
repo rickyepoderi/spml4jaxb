@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.UpdatesResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdateKindType;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdateType;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdatesResponseType;
@@ -21,7 +22,7 @@ import java.util.Iterator;
  *
  * @author ricky
  */
-public class UpdatesResponseAccessor extends ResponseAccessor<UpdatesResponseType> 
+public class UpdatesResponseAccessor extends ResponseAccessor<UpdatesResponseType, UpdatesResponseBuilder> 
         implements Iterator<UpdatesResponseAccessor>, Iterable<UpdatesResponseAccessor> {
 
     protected Iterator<UpdateType> iterator;
@@ -132,7 +133,7 @@ public class UpdatesResponseAccessor extends ResponseAccessor<UpdatesResponseTyp
     }
     
     @Override
-    public ResponseBuilder toBuilder() {
+    public UpdatesResponseBuilder toBuilder() {
         return ResponseBuilder.builderForUpdates().fromResponse(this.response);
     }
     

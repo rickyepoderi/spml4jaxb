@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.BatchResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.batch.BatchResponseType;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
@@ -21,7 +22,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class BatchResponseAccessor extends ResponseAccessor<BatchResponseType> {
+public class BatchResponseAccessor extends ResponseAccessor<BatchResponseType, BatchResponseBuilder> {
 
     protected BatchResponseAccessor(BatchResponseType response) {
         super(response, null);
@@ -55,7 +56,7 @@ public class BatchResponseAccessor extends ResponseAccessor<BatchResponseType> {
     }
     
     @Override
-    public ResponseBuilder toBuilder() {
+    public BatchResponseBuilder toBuilder() {
         return ResponseBuilder.builderForBatch().fromResponse(this.response);
     }
 }

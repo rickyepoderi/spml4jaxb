@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.ExpirePasswordRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.password.ExpirePasswordRequestType;
 import javax.xml.bind.JAXBElement;
@@ -18,7 +19,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ExpirePasswordRequestBuilder extends RequestBuilder<ExpirePasswordRequestType, ExpirePasswordRequestBuilder> {
+public class ExpirePasswordRequestBuilder extends RequestBuilder<ExpirePasswordRequestType, ExpirePasswordRequestBuilder, ExpirePasswordRequestAccessor> {
 
     protected ExpirePasswordRequestBuilder() {
         super(new ExpirePasswordRequestType());
@@ -36,9 +37,9 @@ public class ExpirePasswordRequestBuilder extends RequestBuilder<ExpirePasswordR
     }
     
     @Override
-    public RequestAccessor asAccessor() {
+    public ExpirePasswordRequestAccessor asAccessor() {
         request.setPsoID(pso);
-        return super.asAccessor().asExpirePassword();
+        return RequestAccessor.accessorForRequest(request).asExpirePassword();
     }
 
     @Override

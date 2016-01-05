@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.LookupRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.LookupRequestType;
 import javax.xml.bind.JAXBElement;
@@ -18,7 +19,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class LookupRequestBuilder extends RequestBuilder<LookupRequestType, LookupRequestBuilder>{
+public class LookupRequestBuilder extends RequestBuilder<LookupRequestType, LookupRequestBuilder, LookupRequestAccessor>{
 
     protected LookupRequestBuilder() {
         super(new LookupRequestType());
@@ -32,10 +33,10 @@ public class LookupRequestBuilder extends RequestBuilder<LookupRequestType, Look
     }
     
     @Override
-    public RequestAccessor asAccessor() {
+    public LookupRequestAccessor asAccessor() {
         request.setPsoID(pso);
         request.setReturnData(returnData);
-        return super.asAccessor().asLookup();
+        return RequestAccessor.accessorForRequest(request).asLookup();
     }
 
     @Override

@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.CancelResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.async.CancelResponseType;
 import javax.xml.bind.JAXBElement;
 
@@ -18,7 +19,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class CancelResponseBuilder extends ResponseBuilder<CancelResponseType, CancelResponseBuilder> {
+public class CancelResponseBuilder extends ResponseBuilder<CancelResponseType, CancelResponseBuilder, CancelResponseAccessor> {
 
     protected CancelResponseBuilder() {
         super(new CancelResponseType());
@@ -36,7 +37,7 @@ public class CancelResponseBuilder extends ResponseBuilder<CancelResponseType, C
     
     @Override
     public CancelResponseAccessor asAccessor() {
-        return super.asAccessor().asCancel();
+        return ResponseAccessor.accessorForResponse(response).asCancel();
     }
     
 }

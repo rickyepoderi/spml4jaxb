@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.BatchRequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.batch.BatchRequestType;
@@ -24,7 +25,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class BatchRequestAccessor extends RequestAccessor<BatchRequestType> {
+public class BatchRequestAccessor extends RequestAccessor<BatchRequestType, BatchRequestBuilder> {
 
     protected BatchRequestAccessor(BatchRequestType request) {
         super(request, null, null);
@@ -68,7 +69,7 @@ public class BatchRequestAccessor extends RequestAccessor<BatchRequestType> {
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public BatchRequestBuilder toBuilder() {
         return RequestBuilder.builderForBatch().fromRequest(this.request);
     }
     

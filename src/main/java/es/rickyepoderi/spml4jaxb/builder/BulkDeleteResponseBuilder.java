@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.BulkDeleteResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
@@ -18,7 +19,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class BulkDeleteResponseBuilder extends ResponseBuilder<ResponseType, BulkDeleteResponseBuilder> {
+public class BulkDeleteResponseBuilder extends ResponseBuilder<ResponseType, BulkDeleteResponseBuilder, BulkDeleteResponseAccessor> {
 
     protected BulkDeleteResponseBuilder() {
         super(new ResponseType());
@@ -30,7 +31,7 @@ public class BulkDeleteResponseBuilder extends ResponseBuilder<ResponseType, Bul
     }
     
     @Override
-    public ResponseAccessor asAccessor() {
-        return super.asAccessor().asBulkDelete();
+    public BulkDeleteResponseAccessor asAccessor() {
+        return ResponseAccessor.accessorForResponse(response).asBulkDelete();
     }
 }

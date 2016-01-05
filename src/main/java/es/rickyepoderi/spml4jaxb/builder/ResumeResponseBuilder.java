@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.ResumeResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
 
@@ -18,7 +19,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ResumeResponseBuilder extends ResponseBuilder<ResponseType, ResumeResponseBuilder> {
+public class ResumeResponseBuilder extends ResponseBuilder<ResponseType, ResumeResponseBuilder, ResumeResponseAccessor> {
     
     protected ResumeResponseBuilder() {
         super(new ResponseType());
@@ -30,8 +31,8 @@ public class ResumeResponseBuilder extends ResponseBuilder<ResponseType, ResumeR
     }
     
     @Override
-    public ResponseAccessor asAccessor() {
-        return super.asAccessor().asResume();
+    public ResumeResponseAccessor asAccessor() {
+        return ResponseAccessor.accessorForResponse(response).asResume();
     }
     
 }

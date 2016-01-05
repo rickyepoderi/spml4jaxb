@@ -10,6 +10,8 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.Builder;
+import es.rickyepoderi.spml4jaxb.builder.FilterBuilder;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.AttributeDescription;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.AttributeValueAssertion;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.Filter;
@@ -23,11 +25,11 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class FilterAccessor {
+public class FilterAccessor implements Accessor<Filter, FilterBuilder>{
     
     protected Filter filter;
     
-    protected FilterAccessor(Filter filter) {
+    public FilterAccessor(Filter filter) {
         this.filter = filter;
     }
     
@@ -264,5 +266,15 @@ public class FilterAccessor {
             throw new IllegalStateException("Invalid filter!!!");
         }
         return sb.toString();
+    }
+
+    @Override
+    public Filter getInternalType() {
+        return this.filter;
+    }
+
+    @Override
+    public FilterBuilder toBuilder() {
+        return new FilterBuilder(filter);
     }
 }

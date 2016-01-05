@@ -12,6 +12,7 @@ package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.SuspendRequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.suspend.SuspendRequestType;
 import java.util.Date;
 
@@ -19,7 +20,7 @@ import java.util.Date;
  *
  * @author ricky
  */
-public class SuspendRequestAccessor extends RequestAccessor<SuspendRequestType> {
+public class SuspendRequestAccessor extends RequestAccessor<SuspendRequestType, SuspendRequestBuilder> {
 
     protected SuspendRequestAccessor(SuspendRequestType request) {
         super(request, request.getPsoID(), null);
@@ -39,7 +40,7 @@ public class SuspendRequestAccessor extends RequestAccessor<SuspendRequestType> 
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public SuspendRequestBuilder toBuilder() {
         return RequestBuilder.builderForSuspend().fromRequest(this.request);
     }
     

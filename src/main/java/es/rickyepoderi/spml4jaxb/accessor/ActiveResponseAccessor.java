@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.accessor;
 
+import es.rickyepoderi.spml4jaxb.builder.ActiveResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveResponseType;
 
@@ -17,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveResponseType;
  *
  * @author ricky
  */
-public class ActiveResponseAccessor extends ResponseAccessor<ActiveResponseType> {
+public class ActiveResponseAccessor extends ResponseAccessor<ActiveResponseType, ActiveResponseBuilder> {
 
     public ActiveResponseAccessor(ActiveResponseType response) {
         super(response, null);
@@ -28,7 +29,7 @@ public class ActiveResponseAccessor extends ResponseAccessor<ActiveResponseType>
     }
     
     @Override
-    public ResponseBuilder toBuilder() {
+    public ActiveResponseBuilder toBuilder() {
         return ResponseBuilder.builderForActive().fromResponse(this.response);
     }
     

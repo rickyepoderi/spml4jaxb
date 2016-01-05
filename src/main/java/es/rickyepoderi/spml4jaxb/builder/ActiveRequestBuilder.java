@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
+import es.rickyepoderi.spml4jaxb.accessor.ActiveRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveRequestType;
 import javax.xml.bind.JAXBElement;
@@ -18,7 +19,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ActiveRequestBuilder extends RequestBuilder<ActiveRequestType, ActiveRequestBuilder> {
+public class ActiveRequestBuilder extends RequestBuilder<ActiveRequestType, ActiveRequestBuilder, ActiveRequestAccessor> {
 
     public ActiveRequestBuilder() {
         super(new ActiveRequestType());
@@ -31,9 +32,9 @@ public class ActiveRequestBuilder extends RequestBuilder<ActiveRequestType, Acti
     }
     
     @Override
-    public RequestAccessor asAccessor() {
+    public ActiveRequestAccessor asAccessor() {
         request.setPsoID(pso);
-        return super.asAccessor().asActive();
+        return RequestAccessor.accessorForRequest(request).asActive();
     }
 
     @Override

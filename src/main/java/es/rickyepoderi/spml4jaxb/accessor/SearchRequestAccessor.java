@@ -12,6 +12,7 @@ package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.builder.SearchRequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.search.SearchQueryType;
 import es.rickyepoderi.spml4jaxb.msg.search.SearchRequestType;
 
@@ -19,7 +20,7 @@ import es.rickyepoderi.spml4jaxb.msg.search.SearchRequestType;
  *
  * @author ricky
  */
-public class SearchRequestAccessor extends RequestAccessor<SearchRequestType> {
+public class SearchRequestAccessor extends RequestAccessor<SearchRequestType, SearchRequestBuilder> {
 
     public SearchRequestAccessor(SearchRequestType request) {
         super(request, null, request.getReturnData());
@@ -48,7 +49,7 @@ public class SearchRequestAccessor extends RequestAccessor<SearchRequestType> {
     }
     
     @Override
-    public RequestBuilder toBuilder() {
+    public SearchRequestBuilder toBuilder() {
         return RequestBuilder.builderForSearch().fromRequest(this.request);
     }
     

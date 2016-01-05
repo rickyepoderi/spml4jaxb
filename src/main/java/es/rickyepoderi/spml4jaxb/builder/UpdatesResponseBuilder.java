@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.UpdatesResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
 import es.rickyepoderi.spml4jaxb.msg.updates.ResultsIteratorType;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdateKindType;
@@ -25,7 +26,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class UpdatesResponseBuilder extends ResponseBuilder<UpdatesResponseType, UpdatesResponseBuilder> {
+public class UpdatesResponseBuilder extends ResponseBuilder<UpdatesResponseType, UpdatesResponseBuilder, UpdatesResponseAccessor> {
 
     protected UpdateType update = null;
     
@@ -136,8 +137,8 @@ public class UpdatesResponseBuilder extends ResponseBuilder<UpdatesResponseType,
     }
     
     @Override
-    public ResponseAccessor asAccessor() {
-        return super.asAccessor().asUpdates();
+    public UpdatesResponseAccessor asAccessor() {
+        return ResponseAccessor.accessorForResponse(response).asUpdates();
     }
     
 }
