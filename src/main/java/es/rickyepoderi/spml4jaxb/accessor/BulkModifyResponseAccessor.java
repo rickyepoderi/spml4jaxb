@@ -18,15 +18,24 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
  *
  * @author ricky
  */
-public class BulkModifyResponseAccessor extends ResponseAccessor<ResponseType, BulkModifyResponseBuilder> {
+public class BulkModifyResponseAccessor extends ResponseAccessor<ResponseType, BulkModifyResponseAccessor, BulkModifyResponseBuilder> {
 
-    public BulkModifyResponseAccessor(ResponseType response) {
+    protected BulkModifyResponseAccessor() {
+        this(new ResponseType());
+    }
+    
+    protected BulkModifyResponseAccessor(ResponseType response) {
         super(response, null);
     }
     
     @Override
     public BulkModifyResponseBuilder toBuilder() {
         return ResponseBuilder.builderForBulkModify().fromResponse(this.response);
+    }
+
+    @Override
+    public BulkModifyResponseAccessor asAccessor(ResponseType response) {
+        return new BulkModifyResponseAccessor(response);
     }
     
 }

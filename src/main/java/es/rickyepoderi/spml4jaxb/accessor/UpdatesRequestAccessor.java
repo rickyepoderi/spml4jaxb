@@ -21,8 +21,12 @@ import java.util.Date;
  *
  * @author ricky
  */
-public class UpdatesRequestAccessor extends RequestAccessor<UpdatesRequestType, UpdatesRequestBuilder> {
+public class UpdatesRequestAccessor extends RequestAccessor<UpdatesRequestType, UpdatesRequestAccessor, UpdatesRequestBuilder> {
 
+    protected UpdatesRequestAccessor() {
+        this(new UpdatesRequestType());
+    }
+    
     protected UpdatesRequestAccessor(UpdatesRequestType request) {
         super(request, null, null);
     }
@@ -64,6 +68,11 @@ public class UpdatesRequestAccessor extends RequestAccessor<UpdatesRequestType, 
     @Override
     public UpdatesRequestBuilder toBuilder() {
         return RequestBuilder.builderForUpdates().fromRequest(this.request);
+    }
+
+    @Override
+    public UpdatesRequestAccessor asAccessor(UpdatesRequestType request) {
+        return new UpdatesRequestAccessor(request);
     }
     
     @Override

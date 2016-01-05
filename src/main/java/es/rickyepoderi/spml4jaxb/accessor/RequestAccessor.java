@@ -12,33 +12,13 @@ package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
-import es.rickyepoderi.spml4jaxb.msg.async.CancelRequestType;
-import es.rickyepoderi.spml4jaxb.msg.async.StatusRequestType;
-import es.rickyepoderi.spml4jaxb.msg.batch.BatchRequestType;
-import es.rickyepoderi.spml4jaxb.msg.bulk.BulkDeleteRequestType;
-import es.rickyepoderi.spml4jaxb.msg.bulk.BulkModifyRequestType;
-import es.rickyepoderi.spml4jaxb.msg.core.AddRequestType;
-import es.rickyepoderi.spml4jaxb.msg.core.DeleteRequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ExecutionModeType;
 import es.rickyepoderi.spml4jaxb.msg.core.ListTargetsRequestType;
-import es.rickyepoderi.spml4jaxb.msg.core.LookupRequestType;
-import es.rickyepoderi.spml4jaxb.msg.core.ModifyRequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
 import es.rickyepoderi.spml4jaxb.msg.core.RequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ReturnDataType;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.Filter;
-import es.rickyepoderi.spml4jaxb.msg.password.ExpirePasswordRequestType;
-import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordRequestType;
-import es.rickyepoderi.spml4jaxb.msg.password.SetPasswordRequestType;
-import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordRequestType;
-import es.rickyepoderi.spml4jaxb.msg.search.CloseIteratorRequestType;
-import es.rickyepoderi.spml4jaxb.msg.search.IterateRequestType;
 import es.rickyepoderi.spml4jaxb.msg.search.SearchQueryType;
-import es.rickyepoderi.spml4jaxb.msg.search.SearchRequestType;
-import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveRequestType;
-import es.rickyepoderi.spml4jaxb.msg.suspend.ResumeRequestType;
-import es.rickyepoderi.spml4jaxb.msg.suspend.SuspendRequestType;
-import es.rickyepoderi.spml4jaxb.msg.updates.UpdatesRequestType;
 import java.lang.reflect.Constructor;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -46,9 +26,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
  *
  * @author ricky
  * @param <R>
+ * @param <A>
  * @param <B>
  */
-public class RequestAccessor<R extends RequestType, B extends RequestBuilder> implements Accessor<R, B>{
+public abstract class RequestAccessor<R extends RequestType, A extends RequestAccessor, B extends RequestBuilder> implements Accessor<R, A, B>{
     
     static public final String SPML_CAPABILITY_CORE_URI = "urn:oasis:names:tc:SPML:2:0";
     static public final String SPML_CAPABILITY_ASYNC_URI = "urn:oasis:names:tc:SPML:2:0:async";
@@ -73,7 +54,7 @@ public class RequestAccessor<R extends RequestType, B extends RequestBuilder> im
     }
     
     static public RequestAccessor accessorForRequest(RequestType request) {
-        return new RequestAccessor(request, null, null);
+        return new UnknownRequestAccessor(request);
     }
     
     static public RequestAccessor accessorForRequest(RequestType request, Class<? extends RequestAccessor> accessor) {
@@ -193,14 +174,13 @@ public class RequestAccessor<R extends RequestType, B extends RequestBuilder> im
         }
     }
     
-    public ResponseBuilder responseBuilder() {
-        throw new IllegalStateException("You should never use the accessor at this level");
-    }
+    public abstract ResponseBuilder responseBuilder();
     
     @Override
-    public B toBuilder() {
-        throw new IllegalStateException("You should never use the accessor at this level");
-    }
+    public abstract B toBuilder();
+
+    @Override
+    public abstract A asAccessor(R request);
     
     public ListTargetsRequestAccessor asListTargets() {
         if (request instanceof ListTargetsRequestType) {
@@ -214,180 +194,100 @@ public class RequestAccessor<R extends RequestType, B extends RequestBuilder> im
     // AS METHODS
     //
     
-    public AddRequestAccessor asAdd() {
-        if (request instanceof AddRequestType) {
-            return new AddRequestAccessor((AddRequestType) request);
+    public <T extends RequestAccessor> T asAccessor(T accessor) {
+        if (request.getClass().equals(accessor.request.getClass())) {
+            return (T) accessor.asAccessor(request);
         } else {
             return null;
         }
+    }
+    
+    public AddRequestAccessor asAdd() {
+        return this.asAccessor(new AddRequestAccessor());
     }
     
     public LookupRequestAccessor asLookup() {
-        if (request instanceof LookupRequestType) {
-            return new LookupRequestAccessor((LookupRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new LookupRequestAccessor());
     }
     
     public ModifyRequestAccessor asModify() {
-        if (request instanceof ModifyRequestType) {
-            return new ModifyRequestAccessor((ModifyRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ModifyRequestAccessor());
     }
     
     public DeleteRequestAccessor asDelete() {
-        if (request instanceof DeleteRequestType) {
-            return new DeleteRequestAccessor((DeleteRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new DeleteRequestAccessor());
     }
     
     public CancelRequestAccessor asCancel() {
-        if (request instanceof CancelRequestType) {
-            return new CancelRequestAccessor((CancelRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new CancelRequestAccessor());
     }
     
     public StatusRequestAccessor asStatus() {
-        if (request instanceof StatusRequestType) {
-            return new StatusRequestAccessor((StatusRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new StatusRequestAccessor());
     }
     
     public SetPasswordRequestAccessor asSetPassword() {
-        if (request instanceof SetPasswordRequestType) {
-            return new SetPasswordRequestAccessor((SetPasswordRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new SetPasswordRequestAccessor());
     }
     
     public ExpirePasswordRequestAccessor asExpirePassword() {
-        if (request instanceof ExpirePasswordRequestType) {
-            return new ExpirePasswordRequestAccessor((ExpirePasswordRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ExpirePasswordRequestAccessor());
     }
     
     public ResetPasswordRequestAccessor asResetPassword() {
-        if (request instanceof ResetPasswordRequestType) {
-            return new ResetPasswordRequestAccessor((ResetPasswordRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ResetPasswordRequestAccessor());
     }
     
     public ValidatePasswordRequestAccessor asValidatePassword() {
-        if (request instanceof ValidatePasswordRequestType) {
-            return new ValidatePasswordRequestAccessor((ValidatePasswordRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ValidatePasswordRequestAccessor());
     }
     
     public ActiveRequestAccessor asActive() {
-        if (request instanceof ActiveRequestType) {
-            return new ActiveRequestAccessor((ActiveRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ActiveRequestAccessor());
     }
     
     public ResumeRequestAccessor asResume() {
-        if (request instanceof ResumeRequestType) {
-            return new ResumeRequestAccessor((ResumeRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ResumeRequestAccessor());
     }
     
     public SuspendRequestAccessor asSuspend() {
-        if (request instanceof SuspendRequestType) {
-            return new SuspendRequestAccessor((SuspendRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new SuspendRequestAccessor());
     }
     
     public SearchRequestAccessor asSearch() {
-        if (request instanceof SearchRequestType) {
-            return new SearchRequestAccessor((SearchRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new SearchRequestAccessor());
     }
     
     public IterateRequestAccessor asIterate() {
-        if (request instanceof IterateRequestType) {
-            return new IterateRequestAccessor((IterateRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new IterateRequestAccessor());
     }
     
     public CloseIteratorRequestAccessor asCloseIterator() {
-        if (request instanceof CloseIteratorRequestType) {
-            return new CloseIteratorRequestAccessor((CloseIteratorRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new CloseIteratorRequestAccessor());
     }
     
     public BulkModifyRequestAccessor asBulkModify() {
-        if (request instanceof BulkModifyRequestType) {
-            return new BulkModifyRequestAccessor((BulkModifyRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new BulkModifyRequestAccessor());
     }
     
     public BulkDeleteRequestAccessor asBulkDelete() {
-        if (request instanceof BulkDeleteRequestType) {
-            return new BulkDeleteRequestAccessor((BulkDeleteRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new BulkDeleteRequestAccessor());
     }
     
     public BatchRequestAccessor asBatch() {
-        if (request instanceof BatchRequestType) {
-            return new BatchRequestAccessor((BatchRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new BatchRequestAccessor());
     }
     
     public UpdatesRequestAccessor asUpdates() {
-        if (request instanceof UpdatesRequestType) {
-            return new UpdatesRequestAccessor((UpdatesRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new UpdatesRequestAccessor());
     }
     
     public UpdatesIterateRequestAccessor asUpdatesIterate() {
-        if (request instanceof es.rickyepoderi.spml4jaxb.msg.updates.IterateRequestType) {
-            return new UpdatesIterateRequestAccessor((es.rickyepoderi.spml4jaxb.msg.updates.IterateRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new UpdatesIterateRequestAccessor());
     }
     
     public UpdatesCloseIteratorRequestAccessor asUpdatesCloseIterator() {
-        if (request instanceof es.rickyepoderi.spml4jaxb.msg.updates.CloseIteratorRequestType) {
-            return new UpdatesCloseIteratorRequestAccessor((es.rickyepoderi.spml4jaxb.msg.updates.CloseIteratorRequestType) request);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new UpdatesCloseIteratorRequestAccessor());
     }
     
     @Override

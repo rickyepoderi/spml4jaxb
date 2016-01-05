@@ -18,15 +18,24 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
  *
  * @author ricky
  */
-public class DeleteResponseAccessor extends ResponseAccessor<ResponseType, DeleteResponseBuilder> {
+public class DeleteResponseAccessor extends ResponseAccessor<ResponseType, DeleteResponseAccessor, DeleteResponseBuilder> {
 
-    public DeleteResponseAccessor(ResponseType response) {
+    protected DeleteResponseAccessor() {
+        this(new ResponseType());
+    }
+    
+    protected DeleteResponseAccessor(ResponseType response) {
         super(response, null);
     }
     
     @Override
     public DeleteResponseBuilder toBuilder() {
         return ResponseBuilder.builderForDelete().fromResponse(this.response);
+    }
+
+    @Override
+    public DeleteResponseAccessor asAccessor(ResponseType response) {
+        return new DeleteResponseAccessor(response);
     }
     
 }

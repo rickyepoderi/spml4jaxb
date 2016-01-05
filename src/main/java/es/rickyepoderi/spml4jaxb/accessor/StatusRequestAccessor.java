@@ -19,7 +19,11 @@ import es.rickyepoderi.spml4jaxb.msg.async.StatusRequestType;
  *
  * @author ricky
  */
-public class StatusRequestAccessor extends RequestAccessor<StatusRequestType, StatusRequestBuilder> {
+public class StatusRequestAccessor extends RequestAccessor<StatusRequestType, StatusRequestAccessor, StatusRequestBuilder> {
+    
+    protected StatusRequestAccessor() {
+        this(new StatusRequestType());
+    }
     
     protected StatusRequestAccessor(StatusRequestType request) {
         super(request, null, null);
@@ -45,6 +49,11 @@ public class StatusRequestAccessor extends RequestAccessor<StatusRequestType, St
     @Override
     public StatusRequestBuilder toBuilder() {
         return RequestBuilder.builderForStatus().fromRequest(this.request);
+    }
+
+    @Override
+    public StatusRequestAccessor asAccessor(StatusRequestType request) {
+        return new StatusRequestAccessor(request);
     }
     
     @Override

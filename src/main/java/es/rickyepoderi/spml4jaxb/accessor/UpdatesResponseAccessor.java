@@ -22,13 +22,16 @@ import java.util.Iterator;
  *
  * @author ricky
  */
-public class UpdatesResponseAccessor extends ResponseAccessor<UpdatesResponseType, UpdatesResponseBuilder> 
+public class UpdatesResponseAccessor extends ResponseAccessor<UpdatesResponseType, UpdatesResponseAccessor, UpdatesResponseBuilder> 
         implements Iterator<UpdatesResponseAccessor>, Iterable<UpdatesResponseAccessor> {
 
     protected Iterator<UpdateType> iterator;
     protected UpdateType update;
     
-    public UpdatesResponseAccessor(UpdatesResponseType response) {
+    protected UpdatesResponseAccessor() {
+        this(new UpdatesResponseType());
+    }
+    protected UpdatesResponseAccessor(UpdatesResponseType response) {
         super(response, null);
         start();
     }
@@ -124,17 +127,22 @@ public class UpdatesResponseAccessor extends ResponseAccessor<UpdatesResponseTyp
     }
     
     @Override
+    public UpdatesResponseBuilder toBuilder() {
+        return ResponseBuilder.builderForUpdates().fromResponse(this.response);
+    }
+
+    @Override
+    public UpdatesResponseAccessor asAccessor(UpdatesResponseType response) {
+        return new UpdatesResponseAccessor(response);
+    }
+    
+    @Override
     public String toString() {
         String nl = System.getProperty("line.separator");
         StringBuilder sb = new StringBuilder(super.toString());
         sb.append("  iteratorId: ").append(getIteratorId()).append(nl);
         sb.append("  updates: ").append(response.getUpdate().size()).append(nl);
         return sb.toString();
-    }
-    
-    @Override
-    public UpdatesResponseBuilder toBuilder() {
-        return ResponseBuilder.builderForUpdates().fromResponse(this.response);
     }
     
 }

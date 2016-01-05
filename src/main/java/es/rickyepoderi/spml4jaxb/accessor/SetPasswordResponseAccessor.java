@@ -18,15 +18,24 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
  *
  * @author ricky
  */
-public class SetPasswordResponseAccessor extends ResponseAccessor<ResponseType, SetPasswordResponseBuilder> {
+public class SetPasswordResponseAccessor extends ResponseAccessor<ResponseType, SetPasswordResponseAccessor, SetPasswordResponseBuilder> {
 
-    public SetPasswordResponseAccessor(ResponseType response) {
+    protected SetPasswordResponseAccessor() {
+        this(new ResponseType());
+    }
+    
+    protected SetPasswordResponseAccessor(ResponseType response) {
         super(response, null);
     }
     
     @Override
     public SetPasswordResponseBuilder toBuilder() {
         return ResponseBuilder.builderForSetPassword().fromResponse(this.response);
+    }
+
+    @Override
+    public SetPasswordResponseAccessor asAccessor(ResponseType response) {
+        return new SetPasswordResponseAccessor(response);
     }
     
 }

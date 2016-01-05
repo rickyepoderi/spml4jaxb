@@ -36,7 +36,7 @@ import org.w3c.dom.Element;
  *
  * @author ricky
  */
-public class SchemaAccessor implements Accessor<SchemaType, SchemaBuilder>{
+public class SchemaAccessor implements Accessor<SchemaType, SchemaAccessor, SchemaBuilder>{
     
     protected SchemaType schema;
     
@@ -180,5 +180,10 @@ public class SchemaAccessor implements Accessor<SchemaType, SchemaBuilder>{
     @Override
     public SchemaBuilder toBuilder() {
         return new SchemaBuilder(this.schema, this.getDsmlSchema());
+    }
+
+    @Override
+    public SchemaAccessor asAccessor(SchemaType type) {
+        return new SchemaAccessor(type);
     }
 }

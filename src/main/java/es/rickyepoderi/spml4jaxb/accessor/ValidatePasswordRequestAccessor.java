@@ -19,9 +19,13 @@ import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordRequestType;
  *
  * @author ricky
  */
-public class ValidatePasswordRequestAccessor extends RequestAccessor<ValidatePasswordRequestType, ValidatePasswordRequestBuilder> {
+public class ValidatePasswordRequestAccessor extends RequestAccessor<ValidatePasswordRequestType, ValidatePasswordRequestAccessor, ValidatePasswordRequestBuilder> {
 
-    public ValidatePasswordRequestAccessor(ValidatePasswordRequestType request) {
+    protected ValidatePasswordRequestAccessor() {
+        this(new ValidatePasswordRequestType());
+    }
+    
+    protected ValidatePasswordRequestAccessor(ValidatePasswordRequestType request) {
         super(request, request.getPsoID(), null);
     }
     
@@ -37,6 +41,11 @@ public class ValidatePasswordRequestAccessor extends RequestAccessor<ValidatePas
     @Override
     public ValidatePasswordRequestBuilder toBuilder() {
         return RequestBuilder.builderForValidatePassword().fromRequest(this.request);
+    }
+
+    @Override
+    public ValidatePasswordRequestAccessor asAccessor(ValidatePasswordRequestType request) {
+        return new ValidatePasswordRequestAccessor(request);
     }
     
     @Override

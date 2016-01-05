@@ -24,8 +24,12 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ModifyRequestAccessor extends ModificationRequestAccessor<ModifyRequestType, ModifyRequestBuilder> {
+public class ModifyRequestAccessor extends ModificationRequestAccessor<ModifyRequestType, ModifyRequestAccessor, ModifyRequestBuilder> {
 
+    protected ModifyRequestAccessor() {
+        this(new ModifyRequestType());
+    }
+    
     protected ModifyRequestAccessor(ModifyRequestType request) {
         super(request, request.getPsoID(), request.getReturnData());
     }
@@ -64,5 +68,10 @@ public class ModifyRequestAccessor extends ModificationRequestAccessor<ModifyReq
     @Override
     public ModifyRequestBuilder toBuilder() {
         return RequestBuilder.builderForModify().fromRequest(this.request);
+    }
+
+    @Override
+    public ModifyRequestAccessor asAccessor(ModifyRequestType request) {
+        return new ModifyRequestAccessor(request);
     }
 }

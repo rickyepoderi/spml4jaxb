@@ -11,24 +11,12 @@
 package es.rickyepoderi.spml4jaxb.accessor;
 
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
-import es.rickyepoderi.spml4jaxb.msg.async.CancelResponseType;
-import es.rickyepoderi.spml4jaxb.msg.async.StatusResponseType;
-import es.rickyepoderi.spml4jaxb.msg.batch.BatchResponseType;
-import es.rickyepoderi.spml4jaxb.msg.core.AddResponseType;
 import es.rickyepoderi.spml4jaxb.msg.core.ErrorCode;
-import es.rickyepoderi.spml4jaxb.msg.core.ListTargetsResponseType;
-import es.rickyepoderi.spml4jaxb.msg.core.LookupResponseType;
-import es.rickyepoderi.spml4jaxb.msg.core.ModifyResponseType;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOType;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import es.rickyepoderi.spml4jaxb.msg.core.StatusCodeType;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlAttr;
-import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordResponseType;
-import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordResponseType;
-import es.rickyepoderi.spml4jaxb.msg.search.SearchResponseType;
-import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveResponseType;
-import es.rickyepoderi.spml4jaxb.msg.updates.UpdatesResponseType;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,8 +28,10 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  * @param <R>
+ * @param <A>
+ * @param <B>
  */
-public class ResponseAccessor<R extends ResponseType, B extends ResponseBuilder> implements Accessor<R, B> {
+public abstract class ResponseAccessor<R extends ResponseType, A extends ResponseAccessor, B extends ResponseBuilder> implements Accessor<R, A, B> {
     
     protected R response;
     protected PSOType pso;
@@ -52,7 +42,7 @@ public class ResponseAccessor<R extends ResponseType, B extends ResponseBuilder>
     }
     
     static public ResponseAccessor accessorForResponse(ResponseType response) {
-        return new ResponseAccessor(response, null);
+        return new UnknownResponseAccessor(response);
     }
     
     static public ResponseAccessor accessorForResponse(ResponseType response, Class<? extends ResponseAccessor> accessor) {
@@ -65,9 +55,11 @@ public class ResponseAccessor<R extends ResponseType, B extends ResponseBuilder>
         }
     }
     
-    public B toBuilder() {
-        throw new IllegalStateException("You should never use the accessor at this level");
-    }
+    @Override
+    public abstract B toBuilder();
+
+    @Override
+    public abstract A asAccessor(R response);
     
     public Class getResponseClass() {
         return response.getClass();
@@ -241,172 +233,100 @@ public class ResponseAccessor<R extends ResponseType, B extends ResponseBuilder>
         return null;
     }
     
-    public ListTargetsResponseAccessor asListTargets() {
-        if (response instanceof ListTargetsResponseType) {
-            return new ListTargetsResponseAccessor((ListTargetsResponseType) response);
+    //
+    // AS METHODS
+    //
+    
+    public <T extends ResponseAccessor> T asAccessor(T accessor) {
+        if (response.getClass().equals(accessor.response.getClass())) {
+            return (T) accessor.asAccessor(response);
         } else {
             return null;
         }
+    }
+    
+    public ListTargetsResponseAccessor asListTargets() {
+        return this.asAccessor(new ListTargetsResponseAccessor());
     }
     
     public AddResponseAccessor asAdd() {
-        if (response instanceof AddResponseType) {
-            return new AddResponseAccessor((AddResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new AddResponseAccessor());
     }
     
     public DeleteResponseAccessor asDelete() {
-        if (response instanceof ResponseType) {
-            return new DeleteResponseAccessor((ResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new DeleteResponseAccessor());
     }
     
     public ExpirePasswordResponseAccessor asExpirePassword() {
-        if (response instanceof ResponseType) {
-            return new ExpirePasswordResponseAccessor((ResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ExpirePasswordResponseAccessor());
     }
     
     public SetPasswordResponseAccessor asSetPassword() {
-        if (response instanceof ResponseType) {
-            return new SetPasswordResponseAccessor((ResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new SetPasswordResponseAccessor());
     }
     
     public SuspendResponseAccessor asSuspend() {
-        if (response instanceof ResponseType) {
-            return new SuspendResponseAccessor((ResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new SuspendResponseAccessor());
     }
     
     public ResumeResponseAccessor asResume() {
-        if (response instanceof ResponseType) {
-            return new ResumeResponseAccessor((ResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ResumeResponseAccessor());
     }
     
     public BulkDeleteResponseAccessor asBulkDelete() {
-        if (response instanceof ResponseType) {
-            return new BulkDeleteResponseAccessor((ResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new BulkDeleteResponseAccessor());
     }
     
     public BulkModifyResponseAccessor asBulkModify() {
-        if (response instanceof ResponseType) {
-            return new BulkModifyResponseAccessor((ResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new BulkModifyResponseAccessor());
     }
     
     public UpdatesCloseIteratorResponseAccessor asUpdatesCloseIterator() {
-        if (response instanceof ResponseType) {
-            return new UpdatesCloseIteratorResponseAccessor((ResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new UpdatesCloseIteratorResponseAccessor());
     }
     
     public CloseIteratorResponseAccessor asCloseIterator() {
-        if (response instanceof ResponseType) {
-            return new CloseIteratorResponseAccessor((ResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new CloseIteratorResponseAccessor());
     }
     
     public LookupResponseAccessor asLookup() {
-        if (response instanceof LookupResponseType) {
-            return new LookupResponseAccessor((LookupResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new LookupResponseAccessor());
     }
     
     public ModifyResponseAccessor asModify() {
-        if (response instanceof ModifyResponseType) {
-            return new ModifyResponseAccessor((ModifyResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ModifyResponseAccessor());
     }
     
     public CancelResponseAccessor asCancel() {
-        if (response instanceof CancelResponseType) {
-            return new CancelResponseAccessor((CancelResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new CancelResponseAccessor());
     }
     
     public StatusResponseAccessor asStatus() {
-        if (response instanceof StatusResponseType) {
-            return new StatusResponseAccessor((StatusResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new StatusResponseAccessor());
     }
     
     public ResetPasswordResponseAccessor asResetPassword() {
-        if (response instanceof ResetPasswordResponseType) {
-            return new ResetPasswordResponseAccessor((ResetPasswordResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ResetPasswordResponseAccessor());
     }
     
     public ValidatePasswordResponseAccessor asValidatePassword() {
-        if (response instanceof ValidatePasswordResponseType) {
-            return new ValidatePasswordResponseAccessor((ValidatePasswordResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ValidatePasswordResponseAccessor());
     }
     
     public ActiveResponseAccessor asActive() {
-        if (response instanceof ActiveResponseType) {
-            return new ActiveResponseAccessor((ActiveResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new ActiveResponseAccessor());
     }
     
     public SearchResponseAccessor asSearch() {
-        if (response instanceof SearchResponseType) {
-            return new SearchResponseAccessor((SearchResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new SearchResponseAccessor());
     }
     
     public BatchResponseAccessor asBatch() {
-        if (response instanceof BatchResponseType) {
-            return new BatchResponseAccessor((BatchResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new BatchResponseAccessor());
     }
     
     public UpdatesResponseAccessor asUpdates() {
-        if (response instanceof UpdatesResponseType) {
-            return new UpdatesResponseAccessor((UpdatesResponseType) response);
-        } else {
-            return null;
-        }
+        return this.asAccessor(new UpdatesResponseAccessor());
     }
     
     public String toString(Class clazz) {

@@ -17,7 +17,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
  *
  * @author ricky
  */
-public class PsoIdentifierAccessor implements Accessor<PSOIdentifierType, PsoIdentifierBuilder> {
+public class PsoIdentifierAccessor implements Accessor<PSOIdentifierType, PsoIdentifierAccessor, PsoIdentifierBuilder> {
     
     protected PSOIdentifierType psoId;
     
@@ -49,6 +49,11 @@ public class PsoIdentifierAccessor implements Accessor<PSOIdentifierType, PsoIde
     @Override
     public PsoIdentifierBuilder toBuilder() {
         return new PsoIdentifierBuilder(psoId);
+    }
+
+    @Override
+    public PsoIdentifierAccessor asAccessor(PSOIdentifierType type) {
+        return new PsoIdentifierAccessor(type);
     }
     
 }

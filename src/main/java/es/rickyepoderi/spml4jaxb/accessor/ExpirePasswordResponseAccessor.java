@@ -18,15 +18,24 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
  *
  * @author ricky
  */
-public class ExpirePasswordResponseAccessor extends ResponseAccessor<ResponseType, ExpirePasswordResponseBuilder> {
+public class ExpirePasswordResponseAccessor extends ResponseAccessor<ResponseType, ExpirePasswordResponseAccessor, ExpirePasswordResponseBuilder> {
 
-    public ExpirePasswordResponseAccessor(ResponseType response) {
+    protected ExpirePasswordResponseAccessor() {
+        this(new ResponseType());
+    }
+    
+    protected ExpirePasswordResponseAccessor(ResponseType response) {
         super(response, null);
     }
     
     @Override
     public ExpirePasswordResponseBuilder toBuilder() {
         return ResponseBuilder.builderForExpirePassword().fromResponse(this.response);
+    }
+
+    @Override
+    public ExpirePasswordResponseAccessor asAccessor(ResponseType response) {
+        return new ExpirePasswordResponseAccessor(response);
     }
     
 }

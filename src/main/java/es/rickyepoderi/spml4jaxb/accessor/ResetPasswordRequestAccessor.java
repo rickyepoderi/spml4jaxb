@@ -19,8 +19,12 @@ import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordRequestType;
  *
  * @author ricky
  */
-public class ResetPasswordRequestAccessor extends RequestAccessor<ResetPasswordRequestType, ResetPasswordRequestBuilder> {
+public class ResetPasswordRequestAccessor extends RequestAccessor<ResetPasswordRequestType, ResetPasswordRequestAccessor, ResetPasswordRequestBuilder> {
 
+    protected ResetPasswordRequestAccessor() {
+        this(new ResetPasswordRequestType());
+    }
+    
     protected ResetPasswordRequestAccessor(ResetPasswordRequestType request) {
         super(request, request.getPsoID(), null);
     }
@@ -33,6 +37,11 @@ public class ResetPasswordRequestAccessor extends RequestAccessor<ResetPasswordR
     @Override
     public ResetPasswordRequestBuilder toBuilder() {
         return RequestBuilder.builderForResetPassword().fromRequest(this.request);
+    }
+
+    @Override
+    public ResetPasswordRequestAccessor asAccessor(ResetPasswordRequestType request) {
+        return new ResetPasswordRequestAccessor(request);
     }
     
 }

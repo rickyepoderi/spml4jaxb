@@ -25,7 +25,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class SearchQueryAccessor implements Accessor<SearchQueryType, SearchQueryBuilder> {
+public class SearchQueryAccessor implements Accessor<SearchQueryType, SearchQueryAccessor, SearchQueryBuilder> {
     
     protected SearchQueryType query;
     
@@ -153,5 +153,10 @@ public class SearchQueryAccessor implements Accessor<SearchQueryType, SearchQuer
     @Override
     public SearchQueryBuilder toBuilder() {
         return new SearchQueryBuilder(query).dsmlAttributes(this.getDsmlAttributes());
+    }
+
+    @Override
+    public SearchQueryAccessor asAccessor(SearchQueryType type) {
+        return new SearchQueryAccessor(type);
     }
 }

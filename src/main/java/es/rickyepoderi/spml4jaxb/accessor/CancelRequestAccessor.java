@@ -19,8 +19,12 @@ import es.rickyepoderi.spml4jaxb.msg.async.CancelRequestType;
  *
  * @author ricky
  */
-public class CancelRequestAccessor extends RequestAccessor<CancelRequestType, CancelRequestBuilder> {
+public class CancelRequestAccessor extends RequestAccessor<CancelRequestType, CancelRequestAccessor, CancelRequestBuilder> {
 
+    protected CancelRequestAccessor() {
+        this(new CancelRequestType());
+    }
+    
     protected CancelRequestAccessor(CancelRequestType request) {
         super(request, null, null);
     }
@@ -41,6 +45,11 @@ public class CancelRequestAccessor extends RequestAccessor<CancelRequestType, Ca
     @Override
     public CancelRequestBuilder toBuilder() {
         return RequestBuilder.builderForCancel().fromRequest(this.request);
+    }
+
+    @Override
+    public CancelRequestAccessor asAccessor(CancelRequestType request) {
+        return new CancelRequestAccessor(request);
     }
     
     @Override

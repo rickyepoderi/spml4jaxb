@@ -18,8 +18,12 @@ import es.rickyepoderi.spml4jaxb.msg.core.LookupResponseType;
  *
  * @author ricky
  */
-public class LookupResponseAccessor extends ResponseAccessor<LookupResponseType, LookupResponseBuilder> {
+public class LookupResponseAccessor extends ResponseAccessor<LookupResponseType, LookupResponseAccessor, LookupResponseBuilder> {
 
+    protected LookupResponseAccessor() {
+        this(new LookupResponseType());
+    }
+    
     protected LookupResponseAccessor(LookupResponseType response) {
         super(response, response.getPso());
     }
@@ -27,6 +31,11 @@ public class LookupResponseAccessor extends ResponseAccessor<LookupResponseType,
     @Override
     public LookupResponseBuilder toBuilder() {
         return ResponseBuilder.builderForLookup().fromResponse(this.response);
+    }
+
+    @Override
+    public LookupResponseAccessor asAccessor(LookupResponseType response) {
+        return new LookupResponseAccessor(response);
     }
     
 }

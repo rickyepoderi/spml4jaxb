@@ -21,8 +21,12 @@ import java.util.List;
  *
  * @author ricky
  */
-public class ListTargetsResponseAccessor extends ResponseAccessor<ListTargetsResponseType, ListTargetsResponseBuilder> {
+public class ListTargetsResponseAccessor extends ResponseAccessor<ListTargetsResponseType, ListTargetsResponseAccessor, ListTargetsResponseBuilder> {
 
+    protected ListTargetsResponseAccessor() {
+        this(new ListTargetsResponseType());
+    }
+    
     protected ListTargetsResponseAccessor(ListTargetsResponseType response) {
         super(response, null);
     }
@@ -48,5 +52,10 @@ public class ListTargetsResponseAccessor extends ResponseAccessor<ListTargetsRes
     @Override
     public ListTargetsResponseBuilder toBuilder() {
         return ResponseBuilder.builderForListTargets().fromResponse(this.response);
+    }
+
+    @Override
+    public ListTargetsResponseAccessor asAccessor(ListTargetsResponseType response) {
+        return new ListTargetsResponseAccessor(response);
     }
 }

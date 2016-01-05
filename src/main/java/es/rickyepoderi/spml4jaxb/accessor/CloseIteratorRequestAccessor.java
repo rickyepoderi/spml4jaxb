@@ -19,9 +19,13 @@ import es.rickyepoderi.spml4jaxb.msg.search.CloseIteratorRequestType;
  *
  * @author ricky
  */
-public class CloseIteratorRequestAccessor extends RequestAccessor<CloseIteratorRequestType, CloseIteratorRequestBuilder> {
+public class CloseIteratorRequestAccessor extends RequestAccessor<CloseIteratorRequestType, CloseIteratorRequestAccessor, CloseIteratorRequestBuilder> {
 
-    public CloseIteratorRequestAccessor(CloseIteratorRequestType request) {
+    protected CloseIteratorRequestAccessor() {
+        this(new CloseIteratorRequestType());
+    }
+    
+    protected CloseIteratorRequestAccessor(CloseIteratorRequestType request) {
         super(request, null, null);
     }
     
@@ -41,6 +45,11 @@ public class CloseIteratorRequestAccessor extends RequestAccessor<CloseIteratorR
     @Override
     public CloseIteratorRequestBuilder toBuilder() {
         return RequestBuilder.builderForCloseIterator().fromRequest(this.request);
+    }
+
+    @Override
+    public CloseIteratorRequestAccessor asAccessor(CloseIteratorRequestType request) {
+        return new CloseIteratorRequestAccessor(request);
     }
     
     @Override

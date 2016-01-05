@@ -19,8 +19,12 @@ import es.rickyepoderi.spml4jaxb.msg.password.SetPasswordRequestType;
  *
  * @author ricky
  */
-public class SetPasswordRequestAccessor extends RequestAccessor<SetPasswordRequestType, SetPasswordRequestBuilder> {
+public class SetPasswordRequestAccessor extends RequestAccessor<SetPasswordRequestType, SetPasswordRequestAccessor, SetPasswordRequestBuilder> {
 
+    protected SetPasswordRequestAccessor() {
+        this(new SetPasswordRequestType());
+    }
+    
     protected SetPasswordRequestAccessor(SetPasswordRequestType request) {
         super(request, request.getPsoID(), null);
     }
@@ -41,6 +45,11 @@ public class SetPasswordRequestAccessor extends RequestAccessor<SetPasswordReque
     @Override
     public SetPasswordRequestBuilder toBuilder() {
         return RequestBuilder.builderForSetPassword().fromRequest(this.request);
+    }
+
+    @Override
+    public SetPasswordRequestAccessor asAccessor(SetPasswordRequestType request) {
+        return new SetPasswordRequestAccessor(request);
     }
     
     @Override

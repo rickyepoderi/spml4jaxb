@@ -25,8 +25,16 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class BulkModifyRequestAccessor extends ModificationRequestAccessor<BulkModifyRequestType, BulkModifyRequestBuilder> { 
+public class BulkModifyRequestAccessor extends ModificationRequestAccessor<BulkModifyRequestType, BulkModifyRequestAccessor, BulkModifyRequestBuilder> { 
 
+    protected BulkModifyRequestAccessor() {
+        this(new BulkModifyRequestType());
+    }
+    
+    protected BulkModifyRequestAccessor(BulkModifyRequestType request) {
+        super(request, null, null);
+    }
+    
     @Override
     public DsmlModification[] getDsmlModifications() {
         List<DsmlModification> res = new ArrayList<>();
@@ -52,10 +60,6 @@ public class BulkModifyRequestAccessor extends ModificationRequestAccessor<BulkM
     public ModificationType[] getModifications() {
         return request.getModification().toArray(new ModificationType[0]);
     }
-    
-    protected BulkModifyRequestAccessor(BulkModifyRequestType request) {
-        super(request, null, null);
-    }
 
     public SearchQueryAccessor getQuery() {
         SearchQueryType query = request.getQuery();
@@ -75,6 +79,11 @@ public class BulkModifyRequestAccessor extends ModificationRequestAccessor<BulkM
     @Override
     public BulkModifyRequestBuilder toBuilder() {
         return RequestBuilder.builderForBulkModify().fromRequest(this.request);
+    }
+
+    @Override
+    public BulkModifyRequestAccessor asAccessor(BulkModifyRequestType request) {
+        return new BulkModifyRequestAccessor(request);
     }
     
     @Override

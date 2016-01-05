@@ -19,9 +19,13 @@ import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveRequestType;
  *
  * @author ricky
  */
-public class ActiveRequestAccessor extends RequestAccessor<ActiveRequestType, ActiveRequestBuilder> {
+public class ActiveRequestAccessor extends RequestAccessor<ActiveRequestType, ActiveRequestAccessor, ActiveRequestBuilder> {
 
-    public ActiveRequestAccessor(ActiveRequestType request) {
+    protected ActiveRequestAccessor() {
+        this(new ActiveRequestType());
+    }
+    
+    protected ActiveRequestAccessor(ActiveRequestType request) {
         super(request, request.getPsoID(), null);
     }
     
@@ -34,5 +38,9 @@ public class ActiveRequestAccessor extends RequestAccessor<ActiveRequestType, Ac
     public ActiveRequestBuilder toBuilder() {
         return RequestBuilder.builderForActive().fromRequest(this.request);
     }
-    
+
+    @Override
+    public ActiveRequestAccessor asAccessor(ActiveRequestType request) {
+        return new ActiveRequestAccessor((ActiveRequestType) request);
+    }
 }

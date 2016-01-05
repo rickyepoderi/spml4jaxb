@@ -19,8 +19,12 @@ import es.rickyepoderi.spml4jaxb.msg.core.LookupRequestType;
  *
  * @author ricky
  */
-public class LookupRequestAccessor extends RequestAccessor<LookupRequestType, LookupRequestBuilder> {
+public class LookupRequestAccessor extends RequestAccessor<LookupRequestType, LookupRequestAccessor, LookupRequestBuilder> {
 
+    protected LookupRequestAccessor() {
+        this(new LookupRequestType());
+    }
+    
     protected LookupRequestAccessor(LookupRequestType request) {
         super(request, request.getPsoID(), request.getReturnData());
     }
@@ -33,5 +37,10 @@ public class LookupRequestAccessor extends RequestAccessor<LookupRequestType, Lo
     @Override
     public LookupRequestBuilder toBuilder() {
         return RequestBuilder.builderForLookup().fromRequest(this.request);
+    }
+
+    @Override
+    public LookupRequestAccessor asAccessor(LookupRequestType request) {
+        return new LookupRequestAccessor(request);
     }
 }

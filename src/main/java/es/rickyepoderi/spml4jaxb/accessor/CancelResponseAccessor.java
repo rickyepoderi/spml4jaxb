@@ -18,8 +18,12 @@ import es.rickyepoderi.spml4jaxb.msg.async.CancelResponseType;
  *
  * @author ricky
  */
-public class CancelResponseAccessor extends ResponseAccessor<CancelResponseType, CancelResponseBuilder> {
+public class CancelResponseAccessor extends ResponseAccessor<CancelResponseType, CancelResponseAccessor, CancelResponseBuilder> {
 
+    protected CancelResponseAccessor() {
+        this(new CancelResponseType());
+    }
+    
     protected CancelResponseAccessor(CancelResponseType response) {
         super(response, null);
     }
@@ -43,5 +47,10 @@ public class CancelResponseAccessor extends ResponseAccessor<CancelResponseType,
     @Override
     public CancelResponseBuilder toBuilder() {
         return ResponseBuilder.builderForCancel().fromResponse(this.response);
+    }
+
+    @Override
+    public CancelResponseAccessor asAccessor(CancelResponseType response) {
+        return new CancelResponseAccessor(response);
     }
 }

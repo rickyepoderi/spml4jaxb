@@ -20,10 +20,14 @@ import java.util.Iterator;
  *
  * @author ricky
  */
-public class SearchResponseAccessor extends ResponseAccessor<SearchResponseType, SearchResponseBuilder> 
+public class SearchResponseAccessor extends ResponseAccessor<SearchResponseType, SearchResponseAccessor, SearchResponseBuilder> 
         implements Iterator<SearchResponseAccessor>, Iterable<SearchResponseAccessor> {
 
     protected Iterator<PSOType> iterator;
+    
+    protected SearchResponseAccessor() {
+        this(new SearchResponseType());
+    }
     
     protected SearchResponseAccessor(SearchResponseType response) {
         super(response, null);
@@ -69,16 +73,21 @@ public class SearchResponseAccessor extends ResponseAccessor<SearchResponseType,
     }
     
     @Override
+    public SearchResponseBuilder toBuilder() {
+        return ResponseBuilder.builderForSearch().fromResponse(this.response);
+    }
+
+    @Override
+    public SearchResponseAccessor asAccessor(SearchResponseType response) {
+        return new SearchResponseAccessor(response);
+    }
+    
+    @Override
     public String toString() {
         String nl = System.getProperty("line.separator");
         StringBuilder sb = new StringBuilder(super.toString());
         sb.append("  iteratorId: ").append(getIteratorId()).append(nl);
         sb.append("  returnedData: ").append(response.getPso().size()).append(nl);
         return sb.toString();
-    }
-    
-    @Override
-    public SearchResponseBuilder toBuilder() {
-        return ResponseBuilder.builderForSearch().fromResponse(this.response);
     }
 }

@@ -20,8 +20,12 @@ import java.util.Date;
  *
  * @author ricky
  */
-public class SuspendRequestAccessor extends RequestAccessor<SuspendRequestType, SuspendRequestBuilder> {
+public class SuspendRequestAccessor extends RequestAccessor<SuspendRequestType, SuspendRequestAccessor, SuspendRequestBuilder> {
 
+    protected SuspendRequestAccessor() {
+        this(new SuspendRequestType());
+    }
+    
     protected SuspendRequestAccessor(SuspendRequestType request) {
         super(request, request.getPsoID(), null);
     }
@@ -42,6 +46,11 @@ public class SuspendRequestAccessor extends RequestAccessor<SuspendRequestType, 
     @Override
     public SuspendRequestBuilder toBuilder() {
         return RequestBuilder.builderForSuspend().fromRequest(this.request);
+    }
+
+    @Override
+    public SuspendRequestAccessor asAccessor(SuspendRequestType request) {
+        return new SuspendRequestAccessor(request);
     }
     
     @Override

@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author ricky
  */
-public class TargetAccessor implements Accessor<TargetType, TargetBuilder>{
+public class TargetAccessor implements Accessor<TargetType, TargetAccessor, TargetBuilder>{
     
     protected TargetType target;
     
@@ -141,5 +141,10 @@ public class TargetAccessor implements Accessor<TargetType, TargetBuilder>{
     @Override
     public TargetBuilder toBuilder() {
         return new TargetBuilder(this.target);
+    }
+
+    @Override
+    public TargetAccessor asAccessor(TargetType type) {
+        return new TargetAccessor(type);
     }
 }

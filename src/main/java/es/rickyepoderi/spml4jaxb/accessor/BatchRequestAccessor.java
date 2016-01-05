@@ -25,8 +25,12 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class BatchRequestAccessor extends RequestAccessor<BatchRequestType, BatchRequestBuilder> {
+public class BatchRequestAccessor extends RequestAccessor<BatchRequestType, BatchRequestAccessor, BatchRequestBuilder> {
 
+    protected BatchRequestAccessor() {
+        this(new BatchRequestType());
+    }
+    
     protected BatchRequestAccessor(BatchRequestType request) {
         super(request, null, null);
     }
@@ -71,6 +75,11 @@ public class BatchRequestAccessor extends RequestAccessor<BatchRequestType, Batc
     @Override
     public BatchRequestBuilder toBuilder() {
         return RequestBuilder.builderForBatch().fromRequest(this.request);
+    }
+
+    @Override
+    public BatchRequestAccessor asAccessor(BatchRequestType request) {
+        return new BatchRequestAccessor(request);
     }
     
     @Override

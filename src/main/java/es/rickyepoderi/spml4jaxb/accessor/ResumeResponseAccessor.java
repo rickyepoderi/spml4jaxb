@@ -18,15 +18,24 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
  *
  * @author ricky
  */
-public class ResumeResponseAccessor extends ResponseAccessor<ResponseType, ResumeResponseBuilder> {
+public class ResumeResponseAccessor extends ResponseAccessor<ResponseType, ResumeResponseAccessor, ResumeResponseBuilder> {
 
-    public ResumeResponseAccessor(ResponseType response) {
+    protected ResumeResponseAccessor() {
+        this(new ResponseType());
+    }
+    
+    protected ResumeResponseAccessor(ResponseType response) {
         super(response, null);
     }
     
     @Override
     public ResumeResponseBuilder toBuilder() {
         return ResponseBuilder.builderForResume().fromResponse(this.response);
+    }
+
+    @Override
+    public ResumeResponseAccessor asAccessor(ResponseType response) {
+        return new ResumeResponseAccessor(response);
     }
     
 }

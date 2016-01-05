@@ -18,12 +18,21 @@ import es.rickyepoderi.spml4jaxb.msg.core.AddResponseType;
  *
  * @author ricky
  */
-public class AddResponseAccessor extends ResponseAccessor<AddResponseType, AddResponseBuilder> {
+public class AddResponseAccessor extends ResponseAccessor<AddResponseType, AddResponseAccessor, AddResponseBuilder> {
 
+    protected AddResponseAccessor() {
+        this(new AddResponseType());
+    }
+    
     protected AddResponseAccessor(AddResponseType response) {
         super(response, response.getPso());
     }
     
+    @Override
+    public AddResponseAccessor asAccessor(AddResponseType response) {
+        return new AddResponseAccessor(response);
+    }
+
     @Override
     public AddResponseBuilder toBuilder() {
         return ResponseBuilder.builderForAdd().fromResponse(this.response);

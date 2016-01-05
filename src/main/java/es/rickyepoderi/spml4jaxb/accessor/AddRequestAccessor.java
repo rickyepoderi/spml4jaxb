@@ -23,8 +23,12 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class AddRequestAccessor extends RequestAccessor<AddRequestType, AddRequestBuilder> {
+public class AddRequestAccessor extends RequestAccessor<AddRequestType, AddRequestAccessor, AddRequestBuilder> {
 
+    protected AddRequestAccessor() {
+        this(new AddRequestType());
+    }
+    
     protected AddRequestAccessor(AddRequestType request) {
         super(request, request.getPsoID(), request.getReturnData());
     }
@@ -96,6 +100,11 @@ public class AddRequestAccessor extends RequestAccessor<AddRequestType, AddReque
     @Override
     public AddRequestBuilder toBuilder() {
         return RequestBuilder.builderForAdd().fromRequest(this.request);
+    }
+
+    @Override
+    public AddRequestAccessor asAccessor(AddRequestType request) {
+        return new AddRequestAccessor(request);
     }
     
     @Override

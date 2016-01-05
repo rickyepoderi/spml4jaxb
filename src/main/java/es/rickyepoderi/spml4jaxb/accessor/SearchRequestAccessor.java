@@ -20,9 +20,13 @@ import es.rickyepoderi.spml4jaxb.msg.search.SearchRequestType;
  *
  * @author ricky
  */
-public class SearchRequestAccessor extends RequestAccessor<SearchRequestType, SearchRequestBuilder> {
+public class SearchRequestAccessor extends RequestAccessor<SearchRequestType, SearchRequestAccessor, SearchRequestBuilder> {
 
-    public SearchRequestAccessor(SearchRequestType request) {
+    protected SearchRequestAccessor() {
+        this(new SearchRequestType());
+    }
+    
+    protected SearchRequestAccessor(SearchRequestType request) {
         super(request, null, request.getReturnData());
     }
     
@@ -51,6 +55,11 @@ public class SearchRequestAccessor extends RequestAccessor<SearchRequestType, Se
     @Override
     public SearchRequestBuilder toBuilder() {
         return RequestBuilder.builderForSearch().fromRequest(this.request);
+    }
+
+    @Override
+    public SearchRequestAccessor asAccessor(SearchRequestType request) {
+        return new SearchRequestAccessor(request);
     }
     
     @Override

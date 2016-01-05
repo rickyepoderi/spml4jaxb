@@ -20,9 +20,13 @@ import java.util.Date;
  *
  * @author ricky
  */
-public class ResumeRequestAccessor extends RequestAccessor<ResumeRequestType, ResumeRequestBuilder> {
+public class ResumeRequestAccessor extends RequestAccessor<ResumeRequestType, ResumeRequestAccessor, ResumeRequestBuilder> {
 
-    public ResumeRequestAccessor(ResumeRequestType request) {
+    protected ResumeRequestAccessor() {
+        this(new ResumeRequestType());
+    }
+    
+    protected ResumeRequestAccessor(ResumeRequestType request) {
         super(request, request.getPsoID(), null);
     }
     
@@ -42,6 +46,11 @@ public class ResumeRequestAccessor extends RequestAccessor<ResumeRequestType, Re
     @Override
     public ResumeRequestBuilder toBuilder() {
         return RequestBuilder.builderForResume().fromRequest(this.request);
+    }
+
+    @Override
+    public ResumeRequestAccessor asAccessor(ResumeRequestType request) {
+        return new ResumeRequestAccessor(request);
     }
     
     @Override

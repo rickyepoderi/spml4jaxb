@@ -22,8 +22,12 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class StatusResponseAccessor extends ResponseAccessor<StatusResponseType, StatusResponseBuilder> {
+public class StatusResponseAccessor extends ResponseAccessor<StatusResponseType, StatusResponseAccessor, StatusResponseBuilder> {
 
+    protected StatusResponseAccessor() {
+        this(new StatusResponseType());
+    }
+    
     protected StatusResponseAccessor(StatusResponseType response) {
         super(response, null);
     }
@@ -62,6 +66,16 @@ public class StatusResponseAccessor extends ResponseAccessor<StatusResponseType,
     }
     
     @Override
+    public StatusResponseBuilder toBuilder() {
+        return ResponseBuilder.builderForStatus().fromResponse(this.response);
+    }
+
+    @Override
+    public StatusResponseAccessor asAccessor(StatusResponseType response) {
+        return new StatusResponseAccessor(response);
+    }
+    
+    @Override
     public String toString() {
         String nl = System.getProperty("line.separator");
         StringBuilder sb = new StringBuilder(super.toString())
@@ -70,10 +84,5 @@ public class StatusResponseAccessor extends ResponseAccessor<StatusResponseType,
             sb.append(res);
         }
         return sb.toString();
-    }
-    
-    @Override
-    public StatusResponseBuilder toBuilder() {
-        return ResponseBuilder.builderForStatus().fromResponse(this.response);
     }
 }

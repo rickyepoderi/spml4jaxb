@@ -22,8 +22,12 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class BatchResponseAccessor extends ResponseAccessor<BatchResponseType, BatchResponseBuilder> {
+public class BatchResponseAccessor extends ResponseAccessor<BatchResponseType, BatchResponseAccessor, BatchResponseBuilder> {
 
+    protected BatchResponseAccessor() {
+        this(new BatchResponseType());
+    }
+    
     protected BatchResponseAccessor(BatchResponseType response) {
         super(response, null);
     }
@@ -58,5 +62,10 @@ public class BatchResponseAccessor extends ResponseAccessor<BatchResponseType, B
     @Override
     public BatchResponseBuilder toBuilder() {
         return ResponseBuilder.builderForBatch().fromResponse(this.response);
+    }
+
+    @Override
+    public BatchResponseAccessor asAccessor(BatchResponseType response) {
+        return new BatchResponseAccessor(response);
     }
 }

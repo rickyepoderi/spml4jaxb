@@ -18,8 +18,12 @@ import es.rickyepoderi.spml4jaxb.msg.core.ModifyResponseType;
  *
  * @author ricky
  */
-public class ModifyResponseAccessor extends ResponseAccessor<ModifyResponseType, ModifyResponseBuilder> {
+public class ModifyResponseAccessor extends ResponseAccessor<ModifyResponseType, ModifyResponseAccessor, ModifyResponseBuilder> {
 
+    protected ModifyResponseAccessor() {
+        this(new ModifyResponseType());
+    }
+    
     protected ModifyResponseAccessor(ModifyResponseType response) {
         super(response, response.getPso());
     }
@@ -27,6 +31,11 @@ public class ModifyResponseAccessor extends ResponseAccessor<ModifyResponseType,
     @Override
     public ModifyResponseBuilder toBuilder() {
         return ResponseBuilder.builderForModify().fromResponse(this.response);
+    }
+
+    @Override
+    public ModifyResponseAccessor asAccessor(ModifyResponseType response) {
+        return new ModifyResponseAccessor(response);
     }
     
 }

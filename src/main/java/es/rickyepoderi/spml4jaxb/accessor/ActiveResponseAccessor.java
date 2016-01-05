@@ -18,9 +18,13 @@ import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveResponseType;
  *
  * @author ricky
  */
-public class ActiveResponseAccessor extends ResponseAccessor<ActiveResponseType, ActiveResponseBuilder> {
+public class ActiveResponseAccessor extends ResponseAccessor<ActiveResponseType, ActiveResponseAccessor, ActiveResponseBuilder> {
 
-    public ActiveResponseAccessor(ActiveResponseType response) {
+    protected ActiveResponseAccessor() {
+        this(new ActiveResponseType());
+    }
+    
+    protected ActiveResponseAccessor(ActiveResponseType response) {
         super(response, null);
     }
     
@@ -31,6 +35,11 @@ public class ActiveResponseAccessor extends ResponseAccessor<ActiveResponseType,
     @Override
     public ActiveResponseBuilder toBuilder() {
         return ResponseBuilder.builderForActive().fromResponse(this.response);
+    }
+    
+    @Override
+    public ActiveResponseAccessor asAccessor(ActiveResponseType response) {
+        return new ActiveResponseAccessor(response);
     }
     
     @Override

@@ -25,7 +25,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class FilterAccessor implements Accessor<Filter, FilterBuilder>{
+public class FilterAccessor implements Accessor<Filter, FilterAccessor, FilterBuilder>{
     
     protected Filter filter;
     
@@ -276,5 +276,10 @@ public class FilterAccessor implements Accessor<Filter, FilterBuilder>{
     @Override
     public FilterBuilder toBuilder() {
         return new FilterBuilder(filter);
+    }
+
+    @Override
+    public FilterAccessor asAccessor(Filter type) {
+        return new FilterAccessor(type);
     }
 }

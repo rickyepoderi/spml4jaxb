@@ -19,9 +19,13 @@ import es.rickyepoderi.spml4jaxb.msg.updates.IterateRequestType;
  *
  * @author ricky
  */
-public class UpdatesIterateRequestAccessor extends RequestAccessor<IterateRequestType, UpdatesIterateRequestBuilder> {
+public class UpdatesIterateRequestAccessor extends RequestAccessor<IterateRequestType, UpdatesIterateRequestAccessor, UpdatesIterateRequestBuilder> {
 
-    public UpdatesIterateRequestAccessor(IterateRequestType request) {
+    protected UpdatesIterateRequestAccessor() {
+        this(new IterateRequestType());
+    }
+    
+    protected UpdatesIterateRequestAccessor(IterateRequestType request) {
         super(request, null, null);
     }
     
@@ -41,6 +45,11 @@ public class UpdatesIterateRequestAccessor extends RequestAccessor<IterateReques
     @Override
     public UpdatesIterateRequestBuilder toBuilder() {
         return RequestBuilder.builderForUpdatesIterate().fromRequest(this.request);
+    }
+
+    @Override
+    public UpdatesIterateRequestAccessor asAccessor(IterateRequestType request) {
+        return new UpdatesIterateRequestAccessor(request);
     }
     
     @Override
