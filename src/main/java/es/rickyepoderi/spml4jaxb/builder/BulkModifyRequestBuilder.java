@@ -11,7 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BulkModifyRequestAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.bulk.BulkModifyRequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationModeType;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationType;
@@ -66,7 +66,7 @@ public class BulkModifyRequestBuilder extends ModificationRequestBuilder<BulkMod
     
     @Override
     public BulkModifyRequestAccessor asAccessor() {
-        return RequestAccessor.accessorForRequest(request).asBulkModify();
+        return BaseRequestAccessor.accessorForRequest(request).asBulkModify();
     }
 
     @Override

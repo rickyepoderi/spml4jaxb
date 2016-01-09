@@ -18,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
  *
  * @author ricky
  */
-public class BulkDeleteResponseAccessor extends ResponseAccessor<ResponseType, BulkDeleteResponseAccessor, BulkDeleteResponseBuilder> {
+public class BulkDeleteResponseAccessor extends BaseResponseAccessor<ResponseType, BulkDeleteResponseAccessor, BulkDeleteResponseBuilder> {
 
     protected BulkDeleteResponseAccessor() {
         this(new ResponseType());

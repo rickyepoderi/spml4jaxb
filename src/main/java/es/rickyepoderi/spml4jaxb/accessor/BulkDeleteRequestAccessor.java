@@ -20,7 +20,7 @@ import es.rickyepoderi.spml4jaxb.msg.search.SearchQueryType;
  *
  * @author ricky
  */
-public class BulkDeleteRequestAccessor extends RequestAccessor<BulkDeleteRequestType, BulkDeleteRequestAccessor, BulkDeleteRequestBuilder> {
+public class BulkDeleteRequestAccessor extends BaseRequestAccessor<BulkDeleteRequestType, BulkDeleteRequestAccessor, BulkDeleteRequestBuilder> {
 
     protected BulkDeleteRequestAccessor() {
         this(new BulkDeleteRequestType());

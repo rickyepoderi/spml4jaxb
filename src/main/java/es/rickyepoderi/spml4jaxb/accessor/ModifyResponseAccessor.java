@@ -18,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.ModifyResponseType;
  *
  * @author ricky
  */
-public class ModifyResponseAccessor extends ResponseAccessor<ModifyResponseType, ModifyResponseAccessor, ModifyResponseBuilder> {
+public class ModifyResponseAccessor extends BaseResponseAccessor<ModifyResponseType, ModifyResponseAccessor, ModifyResponseBuilder> {
 
     protected ModifyResponseAccessor() {
         this(new ModifyResponseType());

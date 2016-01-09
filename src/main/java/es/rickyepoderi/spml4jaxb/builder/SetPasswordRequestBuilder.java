@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SetPasswordRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.password.SetPasswordRequestType;
 import javax.xml.bind.JAXBElement;
@@ -44,7 +44,7 @@ public class SetPasswordRequestBuilder extends RequestBuilder<SetPasswordRequest
     @Override
     public SetPasswordRequestAccessor asAccessor() {
         request.setPsoID(pso);
-        return RequestAccessor.accessorForRequest(request).asSetPassword();
+        return BaseRequestAccessor.accessorForRequest(request).asSetPassword();
     }
 
     @Override

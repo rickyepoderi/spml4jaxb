@@ -11,14 +11,15 @@
 package es.rickyepoderi.spml4jaxb.test.updates;
 
 import es.rickyepoderi.spml4jaxb.accessor.AddResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BulkDeleteResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BulkModifyResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.DeleteResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ModifyResponseAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResetPasswordResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResumeResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.SetPasswordResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.StatusResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SuspendResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.UpdatesCloseIteratorResponseAccessor;
@@ -170,7 +171,7 @@ public class RealCommTest {
                         .scope(ScopeType.SUB_TREE)
                         .targetId(targetDsmlId)
                 )
-                .updatedByCapability(RequestAccessor.SPML_CAPABILITY_CORE_URI)
+                .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_CORE_URI)
                 .updatedSince(start)
                 .send(client)
                 .asUpdates();
@@ -180,12 +181,12 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindAdd());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_CORE_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_CORE_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindModify());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_CORE_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_CORE_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertFalse(ura.hasNext());
         // second chunk
@@ -200,7 +201,7 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindDelete());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_CORE_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_CORE_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertFalse(ura.hasNext());
         // close the iterator
@@ -268,7 +269,7 @@ public class RealCommTest {
                         .scope(ScopeType.SUB_TREE)
                         .targetId(targetDsmlId)
                 )
-                .updatedByCapability(RequestAccessor.SPML_CAPABILITY_CORE_URI)
+                .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_CORE_URI)
                 .updatedSince(start)
                 .send(client)
                 .asUpdates();
@@ -280,12 +281,12 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindAdd());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_CORE_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_CORE_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindModify());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_CORE_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_CORE_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertFalse(ura.hasNext());
         // second chunk
@@ -300,7 +301,7 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindDelete());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_CORE_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_CORE_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertFalse(ura.hasNext());
         // close the iterator
@@ -330,14 +331,15 @@ public class RealCommTest {
         // set a new password
         String prevPasswd = u.getPassword();
         u.setPassword("ricky321!");
-        ResponseAccessor spra = RequestBuilder.builderForSetPassword()
+        SetPasswordResponseAccessor spra = RequestBuilder.builderForSetPassword()
                 .synchronous()
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
                 .currentPassword(prevPasswd)
                 .password(u.getPassword())
-                .send(client);
+                .send(client)
+                .asSetPassword();
         Assert.assertTrue(spra.isSuccess());
         // reset the password
         ResetPasswordResponseAccessor rpra = RequestBuilder.builderForResetPassword()
@@ -366,7 +368,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user")
                 )
-                .updatedByCapability(RequestAccessor.SPML_CAPABILITY_PASSWORD_URI)
+                .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI)
                 .updatedSince(start)
                 .send(client)
                 .asUpdates();
@@ -375,12 +377,12 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindCability());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_PASSWORD_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindCability());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_PASSWORD_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertFalse(ura.hasNext());
     }
@@ -402,14 +404,15 @@ public class RealCommTest {
         // set a new password
         String prevPasswd = u.getPassword();
         u.setPassword("ricky321!");
-        ResponseAccessor spra = RequestBuilder.builderForSetPassword()
+        SetPasswordResponseAccessor spra = RequestBuilder.builderForSetPassword()
                 .synchronous()
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
                 .currentPassword(prevPasswd)
                 .password(u.getPassword())
-                .send(client);
+                .send(client)
+                .asSetPassword();
         Assert.assertTrue(spra.isSuccess());
         // reset the password
         ResetPasswordResponseAccessor rpra = RequestBuilder.builderForResetPassword()
@@ -438,7 +441,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user")
                 )
-                .updatedByCapability(RequestAccessor.SPML_CAPABILITY_PASSWORD_URI)
+                .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI)
                 .updatedSince(start)
                 .send(client)
                 .asUpdates();
@@ -449,12 +452,12 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindCability());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_PASSWORD_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindCability());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_PASSWORD_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertFalse(ura.hasNext());
     }
@@ -509,7 +512,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user")
                 )
-                .updatedByCapability(RequestAccessor.SPML_CAPABILITY_SUSPEND_URI)
+                .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI)
                 .updatedSince(start)
                 .send(client)
                 .asUpdates();
@@ -518,12 +521,12 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindCability());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_SUSPEND_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindCability());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_SUSPEND_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertFalse(ura.hasNext());
     }
@@ -578,7 +581,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user")
                 )
-                .updatedByCapability(RequestAccessor.SPML_CAPABILITY_SUSPEND_URI)
+                .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI)
                 .updatedSince(start)
                 .send(client)
                 .asUpdates();
@@ -589,12 +592,12 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindCability());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_SUSPEND_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindCability());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_SUSPEND_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky");
         Assert.assertFalse(ura.hasNext());
     }
@@ -636,7 +639,7 @@ public class RealCommTest {
                         .scope(ScopeType.SUB_TREE)
                         .targetId(targetDsmlId)
                 )
-                .updatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI)
+                .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI)
                 .updatedSince(start)
                 .send(client)
                 .asUpdates();
@@ -646,12 +649,12 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindDelete());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky1");
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindDelete());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky2");
         Assert.assertFalse(ura.hasNext());
         // second chunk
@@ -666,7 +669,7 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindDelete());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky3");
         Assert.assertFalse(ura.hasNext());
         // close the iterator
@@ -716,7 +719,7 @@ public class RealCommTest {
                         .scope(ScopeType.SUB_TREE)
                         .targetId(targetDsmlId)
                 )
-                .updatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI)
+                .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI)
                 .updatedSince(start)
                 .send(client)
                 .asUpdates();
@@ -728,12 +731,12 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindDelete());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky1");
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindDelete());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky2");
         Assert.assertFalse(ura.hasNext());
         // second chunk
@@ -748,7 +751,7 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindDelete());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky3");
         Assert.assertFalse(ura.hasNext());
         // close the iterator
@@ -800,7 +803,7 @@ public class RealCommTest {
                         .scope(ScopeType.SUB_TREE)
                         .targetId(targetDsmlId)
                 )
-                .updatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI)
+                .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI)
                 .updatedSince(start)
                 .send(client)
                 .asUpdates();
@@ -810,12 +813,12 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindModify());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky1");
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindModify());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky2");
         Assert.assertFalse(ura.hasNext());
         // second chunk
@@ -830,7 +833,7 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindModify());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky3");
         Assert.assertFalse(ura.hasNext());
         // close the iterator
@@ -896,7 +899,7 @@ public class RealCommTest {
                         .scope(ScopeType.SUB_TREE)
                         .targetId(targetDsmlId)
                 )
-                .updatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI)
+                .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI)
                 .updatedSince(start)
                 .send(client)
                 .asUpdates();
@@ -908,12 +911,12 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindModify());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky1");
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindModify());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky2");
         Assert.assertFalse(ura.hasNext());
         // second chunk
@@ -928,7 +931,7 @@ public class RealCommTest {
         Assert.assertTrue(ura.hasNext());
         ura.next();
         Assert.assertNotNull(ura.isUpdateKindModify());
-        Assert.assertNotNull(ura.isUpdatedByCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI));
+        Assert.assertNotNull(ura.isUpdatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI));
         Assert.assertEquals(ura.getUpdatePsoId(), "ricky3");
         Assert.assertFalse(ura.hasNext());
         // close the iterator

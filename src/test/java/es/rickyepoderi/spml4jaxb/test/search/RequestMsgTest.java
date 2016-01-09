@@ -13,6 +13,7 @@ package es.rickyepoderi.spml4jaxb.test.search;
 import es.rickyepoderi.spml4jaxb.accessor.CloseIteratorRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.FilterAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.IterateRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SearchQueryAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SearchRequestAccessor;
@@ -57,7 +58,7 @@ public class RequestMsgTest {
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<RequestType> out = (JAXBElement<RequestType>) unmarshaller.unmarshal(bis);
-        return RequestAccessor.accessorForRequest(out.getValue());
+        return BaseRequestAccessor.accessorForRequest(out.getValue());
     }
     
     //

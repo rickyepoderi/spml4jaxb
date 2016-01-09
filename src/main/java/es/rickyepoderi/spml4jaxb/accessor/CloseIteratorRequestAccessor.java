@@ -19,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.search.CloseIteratorRequestType;
  *
  * @author ricky
  */
-public class CloseIteratorRequestAccessor extends RequestAccessor<CloseIteratorRequestType, CloseIteratorRequestAccessor, CloseIteratorRequestBuilder> {
+public class CloseIteratorRequestAccessor extends BaseRequestAccessor<CloseIteratorRequestType, CloseIteratorRequestAccessor, CloseIteratorRequestBuilder> {
 
     protected CloseIteratorRequestAccessor() {
         this(new CloseIteratorRequestType());

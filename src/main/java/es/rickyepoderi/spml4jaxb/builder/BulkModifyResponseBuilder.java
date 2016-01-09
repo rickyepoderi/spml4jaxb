@@ -11,7 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BulkModifyResponseAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
 
@@ -32,7 +32,7 @@ public class BulkModifyResponseBuilder extends ResponseBuilder<ResponseType, Bul
     
     @Override
     public BulkModifyResponseAccessor asAccessor() {
-        return ResponseAccessor.accessorForResponse(response).asBulkModify();
+        return BaseResponseAccessor.accessorForResponse(response).asBulkModify();
     }
     
 }

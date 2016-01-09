@@ -11,7 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.FilterAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.AttributeDescription;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.AttributeValueAssertion;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.Filter;
@@ -129,7 +129,7 @@ public class FilterBuilder implements Builder<JAXBElement<Filter>, FilterAccesso
     }
     
     protected JAXBElement buildFilterSet() {
-        FilterAccessor accessor = RequestAccessor.accessorForFilter(filter);
+        FilterAccessor accessor = BaseRequestAccessor.accessorForFilter(filter);
         if (accessor.isEquals()) {
             return RequestBuilder.dsmlv2ObjectFactory.createFilterSetEqualityMatch(filter.getEqualityMatch());
         } else if (accessor.isGreaterOrEqual()) {

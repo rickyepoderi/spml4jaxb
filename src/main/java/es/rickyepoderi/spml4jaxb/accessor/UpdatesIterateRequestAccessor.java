@@ -19,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.updates.IterateRequestType;
  *
  * @author ricky
  */
-public class UpdatesIterateRequestAccessor extends RequestAccessor<IterateRequestType, UpdatesIterateRequestAccessor, UpdatesIterateRequestBuilder> {
+public class UpdatesIterateRequestAccessor extends BaseRequestAccessor<IterateRequestType, UpdatesIterateRequestAccessor, UpdatesIterateRequestBuilder> {
 
     protected UpdatesIterateRequestAccessor() {
         this(new IterateRequestType());

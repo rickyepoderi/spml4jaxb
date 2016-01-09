@@ -19,8 +19,12 @@ import es.rickyepoderi.spml4jaxb.msg.core.ListTargetsRequestType;
  *
  * @author ricky
  */
-public class ListTargetsRequestAccessor extends RequestAccessor<ListTargetsRequestType, ListTargetsRequestAccessor, ListTargetsRequestBuilder> {
+public class ListTargetsRequestAccessor extends BaseRequestAccessor<ListTargetsRequestType, ListTargetsRequestAccessor, ListTargetsRequestBuilder> {
 
+    protected ListTargetsRequestAccessor() {
+        this(new ListTargetsRequestType());
+    }
+    
     protected ListTargetsRequestAccessor(ListTargetsRequestType request) {
         super(request, null, null);
     }

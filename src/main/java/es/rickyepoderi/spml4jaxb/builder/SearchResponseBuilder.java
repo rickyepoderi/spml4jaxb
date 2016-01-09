@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SearchResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.search.ResultsIteratorType;
 import es.rickyepoderi.spml4jaxb.msg.search.SearchResponseType;
@@ -57,7 +57,7 @@ public class SearchResponseBuilder extends ResponseBuilder<SearchResponseType, S
     
     @Override
     public SearchResponseAccessor asAccessor() {
-        return ResponseAccessor.accessorForResponse(response).asSearch();
+        return BaseResponseAccessor.accessorForResponse(response).asSearch();
     }
     
 }

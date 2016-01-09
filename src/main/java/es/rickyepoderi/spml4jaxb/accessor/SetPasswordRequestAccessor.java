@@ -19,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.password.SetPasswordRequestType;
  *
  * @author ricky
  */
-public class SetPasswordRequestAccessor extends RequestAccessor<SetPasswordRequestType, SetPasswordRequestAccessor, SetPasswordRequestBuilder> {
+public class SetPasswordRequestAccessor extends BaseRequestAccessor<SetPasswordRequestType, SetPasswordRequestAccessor, SetPasswordRequestBuilder> {
 
     protected SetPasswordRequestAccessor() {
         this(new SetPasswordRequestType());

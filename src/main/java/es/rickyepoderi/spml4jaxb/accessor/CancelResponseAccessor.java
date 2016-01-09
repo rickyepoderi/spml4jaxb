@@ -18,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.async.CancelResponseType;
  *
  * @author ricky
  */
-public class CancelResponseAccessor extends ResponseAccessor<CancelResponseType, CancelResponseAccessor, CancelResponseBuilder> {
+public class CancelResponseAccessor extends BaseResponseAccessor<CancelResponseType, CancelResponseAccessor, CancelResponseBuilder> {
 
     protected CancelResponseAccessor() {
         this(new CancelResponseType());

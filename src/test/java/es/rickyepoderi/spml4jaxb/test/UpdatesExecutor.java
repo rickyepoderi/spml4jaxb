@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.test;
 
 import es.rickyepoderi.spml4jaxb.accessor.FilterAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SearchQueryAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.UpdatesRequestAccessor;
@@ -60,7 +61,7 @@ public class UpdatesExecutor extends AsyncSpmlBaseExecutor {
     }
     
     @Override
-    public RequestAccessor specificAccessor(RequestAccessor request) {
+    public BaseRequestAccessor specificAccessor(RequestAccessor request) {
         return request.asUpdates();
     }
     
@@ -69,18 +70,18 @@ public class UpdatesExecutor extends AsyncSpmlBaseExecutor {
             return null;
         } else {
             List<UserManager.AuditTypeOperation> res = new ArrayList<>();
-            if (Arrays.binarySearch(capabilities, RequestAccessor.SPML_CAPABILITY_CORE_URI) >= 0) {
+            if (Arrays.binarySearch(capabilities, BaseRequestAccessor.SPML_CAPABILITY_CORE_URI) >= 0) {
                 res.add(UserManager.AuditTypeOperation.CREATE);
                 res.add(UserManager.AuditTypeOperation.UPDATE);
                 res.add(UserManager.AuditTypeOperation.DELETE);
-            } else if (Arrays.binarySearch(capabilities, RequestAccessor.SPML_CAPABILITY_PASSWORD_URI) >= 0) {
+            } else if (Arrays.binarySearch(capabilities, BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI) >= 0) {
                 res.add(UserManager.AuditTypeOperation.SET_PASSWORD);
                 res.add(UserManager.AuditTypeOperation.RESET_PASSWORD);
                 res.add(UserManager.AuditTypeOperation.EXPIRE_PASSWORD);
-            } else if (Arrays.binarySearch(capabilities, RequestAccessor.SPML_CAPABILITY_SUSPEND_URI) >= 0) {
+            } else if (Arrays.binarySearch(capabilities, BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI) >= 0) {
                 res.add(UserManager.AuditTypeOperation.DISABLE);
                 res.add(UserManager.AuditTypeOperation.ENABLE);
-            } else if (Arrays.binarySearch(capabilities, RequestAccessor.SPML_CAPABILITY_BULK_URI) >= 0) {
+            } else if (Arrays.binarySearch(capabilities, BaseRequestAccessor.SPML_CAPABILITY_BULK_URI) >= 0) {
                 res.add(UserManager.AuditTypeOperation.BULK_DELETE);
                 res.add(UserManager.AuditTypeOperation.BULK_MODIFY);
             }
@@ -94,17 +95,17 @@ public class UpdatesExecutor extends AsyncSpmlBaseExecutor {
                 case CREATE:
                 case UPDATE:
                 case DELETE:
-                    return RequestAccessor.SPML_CAPABILITY_CORE_URI;
+                    return BaseRequestAccessor.SPML_CAPABILITY_CORE_URI;
                 case SET_PASSWORD:
                 case EXPIRE_PASSWORD:
                 case RESET_PASSWORD:
-                    return RequestAccessor.SPML_CAPABILITY_PASSWORD_URI;
+                    return BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI;
                 case DISABLE:
                 case ENABLE:
-                    return RequestAccessor.SPML_CAPABILITY_SUSPEND_URI;
+                    return BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI;
                 case BULK_MODIFY:
                 case BULK_DELETE:
-                    return RequestAccessor.SPML_CAPABILITY_BULK_URI;
+                    return BaseRequestAccessor.SPML_CAPABILITY_BULK_URI;
                 default:
                     return null;
             }

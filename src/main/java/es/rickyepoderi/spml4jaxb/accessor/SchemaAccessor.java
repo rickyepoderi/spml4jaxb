@@ -119,7 +119,7 @@ public class SchemaAccessor implements Accessor<SchemaType, SchemaAccessor, Sche
                 if ("http://www.w3.org/2001/XMLSchema".equals(el.getNamespaceURI())
                         && "schema".equals(el.getLocalName())) {
                     try {
-                        Document doc = RequestAccessor.documentBuilderFactory.newDocumentBuilder().newDocument();
+                        Document doc = BaseRequestAccessor.documentBuilderFactory.newDocumentBuilder().newDocument();
                         doc.adoptNode(el);
                         doc.appendChild(el);
                         return doc;

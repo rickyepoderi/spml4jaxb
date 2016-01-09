@@ -19,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.DeleteRequestType;
  *
  * @author ricky
  */
-public class DeleteRequestAccessor extends RequestAccessor<DeleteRequestType, DeleteRequestAccessor, DeleteRequestBuilder>{ 
+public class DeleteRequestAccessor extends BaseRequestAccessor<DeleteRequestType, DeleteRequestAccessor, DeleteRequestBuilder>{ 
 
     protected DeleteRequestAccessor() {
         this(new DeleteRequestType());

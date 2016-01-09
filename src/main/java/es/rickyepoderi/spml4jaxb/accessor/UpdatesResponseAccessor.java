@@ -22,7 +22,7 @@ import java.util.Iterator;
  *
  * @author ricky
  */
-public class UpdatesResponseAccessor extends ResponseAccessor<UpdatesResponseType, UpdatesResponseAccessor, UpdatesResponseBuilder> 
+public class UpdatesResponseAccessor extends BaseResponseAccessor<UpdatesResponseType, UpdatesResponseAccessor, UpdatesResponseBuilder> 
         implements Iterator<UpdatesResponseAccessor>, Iterable<UpdatesResponseAccessor> {
 
     protected Iterator<UpdateType> iterator;

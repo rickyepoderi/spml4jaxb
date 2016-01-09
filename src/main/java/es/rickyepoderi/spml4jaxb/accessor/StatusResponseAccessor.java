@@ -22,7 +22,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class StatusResponseAccessor extends ResponseAccessor<StatusResponseType, StatusResponseAccessor, StatusResponseBuilder> {
+public class StatusResponseAccessor extends BaseResponseAccessor<StatusResponseType, StatusResponseAccessor, StatusResponseBuilder> {
 
     protected StatusResponseAccessor() {
         this(new StatusResponseType());
@@ -45,11 +45,11 @@ public class StatusResponseAccessor extends ResponseAccessor<StatusResponseType,
         List<Object> l = response.getAny();
         for (Object o : l) {
             if (o instanceof ResponseType) {
-                res.add(ResponseAccessor.accessorForResponse((ResponseType) o));
+                res.add(BaseResponseAccessor.accessorForResponse((ResponseType) o));
             } else if (o instanceof JAXBElement) {
                 JAXBElement el = (JAXBElement) o;
                 if (el.getValue() instanceof ResponseType) {
-                    res.add(ResponseAccessor.accessorForResponse((ResponseType) el.getValue()));
+                    res.add(BaseResponseAccessor.accessorForResponse((ResponseType) el.getValue()));
                 }
             }
         }
@@ -80,7 +80,7 @@ public class StatusResponseAccessor extends ResponseAccessor<StatusResponseType,
         String nl = System.getProperty("line.separator");
         StringBuilder sb = new StringBuilder(super.toString())
                 .append("  Nested Responses:").append(nl);
-        for (ResponseAccessor res: getNestedResponses()) {
+        for (BaseResponseAccessor res: getNestedResponses()) {
             sb.append(res);
         }
         return sb.toString();

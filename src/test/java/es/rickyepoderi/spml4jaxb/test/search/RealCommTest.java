@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.test.search;
 
+import es.rickyepoderi.spml4jaxb.accessor.CloseIteratorResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SearchResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.StatusResponseAccessor;
@@ -122,11 +123,12 @@ public class RealCommTest {
         Assert.assertFalse(sra.hasNext());
         Assert.assertTrue(set.isEmpty());
         // close iterator
-        ResponseAccessor cira = RequestBuilder.builderForCloseIterator()
+        CloseIteratorResponseAccessor cira = RequestBuilder.builderForCloseIterator()
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client);
+                .send(client)
+                .asCloseIterator();
         Assert.assertTrue(cira.isSuccess());
     }
     
@@ -189,18 +191,20 @@ public class RealCommTest {
         Assert.assertFalse(sra.hasNext());
         Assert.assertTrue(set.isEmpty());
         // close iterator
-        ResponseAccessor cira = RequestBuilder.builderForCloseIterator()
+        CloseIteratorResponseAccessor cira = RequestBuilder.builderForCloseIterator()
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client);
+                .send(client)
+                .asCloseIterator();
         Assert.assertTrue(cira.isSuccess());
         // check the iterator no longer exists
         cira = RequestBuilder.builderForCloseIterator()
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client);
+                .send(client)
+                .asCloseIterator();
         Assert.assertFalse(cira.isSuccess());
         Assert.assertTrue(cira.isInvalidIdentifier());
     }
@@ -267,18 +271,20 @@ public class RealCommTest {
         Assert.assertFalse(sra.hasNext());
         Assert.assertTrue(set.isEmpty());
         // close iterator
-        ResponseAccessor cira = RequestBuilder.builderForCloseIterator()
+        CloseIteratorResponseAccessor cira = RequestBuilder.builderForCloseIterator()
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client);
+                .send(client)
+                .asCloseIterator();
         Assert.assertTrue(cira.isSuccess());
         // check the iterator no longer exists
         cira = RequestBuilder.builderForCloseIterator()
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client);
+                .send(client)
+                .asCloseIterator();
         Assert.assertFalse(cira.isSuccess());
         Assert.assertTrue(cira.isInvalidIdentifier());
     }
@@ -356,11 +362,12 @@ public class RealCommTest {
         Assert.assertFalse(sra.hasNext());
         Assert.assertTrue(set.isEmpty());
         // close iterator
-        ResponseAccessor cira = RequestBuilder.builderForCloseIterator()
+        CloseIteratorResponseAccessor cira = RequestBuilder.builderForCloseIterator()
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client);
+                .send(client)
+                .asCloseIterator();
         Assert.assertTrue(cira.isSuccess());
     }
     
@@ -425,18 +432,20 @@ public class RealCommTest {
         Assert.assertFalse(sra.hasNext());
         Assert.assertTrue(set.isEmpty());
         // close iterator
-        ResponseAccessor cira = RequestBuilder.builderForCloseIterator()
+        CloseIteratorResponseAccessor cira = RequestBuilder.builderForCloseIterator()
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client);
+                .send(client)
+                .asCloseIterator();
         Assert.assertTrue(cira.isSuccess());
         // check the iterator no longer exists
         cira = RequestBuilder.builderForCloseIterator()
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client);
+                .send(client)
+                .asCloseIterator();
         Assert.assertFalse(cira.isSuccess());
         Assert.assertTrue(cira.isInvalidIdentifier());
     }

@@ -433,4 +433,24 @@ public class UserManagerTest {
         Assert.assertEquals(audit.get(1).getUid(), "uid3");
     }
     
+    @Test
+    public void testClone() throws ManagerException {
+        User template = createUser();
+        template.getRole().add("User");
+        template.getRole().add("Admin");
+        um.create(template);
+        Assert.assertEquals(template, um.read(template.getUid()));
+        User cloned = new User();
+        cloned.setUid("otheruser");
+        cloned.setPassword("12345678");
+        cloned.getRole().add("Other");
+        um.clone(template.getUid(), cloned);
+        cloned.setCn(template.getCn());
+        cloned.setDescription(template.getDescription());
+        cloned.getRole().addAll(template.getRole());
+        Assert.assertEquals(cloned, um.read(cloned.getUid()));
+        um.delete(template.getUid());
+        um.delete(cloned.getUid());
+    }
+    
 }

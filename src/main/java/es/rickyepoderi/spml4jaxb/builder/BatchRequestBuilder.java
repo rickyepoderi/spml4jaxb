@@ -11,7 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BatchRequestAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.async.CancelRequestType;
 import es.rickyepoderi.spml4jaxb.msg.async.StatusRequestType;
 import es.rickyepoderi.spml4jaxb.msg.batch.BatchRequestType;
@@ -114,7 +114,7 @@ public class BatchRequestBuilder extends RequestBuilder<BatchRequestType, BatchR
     
     @Override
     public BatchRequestAccessor asAccessor() {
-        return RequestAccessor.accessorForRequest(request).asBatch();
+        return BaseRequestAccessor.accessorForRequest(request).asBatch();
     }
 
     @Override

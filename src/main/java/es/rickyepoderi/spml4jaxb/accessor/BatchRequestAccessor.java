@@ -25,7 +25,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class BatchRequestAccessor extends RequestAccessor<BatchRequestType, BatchRequestAccessor, BatchRequestBuilder> {
+public class BatchRequestAccessor extends BaseRequestAccessor<BatchRequestType, BatchRequestAccessor, BatchRequestBuilder> {
 
     protected BatchRequestAccessor() {
         this(new BatchRequestType());
@@ -56,11 +56,11 @@ public class BatchRequestAccessor extends RequestAccessor<BatchRequestType, Batc
         List<Object> l = request.getAny();
         for (Object o : l) {
             if (o instanceof RequestType) {
-                res.add(RequestAccessor.accessorForRequest((RequestType) o));
+                res.add(BaseRequestAccessor.accessorForRequest((RequestType) o));
             } else if (o instanceof JAXBElement) {
                 JAXBElement el = (JAXBElement) o;
                 if (el.getValue() instanceof RequestType) {
-                    res.add(RequestAccessor.accessorForRequest((RequestType) el.getValue()));
+                    res.add(BaseRequestAccessor.accessorForRequest((RequestType) el.getValue()));
                 }
             }
         }
@@ -86,7 +86,7 @@ public class BatchRequestAccessor extends RequestAccessor<BatchRequestType, Batc
     public String toString() {
         String nl = System.getProperty("line.separator");
         StringBuilder sb = new StringBuilder(super.toString());
-        for (RequestAccessor req: getNestedRequests()) {
+        for (BaseRequestAccessor req: getNestedRequests()) {
             sb.append(req);
         }
         return sb.toString();

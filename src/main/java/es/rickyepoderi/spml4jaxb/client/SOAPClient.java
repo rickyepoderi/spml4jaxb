@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.client;
 
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
@@ -93,8 +94,7 @@ public class SOAPClient extends SpmlClient {
                     new DOMSource(resBody.extractContentAsDocument()));
             System.err.println("RESPONSE: ");
             marshaller.marshal(el, System.err);
-            ResponseAccessor accessor = ResponseAccessor.accessorForResponse(el.getValue());
-            return accessor;
+            return BaseResponseAccessor.accessorForResponse(el.getValue());
         } catch (SOAPException|JAXBException e) {
             throw new SpmlException(e);
         }

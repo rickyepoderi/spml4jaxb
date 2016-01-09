@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResumeRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.suspend.ResumeRequestType;
 import javax.xml.bind.JAXBElement;
@@ -54,7 +54,7 @@ public class ResumeRequestBuilder extends RequestBuilder<ResumeRequestType, Resu
     @Override
     public ResumeRequestAccessor asAccessor() {
         request.setPsoID(pso);
-        return RequestAccessor.accessorForRequest(request).asResume();
+        return BaseRequestAccessor.accessorForRequest(request).asResume();
     }
 
     @Override

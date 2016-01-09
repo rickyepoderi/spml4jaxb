@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author ricky
  */
-public class ListTargetsResponseAccessor extends ResponseAccessor<ListTargetsResponseType, ListTargetsResponseAccessor, ListTargetsResponseBuilder> {
+public class ListTargetsResponseAccessor extends BaseResponseAccessor<ListTargetsResponseType, ListTargetsResponseAccessor, ListTargetsResponseBuilder> {
 
     protected ListTargetsResponseAccessor() {
         this(new ListTargetsResponseType());

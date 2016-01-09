@@ -12,6 +12,7 @@ package es.rickyepoderi.spml4jaxb.server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
@@ -76,7 +77,7 @@ public class HandlerImpl implements HttpHandler {
                 Unmarshaller unmarshaller = ctx.createUnmarshaller();
                 JAXBElement<RequestType> el = (JAXBElement<RequestType>) unmarshaller.unmarshal(body.extractContentAsDocument());
                 RequestType request = el.getValue();
-                RequestAccessor requestAccessor = RequestAccessor.accessorForRequest(request);
+                RequestAccessor requestAccessor = BaseRequestAccessor.accessorForRequest(request);
                 // get the executor for this class
                 SpmlExecutor exec = mapper.get(requestAccessor.getRequestClass());
                 if (exec != null) {

@@ -18,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
  *
  * @author ricky
  */
-public class ResumeResponseAccessor extends ResponseAccessor<ResponseType, ResumeResponseAccessor, ResumeResponseBuilder> {
+public class ResumeResponseAccessor extends BaseResponseAccessor<ResponseType, ResumeResponseAccessor, ResumeResponseBuilder> {
 
     protected ResumeResponseAccessor() {
         this(new ResponseType());

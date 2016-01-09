@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.test;
 
 import es.rickyepoderi.spml4jaxb.accessor.LookupRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.builder.LookupResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
@@ -35,7 +36,7 @@ public class LookupExecutor extends AsyncSpmlBaseExecutor {
     }
 
     @Override
-    public RequestAccessor specificAccessor(RequestAccessor request) {
+    public BaseRequestAccessor specificAccessor(RequestAccessor request) {
         return request.asLookup();
     }
 

@@ -19,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.async.StatusRequestType;
  *
  * @author ricky
  */
-public class StatusRequestAccessor extends RequestAccessor<StatusRequestType, StatusRequestAccessor, StatusRequestBuilder> {
+public class StatusRequestAccessor extends BaseRequestAccessor<StatusRequestType, StatusRequestAccessor, StatusRequestBuilder> {
     
     protected StatusRequestAccessor() {
         this(new StatusRequestType());

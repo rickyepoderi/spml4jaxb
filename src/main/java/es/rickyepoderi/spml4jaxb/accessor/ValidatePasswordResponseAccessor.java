@@ -18,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordResponseType;
  *
  * @author ricky
  */
-public class ValidatePasswordResponseAccessor extends ResponseAccessor<ValidatePasswordResponseType, ValidatePasswordResponseAccessor, ValidatePasswordResponseBuilder> {
+public class ValidatePasswordResponseAccessor extends BaseResponseAccessor<ValidatePasswordResponseType, ValidatePasswordResponseAccessor, ValidatePasswordResponseBuilder> {
 
     protected ValidatePasswordResponseAccessor() {
         this(new ValidatePasswordResponseType());

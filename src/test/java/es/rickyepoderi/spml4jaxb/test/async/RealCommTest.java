@@ -12,6 +12,7 @@ package es.rickyepoderi.spml4jaxb.test.async;
 
 import es.rickyepoderi.spml4jaxb.accessor.AddResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.CancelResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.DeleteResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ListTargetsResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.LookupResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ModifyResponseAccessor;
@@ -204,15 +205,16 @@ public class RealCommTest {
         Assert.assertEquals(u, mra.getXsdObject(User.class));
         //
         // Delete
-        ResponseAccessor dra = RequestBuilder.builderForDelete()
+        DeleteResponseAccessor dra = RequestBuilder.builderForDelete()
                 .asynchronous()
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
-                .send(client);
+                .send(client)
+                .asDelete();
         Assert.assertTrue(dra.isPending());
         requestId = dra.getRequestId();
-        dra = waitUntilExecuted(requestId, true);
+        dra = waitUntilExecuted(requestId, true).asDelete();
         Assert.assertTrue(dra.isSuccess());
         //
         // Lookup error

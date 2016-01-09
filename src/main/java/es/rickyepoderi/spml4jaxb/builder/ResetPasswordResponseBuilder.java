@@ -11,7 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.ResetPasswordResponseAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordResponseType;
 import javax.xml.bind.JAXBElement;
 
@@ -37,7 +37,7 @@ public class ResetPasswordResponseBuilder extends ResponseBuilder<ResetPasswordR
     
     @Override
     public ResetPasswordResponseAccessor asAccessor() {
-        return ResponseAccessor.accessorForResponse(response).asResetPassword();
+        return BaseResponseAccessor.accessorForResponse(response).asResetPassword();
     }
     
 }

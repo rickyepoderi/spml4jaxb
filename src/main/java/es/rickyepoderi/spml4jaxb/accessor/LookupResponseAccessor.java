@@ -18,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.LookupResponseType;
  *
  * @author ricky
  */
-public class LookupResponseAccessor extends ResponseAccessor<LookupResponseType, LookupResponseAccessor, LookupResponseBuilder> {
+public class LookupResponseAccessor extends BaseResponseAccessor<LookupResponseType, LookupResponseAccessor, LookupResponseBuilder> {
 
     protected LookupResponseAccessor() {
         this(new LookupResponseType());

@@ -12,6 +12,7 @@ package es.rickyepoderi.spml4jaxb.test.batch;
 
 import es.rickyepoderi.spml4jaxb.accessor.AddResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BatchResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.builder.AddResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.BatchResponseBuilder;
@@ -55,7 +56,7 @@ public class ResponseMsgTest {
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<ResponseType> out = (JAXBElement<ResponseType>) unmarshaller.unmarshal(bis);
-        return ResponseAccessor.accessorForResponse(out.getValue());
+        return BaseResponseAccessor.accessorForResponse(out.getValue());
     }
     
     //
@@ -103,11 +104,11 @@ public class ResponseMsgTest {
         User other = (User) add.getXsdObject(User.class);
         Assert.assertEquals(other, u);
         // password
-        ResponseAccessor pass = res.getNestedResponses()[1];
+        BaseResponseAccessor pass = res.getNestedResponses()[1];
         Assert.assertTrue(pass.isSuccess());
         Assert.assertEquals(pass.getRequestId(), "set-password-id");
         // suspend
-        ResponseAccessor sus = res.getNestedResponses()[2];
+        BaseResponseAccessor sus = res.getNestedResponses()[2];
         Assert.assertTrue(sus.isSuccess());
         Assert.assertEquals(sus.getRequestId(), "suspend-id");
     }

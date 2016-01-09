@@ -19,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveRequestType;
  *
  * @author ricky
  */
-public class ActiveRequestAccessor extends RequestAccessor<ActiveRequestType, ActiveRequestAccessor, ActiveRequestBuilder> {
+public class ActiveRequestAccessor extends BaseRequestAccessor<ActiveRequestType, ActiveRequestAccessor, ActiveRequestBuilder> {
 
     protected ActiveRequestAccessor() {
         this(new ActiveRequestType());

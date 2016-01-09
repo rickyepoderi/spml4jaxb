@@ -34,6 +34,7 @@ import es.rickyepoderi.spml4jaxb.msg.suspend.SuspendRequestType;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdatesRequestType;
 import es.rickyepoderi.spml4jaxb.server.SpmlExecutor;
 import es.rickyepoderi.spml4jaxb.server.SpmlMapperExecutorFactory;
+import es.rickyepoderi.spml4jaxb.test.clone.CloneRequestType;
 import es.rickyepoderi.spml4jaxb.user.UserManager;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,6 +93,8 @@ public class TestFactory implements SpmlMapperExecutorFactory {
             mapper.put(UpdatesRequestType.class, new UpdatesExecutor(um, queue, 2));
             mapper.put(es.rickyepoderi.spml4jaxb.msg.updates.IterateRequestType.class, new UpdatesIterateExecutor(queue, 2));
             mapper.put(es.rickyepoderi.spml4jaxb.msg.updates.CloseIteratorRequestType.class, new UpdatesCloseIterator(queue));
+            // clone extension
+            mapper.put(CloneRequestType.class, new CloneExecutor(um, queue));
             return mapper;
         } catch (Exception e) {
             throw new SpmlException(e);

@@ -19,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordRequestType;
  *
  * @author ricky
  */
-public class ValidatePasswordRequestAccessor extends RequestAccessor<ValidatePasswordRequestType, ValidatePasswordRequestAccessor, ValidatePasswordRequestBuilder> {
+public class ValidatePasswordRequestAccessor extends BaseRequestAccessor<ValidatePasswordRequestType, ValidatePasswordRequestAccessor, ValidatePasswordRequestBuilder> {
 
     protected ValidatePasswordRequestAccessor() {
         this(new ValidatePasswordRequestType());

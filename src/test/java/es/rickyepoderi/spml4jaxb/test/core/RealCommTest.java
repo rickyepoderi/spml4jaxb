@@ -16,7 +16,7 @@ import es.rickyepoderi.spml4jaxb.accessor.AddResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ListTargetsResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.LookupResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ModifyResponseAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.DeleteResponseAccessor;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlAttr;
 import es.rickyepoderi.spml4jaxb.test.HttpServer;
@@ -165,13 +165,14 @@ public class RealCommTest {
         Assert.assertTrue(lra.isSuccess());
         Assert.assertEquals(u, lra.getXsdObject(User.class));
         // delete user
-        ResponseAccessor drb = RequestBuilder.builderForDelete()
+        DeleteResponseAccessor drb = RequestBuilder.builderForDelete()
                 .synchronous()
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
-                .send(client);
-        Assert.assertTrue(lra.isSuccess());
+                .send(client)
+                .asDelete();
+        Assert.assertTrue(drb.isSuccess());
         // lookup again
         lra = RequestBuilder.builderForLookup()
                 .synchronous()
@@ -270,13 +271,14 @@ public class RealCommTest {
         Assert.assertTrue(lra.isSuccess());
         checkUser(u, lra.getDsmlAttributesMap());
         // delete user
-        ResponseAccessor drb = RequestBuilder.builderForDelete()
+        DeleteResponseAccessor drb = RequestBuilder.builderForDelete()
                 .synchronous()
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
-                .send(client);
-        Assert.assertTrue(lra.isSuccess());
+                .send(client)
+                .asDelete();
+        Assert.assertTrue(drb.isSuccess());
         // lookup again
         lra = RequestBuilder.builderForLookup()
                 .synchronous()

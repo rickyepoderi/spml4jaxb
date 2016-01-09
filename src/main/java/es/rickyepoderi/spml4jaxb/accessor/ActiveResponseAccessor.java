@@ -18,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveResponseType;
  *
  * @author ricky
  */
-public class ActiveResponseAccessor extends ResponseAccessor<ActiveResponseType, ActiveResponseAccessor, ActiveResponseBuilder> {
+public class ActiveResponseAccessor extends BaseResponseAccessor<ActiveResponseType, ActiveResponseAccessor, ActiveResponseBuilder> {
 
     protected ActiveResponseAccessor() {
         this(new ActiveResponseType());

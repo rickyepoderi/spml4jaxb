@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.test.async;
 
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.CancelRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.StatusRequestAccessor;
@@ -48,7 +49,7 @@ public class RequestMsgTest {
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<RequestType> out = (JAXBElement<RequestType>) unmarshaller.unmarshal(bis);
-        return RequestAccessor.accessorForRequest(out.getValue());
+        return BaseRequestAccessor.accessorForRequest(out.getValue());
     }
 
     //

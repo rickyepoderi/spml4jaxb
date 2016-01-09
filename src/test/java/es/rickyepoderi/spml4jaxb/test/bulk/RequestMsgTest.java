@@ -13,6 +13,7 @@ package es.rickyepoderi.spml4jaxb.test.bulk;
 import es.rickyepoderi.spml4jaxb.accessor.BulkDeleteRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BulkModifyRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.FilterAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SearchQueryAccessor;
 import es.rickyepoderi.spml4jaxb.builder.BulkDeleteRequestBuilder;
@@ -62,7 +63,7 @@ public class RequestMsgTest {
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<RequestType> out = (JAXBElement<RequestType>) unmarshaller.unmarshal(bis);
-        return RequestAccessor.accessorForRequest(out.getValue());
+        return BaseRequestAccessor.accessorForRequest(out.getValue());
     }
     
     //

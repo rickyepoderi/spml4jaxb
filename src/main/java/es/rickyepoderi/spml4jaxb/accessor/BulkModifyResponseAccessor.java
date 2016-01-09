@@ -18,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
  *
  * @author ricky
  */
-public class BulkModifyResponseAccessor extends ResponseAccessor<ResponseType, BulkModifyResponseAccessor, BulkModifyResponseBuilder> {
+public class BulkModifyResponseAccessor extends BaseResponseAccessor<ResponseType, BulkModifyResponseAccessor, BulkModifyResponseBuilder> {
 
     protected BulkModifyResponseAccessor() {
         this(new ResponseType());

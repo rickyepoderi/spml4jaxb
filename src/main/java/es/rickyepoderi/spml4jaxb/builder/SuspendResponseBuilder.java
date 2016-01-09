@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SuspendResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
@@ -32,7 +32,7 @@ public class SuspendResponseBuilder extends ResponseBuilder<ResponseType, Suspen
     
     @Override
     public SuspendResponseAccessor asAccessor() {
-        return ResponseAccessor.accessorForResponse(response).asSuspend();
+        return BaseResponseAccessor.accessorForResponse(response).asSuspend();
     }
     
 }

@@ -17,8 +17,8 @@ import es.rickyepoderi.spml4jaxb.accessor.ListTargetsRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.LookupRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ModifyRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.PsoIdentifierAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
-import es.rickyepoderi.spml4jaxb.builder.PsoIdentifierBuilder;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationType;
 import es.rickyepoderi.spml4jaxb.msg.core.RequestType;
@@ -59,7 +59,7 @@ public class RequestMsgTest {
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<RequestType> out = (JAXBElement<RequestType>) unmarshaller.unmarshal(bis);
-        return RequestAccessor.accessorForRequest(out.getValue());
+        return BaseRequestAccessor.accessorForRequest(out.getValue());
     }
     
     //

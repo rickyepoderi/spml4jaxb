@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.test.updates;
 
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.UpdatesResponseAccessor;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
@@ -52,7 +53,7 @@ public class ResponseMsgTest {
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<ResponseType> out = (JAXBElement<ResponseType>) unmarshaller.unmarshal(bis);
-        return ResponseAccessor.accessorForResponse(out.getValue());
+        return BaseResponseAccessor.accessorForResponse(out.getValue());
     }
     
     //
@@ -134,7 +135,7 @@ public class ResponseMsgTest {
                 .requestId("requestid")
                 .success()
                 .build();
-        ResponseAccessor res = parse(el);
+        BaseResponseAccessor res = parse(el);
         Assert.assertTrue(res.isSuccess());
         Assert.assertEquals(res.getRequestId(), "requestid");
         Assert.assertNull(res.getError());

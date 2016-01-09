@@ -12,7 +12,8 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
 import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ExecutionModeType;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
@@ -31,7 +32,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @param <B> The request builder we are creating
  * @param <A>
  */
-public abstract class RequestBuilder<R extends RequestType, B extends RequestBuilder, A extends RequestAccessor> implements Builder<JAXBElement<R>, A> {
+public abstract class RequestBuilder<R extends RequestType, B extends RequestBuilder, A extends BaseRequestAccessor> implements Builder<JAXBElement<R>, A> {
     
     static public final String DSML_PROFILE_URI = "urn:oasis:names:tc:SPML:2:0:DSML";
     static public final String XSD_PROFILE_URI = "urn:oasis:names:tc:SPML:2.0:profiles:XSD";

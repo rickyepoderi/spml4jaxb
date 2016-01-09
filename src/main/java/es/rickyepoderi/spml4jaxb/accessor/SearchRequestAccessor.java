@@ -20,7 +20,7 @@ import es.rickyepoderi.spml4jaxb.msg.search.SearchRequestType;
  *
  * @author ricky
  */
-public class SearchRequestAccessor extends RequestAccessor<SearchRequestType, SearchRequestAccessor, SearchRequestBuilder> {
+public class SearchRequestAccessor extends BaseRequestAccessor<SearchRequestType, SearchRequestAccessor, SearchRequestBuilder> {
 
     protected SearchRequestAccessor() {
         this(new SearchRequestType());

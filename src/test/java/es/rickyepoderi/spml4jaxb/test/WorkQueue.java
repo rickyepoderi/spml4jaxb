@@ -10,8 +10,9 @@
  */
 package es.rickyepoderi.spml4jaxb.test;
 
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.RequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
@@ -42,13 +43,13 @@ public class WorkQueue {
     static public enum WorkItemStatus {PENDING, FINISHED, CANCELED};
     
     static public class WorkItem {
-        private RequestAccessor request;
-        private ResponseAccessor response;
+        private BaseRequestAccessor request;
+        private BaseResponseAccessor response;
         private String id;
         private Date timestamp;
         private WorkItemStatus status;
         
-        public WorkItem(String id, RequestAccessor request) {
+        public WorkItem(String id, BaseRequestAccessor request) {
             this.id = id;
             this.request = request;
             this.status = WorkItemStatus.PENDING;
@@ -117,11 +118,11 @@ public class WorkQueue {
             }
         }
         
-        public ResponseAccessor getResponseAccessor() {
+        public BaseResponseAccessor getResponseAccessor() {
             return response;
         }
         
-        public RequestAccessor getRequestAccessor() {
+        public BaseRequestAccessor getRequestAccessor() {
             return request;
         }
         
@@ -182,15 +183,14 @@ public class WorkQueue {
                         JAXBElement<RequestType> resquestel = (JAXBElement<RequestType>) unmarshaller.unmarshal(
                                 new StringReader(rs.getString("REQUEST")));
                         RequestType request = resquestel.getValue();
-                        RequestAccessor requestAccessor = RequestAccessor.accessorForRequest(request, clazz);
+                        BaseRequestAccessor requestAccessor = BaseRequestAccessor.accessorForRequest(request, clazz);
                         item = new WorkItem(id, requestAccessor);
                         item.status = WorkItemStatus.values()[rs.getByte("STATUS")];
                         String res = rs.getString("RESPONSE");
                         if (res != null) {
                             JAXBElement<ResponseType> responseel = (JAXBElement<ResponseType>) unmarshaller.unmarshal(new StringReader(res));
-                            ResponseType response = responseel.getValue();
-                            ResponseAccessor responseAccessor = requestAccessor.responseBuilder().asAccessor();
-                            item.response = ResponseAccessor.accessorForResponse(responseel.getValue(), responseAccessor.getClass());
+                            BaseResponseAccessor responseAccessor = requestAccessor.responseBuilder().asAccessor();
+                            item.response = BaseResponseAccessor.accessorForResponse(responseel.getValue(), responseAccessor.getClass());
                         }
                     }
                 }
@@ -229,7 +229,7 @@ public class WorkQueue {
         }
     }
     
-    public synchronized String insert(String id, RequestAccessor req) {
+    public synchronized String insert(String id, BaseRequestAccessor req) {
         String requestId = req.getRequestId();
         if (requestId == null) {
             requestId = UUID.randomUUID().toString();

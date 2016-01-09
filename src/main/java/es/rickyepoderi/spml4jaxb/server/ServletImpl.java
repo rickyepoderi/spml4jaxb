@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.server;
 
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
@@ -88,7 +89,7 @@ public class ServletImpl extends HttpServlet {
             Unmarshaller unmarshaller = ctx.createUnmarshaller();
             JAXBElement<RequestType> el = (JAXBElement<RequestType>) unmarshaller.unmarshal(body.extractContentAsDocument());
             RequestType request = el.getValue();
-            RequestAccessor requestAccessor = RequestAccessor.accessorForRequest(request);
+            RequestAccessor requestAccessor = BaseRequestAccessor.accessorForRequest(request);
             // get the executor for this class
             SpmlExecutor exec = mapper.get(requestAccessor.getRequestClass());
             if (exec != null) {

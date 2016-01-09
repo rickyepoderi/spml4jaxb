@@ -19,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.LookupRequestType;
  *
  * @author ricky
  */
-public class LookupRequestAccessor extends RequestAccessor<LookupRequestType, LookupRequestAccessor, LookupRequestBuilder> {
+public class LookupRequestAccessor extends BaseRequestAccessor<LookupRequestType, LookupRequestAccessor, LookupRequestBuilder> {
 
     protected LookupRequestAccessor() {
         this(new LookupRequestType());

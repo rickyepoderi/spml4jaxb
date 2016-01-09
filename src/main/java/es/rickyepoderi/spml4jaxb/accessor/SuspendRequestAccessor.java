@@ -20,7 +20,7 @@ import java.util.Date;
  *
  * @author ricky
  */
-public class SuspendRequestAccessor extends RequestAccessor<SuspendRequestType, SuspendRequestAccessor, SuspendRequestBuilder> {
+public class SuspendRequestAccessor extends BaseRequestAccessor<SuspendRequestType, SuspendRequestAccessor, SuspendRequestBuilder> {
 
     protected SuspendRequestAccessor() {
         this(new SuspendRequestType());

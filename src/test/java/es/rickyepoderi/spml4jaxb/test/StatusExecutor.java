@@ -10,8 +10,8 @@
  */
 package es.rickyepoderi.spml4jaxb.test;
 
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.StatusRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.StatusResponseBuilder;
 import es.rickyepoderi.spml4jaxb.server.SpmlExecutor;

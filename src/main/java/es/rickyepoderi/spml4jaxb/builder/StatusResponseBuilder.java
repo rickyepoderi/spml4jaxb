@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.StatusResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.async.StatusResponseType;
 import javax.xml.bind.JAXBElement;
@@ -42,7 +42,7 @@ public class StatusResponseBuilder extends ResponseBuilder<StatusResponseType, S
     
     @Override
     public StatusResponseAccessor asAccessor() {
-        return ResponseAccessor.accessorForResponse(response).asStatus();
+        return BaseResponseAccessor.accessorForResponse(response).asStatus();
     }
     
 }

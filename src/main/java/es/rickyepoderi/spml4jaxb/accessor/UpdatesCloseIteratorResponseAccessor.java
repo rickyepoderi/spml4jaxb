@@ -18,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
  *
  * @author ricky
  */
-public class UpdatesCloseIteratorResponseAccessor extends ResponseAccessor<ResponseType, UpdatesCloseIteratorResponseAccessor, UpdatesCloseIteratorResponseBuilder> {
+public class UpdatesCloseIteratorResponseAccessor extends BaseResponseAccessor<ResponseType, UpdatesCloseIteratorResponseAccessor, UpdatesCloseIteratorResponseBuilder> {
     
     protected UpdatesCloseIteratorResponseAccessor() {
         this(new ResponseType());

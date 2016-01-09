@@ -19,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.async.CancelRequestType;
  *
  * @author ricky
  */
-public class CancelRequestAccessor extends RequestAccessor<CancelRequestType, CancelRequestAccessor, CancelRequestBuilder> {
+public class CancelRequestAccessor extends BaseRequestAccessor<CancelRequestType, CancelRequestAccessor, CancelRequestBuilder> {
 
     protected CancelRequestAccessor() {
         this(new CancelRequestType());

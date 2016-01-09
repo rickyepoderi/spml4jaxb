@@ -23,7 +23,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class AddRequestAccessor extends RequestAccessor<AddRequestType, AddRequestAccessor, AddRequestBuilder> {
+public class AddRequestAccessor extends BaseRequestAccessor<AddRequestType, AddRequestAccessor, AddRequestBuilder> {
 
     protected AddRequestAccessor() {
         this(new AddRequestType());
@@ -49,6 +49,14 @@ public class AddRequestAccessor extends RequestAccessor<AddRequestType, AddReque
         }
     }
     
+    public PsoIdentifierAccessor getContainer() {
+        if (request.getContainerID() != null) {
+            return new PsoIdentifierAccessor(request.getContainerID());
+        } else {
+            return null;
+        }
+    }
+    
     public String getTargetId() {
         return request.getTargetID();
     }
@@ -57,11 +65,10 @@ public class AddRequestAccessor extends RequestAccessor<AddRequestType, AddReque
         return id.equals(request.getTargetID());
     }
     
-    public DsmlAttr[] getDsmlAttributes() {
+    static public DsmlAttr[] getDsmlAttributes(List<Object> list) {
         List<DsmlAttr> res = new ArrayList<>();
-        if (request.getData() != null) {
-            List<Object> l = request.getData().getAny();
-            for (Object o: l) {
+        if (list != null) {
+            for (Object o : list) {
                 if (o instanceof DsmlAttr) {
                     res.add((DsmlAttr) o);
                 } else if (o instanceof JAXBElement) {
@@ -75,21 +82,28 @@ public class AddRequestAccessor extends RequestAccessor<AddRequestType, AddReque
         return res.toArray(new DsmlAttr[0]);
     }
     
-    public Object getXsdObject(Class clazz) {
-        if (request.getData() != null) {
-            List<Object> l = request.getData().getAny();
-            for (Object o: l) {
+    public DsmlAttr[] getDsmlAttributes() {
+        return getDsmlAttributes(request.getData() == null? null:request.getData().getAny());
+    }
+    
+    static public <T> T getXsdObject(List<Object> list, Class<T> clazz) {
+        if (list != null) {
+            for (Object o: list) {
                 if (clazz.isInstance(o)) {
-                    return o;
+                    return clazz.cast(o);
                 } else if (o instanceof JAXBElement) {
                     JAXBElement el = (JAXBElement) o;
                     if (clazz.isInstance(el.getValue())) {
-                        return el.getValue();
+                        return clazz.cast(el.getValue());
                     }
                 }
             }
         }
         return null;
+    }
+    
+    public <T> T getXsdObject(Class<T> clazz) {
+        return getXsdObject(request.getData() == null? null:request.getData().getAny(), clazz);
     }
     
     @Override

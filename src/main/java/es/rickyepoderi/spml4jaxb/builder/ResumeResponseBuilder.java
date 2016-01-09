@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResumeResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
@@ -32,7 +32,7 @@ public class ResumeResponseBuilder extends ResponseBuilder<ResponseType, ResumeR
     
     @Override
     public ResumeResponseAccessor asAccessor() {
-        return ResponseAccessor.accessorForResponse(response).asResume();
+        return BaseResponseAccessor.accessorForResponse(response).asResume();
     }
     
 }

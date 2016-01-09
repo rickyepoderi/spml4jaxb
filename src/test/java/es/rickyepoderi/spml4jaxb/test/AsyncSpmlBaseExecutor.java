@@ -10,6 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.test;
 
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.server.SpmlExecutor;
@@ -30,11 +31,11 @@ public abstract class AsyncSpmlBaseExecutor implements SpmlExecutor, AsyncSpmlEx
     @Override
     public abstract ResponseBuilder realExecute(WorkQueue.WorkItem item);
 
-    public abstract RequestAccessor specificAccessor(RequestAccessor request);
+    public abstract BaseRequestAccessor specificAccessor(RequestAccessor request);
     
     @Override
     public ResponseBuilder execute(RequestAccessor request) {
-        RequestAccessor req = specificAccessor(request);
+        BaseRequestAccessor req = specificAccessor(request);
         String id = request.getRequestId() == null? UUID.randomUUID().toString() : req.getRequestId();
         ResponseBuilder builder = null;
         if (req.isSynchronous()) {

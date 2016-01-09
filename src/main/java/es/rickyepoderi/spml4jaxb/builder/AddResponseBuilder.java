@@ -11,7 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.AddResponseAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.AddResponseType;
 import javax.xml.bind.JAXBElement;
 
@@ -33,7 +33,7 @@ public class AddResponseBuilder extends ResponseBuilder<AddResponseType, AddResp
     
     @Override
     public AddResponseAccessor asAccessor() {
-        return ResponseAccessor.accessorForResponse(response).asAdd();
+        return BaseResponseAccessor.accessorForResponse(response).asAdd();
     }
 
     @Override

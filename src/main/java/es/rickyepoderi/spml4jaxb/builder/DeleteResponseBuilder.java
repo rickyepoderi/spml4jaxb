@@ -11,7 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.DeleteResponseAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
 
@@ -32,7 +32,7 @@ public class DeleteResponseBuilder extends ResponseBuilder<ResponseType, DeleteR
     
     @Override
     public DeleteResponseAccessor asAccessor() {
-        return ResponseAccessor.accessorForResponse(response).asDelete();
+        return BaseResponseAccessor.accessorForResponse(response).asDelete();
     }
     
 }

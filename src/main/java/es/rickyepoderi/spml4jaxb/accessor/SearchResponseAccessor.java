@@ -20,7 +20,7 @@ import java.util.Iterator;
  *
  * @author ricky
  */
-public class SearchResponseAccessor extends ResponseAccessor<SearchResponseType, SearchResponseAccessor, SearchResponseBuilder> 
+public class SearchResponseAccessor extends BaseResponseAccessor<SearchResponseType, SearchResponseAccessor, SearchResponseBuilder> 
         implements Iterator<SearchResponseAccessor>, Iterable<SearchResponseAccessor> {
 
     protected Iterator<PSOType> iterator;

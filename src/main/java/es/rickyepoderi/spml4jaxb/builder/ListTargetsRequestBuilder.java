@@ -11,7 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.ListTargetsRequestAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ListTargetsRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -42,7 +42,7 @@ public class ListTargetsRequestBuilder extends RequestBuilder<ListTargetsRequest
     
     @Override
     public ListTargetsRequestAccessor asAccessor() {
-        return RequestAccessor.accessorForRequest(request).asListTargets();
+        return BaseRequestAccessor.accessorForRequest(request).asListTargets();
     }
 
     @Override

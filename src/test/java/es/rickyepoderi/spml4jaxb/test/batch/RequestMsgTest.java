@@ -12,6 +12,7 @@ package es.rickyepoderi.spml4jaxb.test.batch;
 
 import es.rickyepoderi.spml4jaxb.accessor.AddRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BatchRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SetPasswordRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SuspendRequestAccessor;
@@ -56,7 +57,7 @@ public class RequestMsgTest {
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<RequestType> out = (JAXBElement<RequestType>) unmarshaller.unmarshal(bis);
-        return RequestAccessor.accessorForRequest(out.getValue());
+        return BaseRequestAccessor.accessorForRequest(out.getValue());
     }
     
     @Test
@@ -103,7 +104,7 @@ public class RequestMsgTest {
         Assert.assertTrue(req.isSynchronous());
         Assert.assertTrue(req.isProcessingParallel());
         Assert.assertTrue(req.isOnErrorResume());
-        RequestAccessor[] nested = req.getNestedRequests();
+        BaseRequestAccessor[] nested = req.getNestedRequests();
         Assert.assertEquals(nested.length, 3);
         // add
         Assert.assertNotNull(nested[0].asAdd());

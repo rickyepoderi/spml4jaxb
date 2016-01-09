@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.UpdatesResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
 import es.rickyepoderi.spml4jaxb.msg.updates.ResultsIteratorType;
@@ -138,7 +138,7 @@ public class UpdatesResponseBuilder extends ResponseBuilder<UpdatesResponseType,
     
     @Override
     public UpdatesResponseAccessor asAccessor() {
-        return ResponseAccessor.accessorForResponse(response).asUpdates();
+        return BaseResponseAccessor.accessorForResponse(response).asUpdates();
     }
     
 }

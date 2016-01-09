@@ -34,7 +34,7 @@ import org.w3c.dom.Node;
  * @param <B>
  */
 public abstract class ModificationRequestAccessor<R extends RequestType, A extends ModificationRequestAccessor, B extends ModificationRequestBuilder> 
-        extends RequestAccessor<R, A, B> {
+        extends BaseRequestAccessor<R, A, B> {
 
     protected ModificationRequestAccessor(R request, PSOIdentifierType pso, ReturnDataType returnData) {
         super(request, pso, returnData);

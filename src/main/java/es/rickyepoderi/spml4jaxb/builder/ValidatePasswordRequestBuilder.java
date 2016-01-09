@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ValidatePasswordRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordRequestType;
 import javax.xml.bind.JAXBElement;
@@ -39,7 +39,7 @@ public class ValidatePasswordRequestBuilder extends RequestBuilder<ValidatePassw
     @Override
     public ValidatePasswordRequestAccessor asAccessor() {
         request.setPsoID(pso);
-        return RequestAccessor.accessorForRequest(request).asValidatePassword();
+        return BaseRequestAccessor.accessorForRequest(request).asValidatePassword();
     }
 
     @Override

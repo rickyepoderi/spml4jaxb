@@ -86,39 +86,39 @@ public class TargetAccessor implements Accessor<TargetType, TargetAccessor, Targ
     }
     
     public boolean hasAsyncCapability() {
-        return hasCapability(RequestAccessor.SPML_CAPABILITY_ASYNC_URI);
+        return hasCapability(BaseRequestAccessor.SPML_CAPABILITY_ASYNC_URI);
     }
     
     public boolean hasPasswordCapability() {
-        return hasCapability(RequestAccessor.SPML_CAPABILITY_PASSWORD_URI);
+        return hasCapability(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI);
     }
     
     public boolean hasPasswordCapabilityFor(String entity) {
-        return hasCapabilityFor(RequestAccessor.SPML_CAPABILITY_PASSWORD_URI, entity);
+        return hasCapabilityFor(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI, entity);
     }
     
     public boolean hasSuspendCapability() {
-        return hasCapability(RequestAccessor.SPML_CAPABILITY_SUSPEND_URI);
+        return hasCapability(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI);
     }
     
     public boolean hasSuspendCapabilityFor(String entity) {
-        return hasCapabilityFor(RequestAccessor.SPML_CAPABILITY_SUSPEND_URI, entity);
+        return hasCapabilityFor(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI, entity);
     }
     
     public boolean hasBulkCapability() {
-        return hasCapability(RequestAccessor.SPML_CAPABILITY_BULK_URI);
+        return hasCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI);
     }
     
     public boolean hasBatchCapability() {
-        return hasCapability(RequestAccessor.SPML_CAPABILITY_BATCH_URI);
+        return hasCapability(BaseRequestAccessor.SPML_CAPABILITY_BATCH_URI);
     }
     
     public boolean hasUpdatesCapability() {
-        return hasCapability(RequestAccessor.SPML_CAPABILITY_UPDATES_URI);
+        return hasCapability(BaseRequestAccessor.SPML_CAPABILITY_UPDATES_URI);
     }
     
     public boolean hasSearchCapability() {
-        return hasCapability(RequestAccessor.SPML_CAPABILITY_SEARCH_URI);
+        return hasCapability(BaseRequestAccessor.SPML_CAPABILITY_SEARCH_URI);
     }
     
     @Override

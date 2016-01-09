@@ -19,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.password.ExpirePasswordRequestType;
  *
  * @author ricky
  */
-public class ExpirePasswordRequestAccessor extends RequestAccessor<ExpirePasswordRequestType, ExpirePasswordRequestAccessor, ExpirePasswordRequestBuilder> {
+public class ExpirePasswordRequestAccessor extends BaseRequestAccessor<ExpirePasswordRequestType, ExpirePasswordRequestAccessor, ExpirePasswordRequestBuilder> {
 
     protected ExpirePasswordRequestAccessor() {
         this(new ExpirePasswordRequestType());

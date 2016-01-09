@@ -11,7 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BulkDeleteRequestAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.bulk.BulkDeleteRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -50,7 +50,7 @@ public class BulkDeleteRequestBuilder extends RequestBuilder<BulkDeleteRequestTy
     
     @Override
     public BulkDeleteRequestAccessor asAccessor() {
-        return RequestAccessor.accessorForRequest(request).asBulkDelete();
+        return BaseRequestAccessor.accessorForRequest(request).asBulkDelete();
     }
 
     @Override

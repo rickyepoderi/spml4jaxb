@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SearchRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.search.SearchRequestType;
 import java.util.Arrays;
@@ -50,7 +50,7 @@ public class SearchRequestBuilder extends RequestBuilder<SearchRequestType, Sear
     @Override
     public SearchRequestAccessor asAccessor() {
         request.setReturnData(returnData);
-        return RequestAccessor.accessorForRequest(request).asSearch();
+        return BaseRequestAccessor.accessorForRequest(request).asSearch();
     }
 
     @Override

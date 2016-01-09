@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResetPasswordRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordRequestType;
 import javax.xml.bind.JAXBElement;
@@ -34,7 +34,7 @@ public class ResetPasswordRequestBuilder extends RequestBuilder<ResetPasswordReq
     @Override
     public ResetPasswordRequestAccessor asAccessor() {
         request.setPsoID(pso);
-        return RequestAccessor.accessorForRequest(request).asResetPassword();
+        return BaseRequestAccessor.accessorForRequest(request).asResetPassword();
     }
 
     @Override

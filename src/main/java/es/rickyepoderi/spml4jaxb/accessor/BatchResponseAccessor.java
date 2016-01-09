@@ -22,7 +22,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class BatchResponseAccessor extends ResponseAccessor<BatchResponseType, BatchResponseAccessor, BatchResponseBuilder> {
+public class BatchResponseAccessor extends BaseResponseAccessor<BatchResponseType, BatchResponseAccessor, BatchResponseBuilder> {
 
     protected BatchResponseAccessor() {
         this(new BatchResponseType());
@@ -32,20 +32,20 @@ public class BatchResponseAccessor extends ResponseAccessor<BatchResponseType, B
         super(response, null);
     }
     
-    public ResponseAccessor[] getNestedResponses() {
-        List<ResponseAccessor> res = new ArrayList<>();
+    public BaseResponseAccessor[] getNestedResponses() {
+        List<BaseResponseAccessor> res = new ArrayList<>();
         List<Object> l = response.getAny();
         for (Object o : l) {
             if (o instanceof ResponseType) {
-                res.add(ResponseAccessor.accessorForResponse((ResponseType) o));
+                res.add(BaseResponseAccessor.accessorForResponse((ResponseType) o));
             } else if (o instanceof JAXBElement) {
                 JAXBElement el = (JAXBElement) o;
                 if (el.getValue() instanceof ResponseType) {
-                    res.add(ResponseAccessor.accessorForResponse((ResponseType) el.getValue()));
+                    res.add(BaseResponseAccessor.accessorForResponse((ResponseType) el.getValue()));
                 }
             }
         }
-        return res.toArray(new ResponseAccessor[0]);
+        return res.toArray(new BaseResponseAccessor[0]);
     }
     
     @Override
@@ -53,7 +53,7 @@ public class BatchResponseAccessor extends ResponseAccessor<BatchResponseType, B
         String nl = System.getProperty("line.separator");
         StringBuilder sb = new StringBuilder(super.toString())
                 .append("  Nested Responses:").append(nl);
-        for (ResponseAccessor res: getNestedResponses()) {
+        for (BaseResponseAccessor res: getNestedResponses()) {
             sb.append(res);
         }
         return sb.toString();

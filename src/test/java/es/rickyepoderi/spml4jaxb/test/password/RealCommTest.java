@@ -10,8 +10,10 @@
  */
 package es.rickyepoderi.spml4jaxb.test.password;
 
+import es.rickyepoderi.spml4jaxb.accessor.ExpirePasswordResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResetPasswordResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.SetPasswordResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.StatusResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ValidatePasswordResponseAccessor;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
@@ -74,17 +76,18 @@ public class RealCommTest {
         // change the password
         String previousPassword = user.getPassword();
         user.setPassword("passsetasync123");
-        ResponseAccessor spra = RequestBuilder.builderForSetPassword()
+        SetPasswordResponseAccessor spra = RequestBuilder.builderForSetPassword()
                 .asynchronous()
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .currentPassword(previousPassword)
                 .password(user.getPassword())
-                .send(client);
+                .send(client)
+                .asSetPassword();
         Assert.assertTrue(spra.isPending());
         String requestId = spra.getRequestId();
-        spra = waitUntilExecuted(requestId, true);
+        spra = waitUntilExecuted(requestId, true).asSetPassword();
         Assert.assertTrue(spra.isSuccess());
         // validate the new password
         ValidatePasswordResponseAccessor vpra = RequestBuilder.builderForValidatePassword()
@@ -167,16 +170,17 @@ public class RealCommTest {
     @Test
     public void testExpirePasswordAsync() throws SpmlException {
         // expire the password
-        ResponseAccessor epra = RequestBuilder.builderForExpirePassword()
+        ExpirePasswordResponseAccessor epra = RequestBuilder.builderForExpirePassword()
                 .asynchronous()
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .remainingLoggings(0)
-                .send(client);
+                .send(client)
+                .asExpirePassword();
         Assert.assertTrue(epra.isPending());
         String requestId = epra.getRequestId();
-        epra = waitUntilExecuted(requestId, true);
+        epra = waitUntilExecuted(requestId, true).asExpirePassword();
         Assert.assertTrue(epra.isSuccess());
         // good password does not work
         ValidatePasswordResponseAccessor vpra = RequestBuilder.builderForValidatePassword()
@@ -199,10 +203,11 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .remainingLoggings(1)
-                .send(client);
+                .send(client)
+                .asExpirePassword();
         Assert.assertTrue(epra.isPending());
         requestId = epra.getRequestId();
-        epra = waitUntilExecuted(requestId, true);
+        epra = waitUntilExecuted(requestId, true).asExpirePassword();
         Assert.assertTrue(epra.isSuccess());
         // validate first should be ok
         vpra = RequestBuilder.builderForValidatePassword()
@@ -253,14 +258,15 @@ public class RealCommTest {
         // change the password
         String previousPassword = user.getPassword();
         user.setPassword("password-set123");
-        ResponseAccessor spra = RequestBuilder.builderForSetPassword()
+        SetPasswordResponseAccessor spra = RequestBuilder.builderForSetPassword()
                 .synchronous()
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .currentPassword(previousPassword)
                 .password(user.getPassword())
-                .send(client);
+                .send(client)
+                .asSetPassword();
         Assert.assertTrue(spra.isSuccess());
         // validate the new password
         ValidatePasswordResponseAccessor vpra = RequestBuilder.builderForValidatePassword()
@@ -327,13 +333,14 @@ public class RealCommTest {
     @Test
     public void testExpirePassword() throws SpmlException {
         // expire the password
-        ResponseAccessor epra = RequestBuilder.builderForExpirePassword()
+        ExpirePasswordResponseAccessor epra = RequestBuilder.builderForExpirePassword()
                 .synchronous()
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .remainingLoggings(0)
-                .send(client);
+                .send(client)
+                .asExpirePassword();
         Assert.assertTrue(epra.isSuccess());
         // good password does not work
          ValidatePasswordResponseAccessor vpra = RequestBuilder.builderForValidatePassword()
@@ -353,7 +360,8 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .remainingLoggings(1)
-                .send(client);
+                .send(client)
+                .asExpirePassword();
         Assert.assertTrue(epra.isSuccess());
         vpra = RequestBuilder.builderForValidatePassword()
                 .synchronous()

@@ -12,7 +12,7 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.Accessor;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import static es.rickyepoderi.spml4jaxb.builder.RequestBuilder.coreObjectFactory;
 import es.rickyepoderi.spml4jaxb.msg.core.ErrorCode;
 import es.rickyepoderi.spml4jaxb.msg.core.ExtensibleType;
@@ -32,7 +32,7 @@ import javax.xml.bind.JAXBElement;
  * @param <B>
  * @param <A>
  */
-public abstract class ResponseBuilder<R extends ResponseType, B extends ResponseBuilder, A extends ResponseAccessor> implements Builder<JAXBElement<R>, A> {
+public abstract class ResponseBuilder<R extends ResponseType, B extends ResponseBuilder, A extends BaseResponseAccessor> implements Builder<JAXBElement<R>, A> {
 
     protected R response = null;
     protected PSOType pso = null;

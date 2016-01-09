@@ -18,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordResponseType;
  *
  * @author ricky
  */
-public class ResetPasswordResponseAccessor extends ResponseAccessor<ResetPasswordResponseType, ResetPasswordResponseAccessor, ResetPasswordResponseBuilder> {
+public class ResetPasswordResponseAccessor extends BaseResponseAccessor<ResetPasswordResponseType, ResetPasswordResponseAccessor, ResetPasswordResponseBuilder> {
     
     protected ResetPasswordResponseAccessor() {
         this(new ResetPasswordResponseType());

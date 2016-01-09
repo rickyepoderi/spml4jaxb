@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.UpdatesRequestAccessor;
 import static es.rickyepoderi.spml4jaxb.builder.RequestBuilder.dataTypeFactory;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdatesRequestType;
@@ -74,7 +74,7 @@ public class UpdatesRequestBuilder extends RequestBuilder<UpdatesRequestType, Up
     
     @Override
     public UpdatesRequestAccessor asAccessor() {
-        return RequestAccessor.accessorForRequest(request).asUpdates();
+        return BaseRequestAccessor.accessorForRequest(request).asUpdates();
     }
 
     @Override

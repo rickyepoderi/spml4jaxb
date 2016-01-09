@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.TargetAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.CapabilitiesListType;
 import es.rickyepoderi.spml4jaxb.msg.core.CapabilityType;
@@ -79,39 +79,39 @@ public class TargetBuilder implements Builder<TargetType, TargetAccessor> {
     }
     
     public TargetBuilder capabilityAsync() {
-        return capability(RequestAccessor.SPML_CAPABILITY_ASYNC_URI);
+        return capability(BaseRequestAccessor.SPML_CAPABILITY_ASYNC_URI);
     }
     
     public TargetBuilder capabilityPassword() {
-        return capability(RequestAccessor.SPML_CAPABILITY_PASSWORD_URI);
+        return capability(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI);
     }
     
     public TargetBuilder capabilityPassword(String... entities) {
-        return capability(RequestAccessor.SPML_CAPABILITY_PASSWORD_URI, entities);
+        return capability(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI, entities);
     }
     
     public TargetBuilder capabilitySuspend() {
-        return capability(RequestAccessor.SPML_CAPABILITY_SUSPEND_URI);
+        return capability(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI);
     }
     
     public TargetBuilder capabilitySuspend(String... entities) {
-        return capability(RequestAccessor.SPML_CAPABILITY_SUSPEND_URI, entities);
+        return capability(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI, entities);
     }
     
     public TargetBuilder capabilityBulk() {
-        return capability(RequestAccessor.SPML_CAPABILITY_BULK_URI);
+        return capability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI);
     }
     
     public TargetBuilder capabilityBatch() {
-        return capability(RequestAccessor.SPML_CAPABILITY_BATCH_URI);
+        return capability(BaseRequestAccessor.SPML_CAPABILITY_BATCH_URI);
     }
     
     public TargetBuilder capabilitySearch() {
-        return capability(RequestAccessor.SPML_CAPABILITY_SEARCH_URI);
+        return capability(BaseRequestAccessor.SPML_CAPABILITY_SEARCH_URI);
     }
     
     public TargetBuilder capabilityUpdates() {
-        return capability(RequestAccessor.SPML_CAPABILITY_UPDATES_URI);
+        return capability(BaseRequestAccessor.SPML_CAPABILITY_UPDATES_URI);
     }
     
     @Override

@@ -11,7 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.LookupResponseAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.LookupResponseType;
 import javax.xml.bind.JAXBElement;
 
@@ -34,7 +34,7 @@ public class LookupResponseBuilder extends ResponseBuilder<LookupResponseType, L
     @Override
     public LookupResponseAccessor asAccessor() {
         response.setPso(pso);
-        return ResponseAccessor.accessorForResponse(response).asLookup();
+        return BaseResponseAccessor.accessorForResponse(response).asLookup();
     }
     
     @Override

@@ -16,6 +16,7 @@ import es.rickyepoderi.spml4jaxb.accessor.ListTargetsResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.LookupResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ModifyResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.PsoIdentifierAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SchemaAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.TargetAccessor;
@@ -65,7 +66,7 @@ public class ResponseMsgTest {
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<ResponseType> out = (JAXBElement<ResponseType>) unmarshaller.unmarshal(bis);
-        return ResponseAccessor.accessorForResponse(out.getValue());
+        return BaseResponseAccessor.accessorForResponse(out.getValue());
     }
     
     //
@@ -81,7 +82,7 @@ public class ResponseMsgTest {
                 .errorMessage("error1")
                 .errorMessage("error2")
                 .build();
-        ResponseAccessor res = parse(el);
+        BaseResponseAccessor res = parse(el);
         Assert.assertTrue(res.isFailure());
         Assert.assertTrue(res.isMalformedRequest());
         Assert.assertEquals(res.getRequestId(), "requestid");
@@ -266,7 +267,7 @@ public class ResponseMsgTest {
                 .requestId("request-delete")
                 .success()
                 .build();
-        ResponseAccessor res = parse(el);
+        BaseResponseAccessor res = parse(el);
         Assert.assertEquals(res.getRequestId(), "request-delete");
         Assert.assertNull(res.getError());
         Assert.assertTrue(res.isSuccess());

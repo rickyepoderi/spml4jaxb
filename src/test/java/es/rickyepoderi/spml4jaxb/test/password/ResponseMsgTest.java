@@ -11,6 +11,7 @@
 package es.rickyepoderi.spml4jaxb.test.password;
 
 import es.rickyepoderi.spml4jaxb.accessor.ResetPasswordResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ValidatePasswordResponseAccessor;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
@@ -48,7 +49,7 @@ public class ResponseMsgTest {
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<ResponseType> out = (JAXBElement<ResponseType>) unmarshaller.unmarshal(bis);
-        return ResponseAccessor.accessorForResponse(out.getValue());
+        return BaseResponseAccessor.accessorForResponse(out.getValue());
     }
     
     //
@@ -61,7 +62,7 @@ public class ResponseMsgTest {
                 .requestId("request-set-password")
                 .success()
                 .build();
-        ResponseAccessor res = parse(el);
+        BaseResponseAccessor res = parse(el);
         Assert.assertEquals(res.getRequestId(), "request-set-password");
         Assert.assertNull(res.getError());
         Assert.assertTrue(res.isSuccess());
@@ -78,7 +79,7 @@ public class ResponseMsgTest {
                 .requestId("request-expire-password")
                 .success()
                 .build();
-        ResponseAccessor res = parse(el);
+        BaseResponseAccessor res = parse(el);
         Assert.assertEquals(res.getRequestId(), "request-expire-password");
         Assert.assertNull(res.getError());
         Assert.assertTrue(res.isSuccess());

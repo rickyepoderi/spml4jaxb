@@ -12,7 +12,9 @@ package es.rickyepoderi.spml4jaxb.test.suspend;
 
 import es.rickyepoderi.spml4jaxb.accessor.ActiveResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.ResumeResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.StatusResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.SuspendResponseAccessor;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.client.SOAPClient;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
@@ -85,15 +87,16 @@ public class RealCommTest {
         Assert.assertTrue(ara.isSuccess());
         Assert.assertTrue(ara.isActive());
         // disable user
-        ResponseAccessor sra = RequestBuilder.builderForSuspend()
+        SuspendResponseAccessor sra = RequestBuilder.builderForSuspend()
                 .asynchronous()
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client);
+                .send(client)
+                .asSuspend();
         Assert.assertTrue(sra.isPending());
         requestId = sra.getRequestId();
-        sra = waitUntilExecuted(requestId, true);
+        sra = waitUntilExecuted(requestId, true).asSuspend();
         Assert.assertTrue(sra.isSuccess());
         // check user is disabled
         ara = RequestBuilder.builderForActive()
@@ -109,15 +112,16 @@ public class RealCommTest {
         Assert.assertTrue(ara.isSuccess());
         Assert.assertFalse(ara.isActive());
         // enable user
-        ResponseAccessor rra = RequestBuilder.builderForResume()
+        ResumeResponseAccessor rra = RequestBuilder.builderForResume()
                 .asynchronous()
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client);
+                .send(client)
+                .asResume();
         Assert.assertTrue(rra.isPending());
         requestId = rra.getRequestId();
-        rra = waitUntilExecuted(requestId, true);
+        rra = waitUntilExecuted(requestId, true).asResume();
         Assert.assertTrue(rra.isSuccess());
         // check is again enabled
         ara = RequestBuilder.builderForActive()
@@ -147,12 +151,13 @@ public class RealCommTest {
         Assert.assertTrue(ara.isSuccess());
         Assert.assertTrue(ara.isActive());
         // disable user
-        ResponseAccessor sra = RequestBuilder.builderForSuspend()
+        SuspendResponseAccessor sra = RequestBuilder.builderForSuspend()
                 .synchronous()
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client);
+                .send(client)
+                .asSuspend();
         Assert.assertTrue(sra.isSuccess());
         // check user is disabled
         ara = RequestBuilder.builderForActive()
@@ -165,12 +170,13 @@ public class RealCommTest {
         Assert.assertTrue(ara.isSuccess());
         Assert.assertFalse(ara.isActive());
         // enable user
-        ResponseAccessor rra = RequestBuilder.builderForResume()
+        ResumeResponseAccessor rra = RequestBuilder.builderForResume()
                 .synchronous()
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client);
+                .send(client)
+                .asResume();
         Assert.assertTrue(rra.isSuccess());
         // check is again enabled
         ara = RequestBuilder.builderForActive()
@@ -197,13 +203,14 @@ public class RealCommTest {
         Assert.assertTrue(ara.isSuccess());
         Assert.assertTrue(ara.isActive());
         // disable user (1 day ago)
-        ResponseAccessor sra = RequestBuilder.builderForSuspend()
+        SuspendResponseAccessor sra = RequestBuilder.builderForSuspend()
                 .synchronous()
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .effectiveDate(new Date(System.currentTimeMillis() - 86400000L))
-                .send(client);
+                .send(client)
+                .asSuspend();
         Assert.assertTrue(sra.isSuccess());
         // check user is disabled
         ara = RequestBuilder.builderForActive()
@@ -216,13 +223,14 @@ public class RealCommTest {
         Assert.assertTrue(ara.isSuccess());
         Assert.assertFalse(ara.isActive());
         // enable user (half day ago)
-        ResponseAccessor rra = RequestBuilder.builderForResume()
+        ResumeResponseAccessor rra = RequestBuilder.builderForResume()
                 .synchronous()
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .effectiveDate(new Date(System.currentTimeMillis() - 43200000L))
-                .send(client);
+                .send(client)
+                .asResume();
         Assert.assertTrue(rra.isSuccess());
         // check is again enabled
         ara = RequestBuilder.builderForActive()

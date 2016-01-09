@@ -11,7 +11,7 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.AddRequestAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlAttr;
 import es.rickyepoderi.spml4jaxb.msg.core.AddRequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ExtensibleType;
@@ -62,6 +62,11 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
         return this;
     }
     
+    public AddRequestBuilder container(PsoIdentifierBuilder builder) {
+        request.setContainerID(builder.build());
+        return this;
+    }
+    
     //
     // DATA
     //
@@ -105,7 +110,7 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
     public AddRequestAccessor asAccessor() {
         request.setReturnData(returnData);
         request.setPsoID(pso);
-        return RequestAccessor.accessorForRequest(request).asAdd();
+        return BaseRequestAccessor.accessorForRequest(request).asAdd();
     }
 
     @Override

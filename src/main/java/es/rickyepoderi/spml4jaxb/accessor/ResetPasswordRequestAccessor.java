@@ -19,7 +19,7 @@ import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordRequestType;
  *
  * @author ricky
  */
-public class ResetPasswordRequestAccessor extends RequestAccessor<ResetPasswordRequestType, ResetPasswordRequestAccessor, ResetPasswordRequestBuilder> {
+public class ResetPasswordRequestAccessor extends BaseRequestAccessor<ResetPasswordRequestType, ResetPasswordRequestAccessor, ResetPasswordRequestBuilder> {
 
     protected ResetPasswordRequestAccessor() {
         this(new ResetPasswordRequestType());

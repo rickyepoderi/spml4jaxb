@@ -21,7 +21,7 @@ import java.util.Date;
  *
  * @author ricky
  */
-public class UpdatesRequestAccessor extends RequestAccessor<UpdatesRequestType, UpdatesRequestAccessor, UpdatesRequestBuilder> {
+public class UpdatesRequestAccessor extends BaseRequestAccessor<UpdatesRequestType, UpdatesRequestAccessor, UpdatesRequestBuilder> {
 
     protected UpdatesRequestAccessor() {
         this(new UpdatesRequestType());

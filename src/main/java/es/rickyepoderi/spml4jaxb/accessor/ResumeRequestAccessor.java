@@ -20,7 +20,7 @@ import java.util.Date;
  *
  * @author ricky
  */
-public class ResumeRequestAccessor extends RequestAccessor<ResumeRequestType, ResumeRequestAccessor, ResumeRequestBuilder> {
+public class ResumeRequestAccessor extends BaseRequestAccessor<ResumeRequestType, ResumeRequestAccessor, ResumeRequestBuilder> {
 
     protected ResumeRequestAccessor() {
         this(new ResumeRequestType());

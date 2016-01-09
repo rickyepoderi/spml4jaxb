@@ -1,0 +1,38 @@
+<schema targetNamespace="urn:ddbb-spml-dsml:user:clone" 
+        xmlns:clone="urn:ddbb-spml-dsml:user:clone"
+        xmlns:spml="urn:oasis:names:tc:SPML:2:0"
+        xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+	<import namespace="urn:oasis:names:tc:SPML:2:0" schemaLocation="pstc_spmlv2_core.xsd"/>
+
+        <complexType name="CloneRequestType">
+                <complexContent>
+                        <extension base="spml:RequestType">
+                                <sequence>
+					<element name="psoTemplateID" type="spml:PSOIdentifierType" minOccurs="0"/>
+                                        <element name="psoID" type="spml:PSOIdentifierType" minOccurs="0"/>
+                                        <element name="containerID" type="spml:PSOIdentifierType" minOccurs="0"/>
+                                        <element name="data" type="spml:ExtensibleType" />
+                                        <element name="capabilityData" type="spml:CapabilityDataType" minOccurs="0" maxOccurs="unbounded"/>
+                                </sequence>
+                                <attribute name="targetID" type="string" use="optional"/>
+                                <attribute name="returnData" type="spml:ReturnDataType" use="optional" default="everything"/>
+                        </extension>
+                </complexContent>
+        </complexType>
+
+        <complexType name="CloneResponseType">
+                <complexContent>
+                        <extension base="spml:ResponseType">
+                                <sequence>
+                                        <element name="pso" type="spml:PSOType" minOccurs="0"/>
+                                </sequence>
+                        </extension>
+                </complexContent>
+        </complexType>
+
+        <element name="cloneRequestType" type="clone:CloneRequestType"/>
+        <element name="cloneResponseType" type="clone:CloneResponseType"/>
+
+</schema>
+

@@ -12,6 +12,7 @@ package es.rickyepoderi.spml4jaxb.test;
 
 import es.rickyepoderi.spml4jaxb.accessor.BulkModifyRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.FilterAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SearchQueryAccessor;
 import es.rickyepoderi.spml4jaxb.builder.BulkModifyResponseBuilder;
@@ -19,7 +20,6 @@ import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationModeType;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationType;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlModification;
-import es.rickyepoderi.spml4jaxb.test.ModifyExecutor;
 import es.rickyepoderi.spml4jaxb.user.ManagerException;
 import es.rickyepoderi.spml4jaxb.user.User;
 import es.rickyepoderi.spml4jaxb.user.UserManager;
@@ -54,7 +54,7 @@ public class BulkModifyExecutor extends AsyncSpmlBaseExecutor {
     }
 
     @Override
-    public RequestAccessor specificAccessor(RequestAccessor request) {
+    public BaseRequestAccessor specificAccessor(RequestAccessor request) {
         return request.asBulkModify();
     }
     

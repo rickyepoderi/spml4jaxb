@@ -10,7 +10,7 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.StatusRequestAccessor;
 import es.rickyepoderi.spml4jaxb.msg.async.StatusRequestType;
 import javax.xml.bind.JAXBElement;
@@ -52,7 +52,7 @@ public class StatusRequestBuilder extends RequestBuilder<StatusRequestType, Stat
     
     @Override
     public StatusRequestAccessor asAccessor() {
-        return RequestAccessor.accessorForRequest(request).asStatus();
+        return BaseRequestAccessor.accessorForRequest(request).asStatus();
     }
 
     @Override

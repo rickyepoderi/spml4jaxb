@@ -18,7 +18,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
  *
  * @author ricky
  */
-public class SuspendResponseAccessor extends ResponseAccessor<ResponseType, SuspendResponseAccessor, SuspendResponseBuilder> {
+public class SuspendResponseAccessor extends BaseResponseAccessor<ResponseType, SuspendResponseAccessor, SuspendResponseBuilder> {
 
     protected SuspendResponseAccessor() {
         this(new ResponseType());

@@ -23,6 +23,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.HashSet;
+import java.util.Set;
 import org.hsqldb.jdbc.JDBCDataSource;
 
 /**
@@ -316,6 +318,28 @@ public class UserManager {
         } catch (SQLException e) {
             throw new ManagerException(e);
         }
+    }
+    
+    public User clone(String templateUid, User u) throws ManagerException {
+        // read the template user
+        User clone = read(templateUid);
+        if (clone == null) {
+            throw new ManagerException(String.format("The template id does not exists: %s", templateUid));
+        }
+        // assign cn and description from clone if empty
+        if (u.getCn() == null) {
+            u.setCn(clone.getCn());
+        }
+        if (u.getDescription() == null) {
+            u.setDescription(clone.getDescription());
+        }
+        // add all roles from the template
+        Set<String> roles = new HashSet<>();
+        roles.addAll(u.getRole());
+        roles.addAll(clone.getRole());
+        u.getRole().clear();
+        u.getRole().addAll(roles);
+        return create(u);
     }
 
     public void setPassword(String uid, String password) throws ManagerException {
