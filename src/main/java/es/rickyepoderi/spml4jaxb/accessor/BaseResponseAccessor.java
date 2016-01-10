@@ -17,6 +17,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.PSOType;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import es.rickyepoderi.spml4jaxb.msg.core.StatusCodeType;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlAttr;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -151,6 +152,14 @@ public abstract class BaseResponseAccessor<R extends ResponseType, A extends Bas
     
     public String[] getErrorMessages() {
         return response.getErrorMessage().toArray(new String[0]);
+    }
+    
+    public String getErrorMessagesInOne() {
+        StringBuilder sb = new StringBuilder();
+        for (String error: getErrorMessages()) {
+            sb.append(error).append(System.getProperty("line.separator"));
+        }
+        return sb.toString();
     }
     
     public PSOType getPso() {
@@ -331,6 +340,21 @@ public abstract class BaseResponseAccessor<R extends ResponseType, A extends Bas
     
     public UpdatesResponseAccessor asUpdates() {
         return this.asAccessor(new UpdatesResponseAccessor());
+    }
+    
+    public <T> T[] getOperationalObjects(Class<T> clazz) {
+        List<T> res = new ArrayList<>();
+        for (Object o : response.getAny()) {
+            if (clazz.isInstance(o)) {
+                res.add(clazz.cast(o));
+            } else if (o instanceof JAXBElement) {
+                JAXBElement el = (JAXBElement) o;
+                if (clazz.isInstance(el.getValue())) {
+                    res.add(clazz.cast(el.getValue()));
+                }
+            }
+        }
+        return res.toArray((T[]) Array.newInstance(clazz, 0));
     }
     
     public String toString(Class clazz) {

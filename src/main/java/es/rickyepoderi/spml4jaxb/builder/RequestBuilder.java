@@ -13,7 +13,6 @@ package es.rickyepoderi.spml4jaxb.builder;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
 import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
-import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ExecutionModeType;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
@@ -358,6 +357,15 @@ public abstract class RequestBuilder<R extends RequestType, B extends RequestBui
 
     public B returnIdentifier() {
         returnData = ReturnDataType.IDENTIFIER;
+        return (B) this;
+    }
+    
+    //
+    // ANY ATTRIBUTES
+    //
+    
+    public B operationalObject(Object o) {
+        this.request.getAny().add(o);
         return (B) this;
     }
     

@@ -31,11 +31,9 @@ public class ModifyRequestBuilder extends ModificationRequestBuilder<ModifyReque
     
     @Override
     public ModifyRequestBuilder dsmlModification(DsmlModification dsmlMod) {
-        if (request.getModification().isEmpty()) {
-            request.getModification().add(new ModificationType());
-        }
-        ModificationType spmlMod = request.getModification().get(0);
+        ModificationType spmlMod = new ModificationType();
         spmlMod.getAny().add(getDsmlv2ObjectFactory().createModification(dsmlMod));
+        request.getModification().add(spmlMod);
         return this;
     }
     

@@ -351,6 +351,12 @@ public abstract class ResponseBuilder<R extends ResponseType, B extends Response
         return (B) this;
     }
     
+    public B operationalObject(Object o) {
+        this.response.getAny().add(o);
+        return (B) this;
+    }
+    
+    
     @Override
     abstract public JAXBElement<R> build();
     

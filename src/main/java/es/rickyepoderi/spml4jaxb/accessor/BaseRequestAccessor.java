@@ -18,7 +18,11 @@ import es.rickyepoderi.spml4jaxb.msg.core.RequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ReturnDataType;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.Filter;
 import es.rickyepoderi.spml4jaxb.msg.search.SearchQueryType;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.JAXBElement;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
@@ -287,6 +291,21 @@ public abstract class BaseRequestAccessor<R extends RequestType, A extends BaseR
     
     public UpdatesCloseIteratorRequestAccessor asUpdatesCloseIterator() {
         return this.asAccessor(new UpdatesCloseIteratorRequestAccessor());
+    }
+    
+    public <T> T[] getOperationalObjects(Class<T> clazz) {
+        List<T> res = new ArrayList<>();
+        for (Object o : request.getAny()) {
+            if (clazz.isInstance(o)) {
+                res.add(clazz.cast(o));
+            } else if (o instanceof JAXBElement) {
+                JAXBElement el = (JAXBElement) o;
+                if (clazz.isInstance(el.getValue())) {
+                    res.add(clazz.cast(el.getValue()));
+                }
+            }
+        }
+        return res.toArray((T[]) Array.newInstance(clazz, 0));
     }
     
     @Override
