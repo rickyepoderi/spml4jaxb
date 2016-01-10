@@ -19,6 +19,8 @@ import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
 import es.rickyepoderi.spml4jaxb.msg.core.RequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ReturnDataType;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -32,6 +34,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @param <A>
  */
 public abstract class RequestBuilder<R extends RequestType, B extends RequestBuilder, A extends BaseRequestAccessor> implements Builder<JAXBElement<R>, A> {
+    
+    protected static final Logger log = Logger.getLogger(RequestBuilder.class.getName());
     
     static public final String DSML_PROFILE_URI = "urn:oasis:names:tc:SPML:2:0:DSML";
     static public final String XSD_PROFILE_URI = "urn:oasis:names:tc:SPML:2.0:profiles:XSD";
@@ -66,7 +70,7 @@ public abstract class RequestBuilder<R extends RequestType, B extends RequestBui
         try {
             dataTypeFactory = DatatypeFactory.newInstance();
         } catch(DatatypeConfigurationException e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Error initializing the data type factory", e);
         }
     }
     

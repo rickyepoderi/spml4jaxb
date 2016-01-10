@@ -27,6 +27,8 @@ import java.util.ArrayDeque;
 import java.util.Date;
 import java.util.Deque;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -39,6 +41,8 @@ import javax.xml.bind.Unmarshaller;
  * @author ricky
  */
 public class WorkQueue {
+    
+    protected static final Logger log = Logger.getLogger(WorkQueue.class.getName());
     
     static public enum WorkItemStatus {PENDING, FINISHED, CANCELED};
     
@@ -82,7 +86,7 @@ public class WorkQueue {
                     "UPDATE WORKITEM SET STATUS=?,RESPONSE=? WHERE ID=?");
                     StringWriter sw = new StringWriter()) {
                 this.response = res.asAccessor();
-                System.err.println("Finish: " + this.response);
+                log.log(Level.FINE, "Finish: {0}", this.response);
                 this.timestamp = new Date();
                 this.status = WorkItemStatus.FINISHED;
                 pstmt.setByte(1, (byte) this.status.ordinal());
@@ -177,7 +181,7 @@ public class WorkQueue {
                 try (ResultSet rs = pstmt.executeQuery()) {
                     if (rs.next()) {
                         String clazzName = rs.getString("CLASS");
-                        System.err.println("================> Request class: " + clazzName);
+                        log.log(Level.FINE, "Request class: {0}", clazzName);
                         Class clazz = Class.forName(clazzName);
                         Unmarshaller unmarshaller = ctx.createUnmarshaller();
                         JAXBElement<RequestType> resquestel = (JAXBElement<RequestType>) unmarshaller.unmarshal(
@@ -239,7 +243,7 @@ public class WorkQueue {
             try (Connection conn = this.ds.getConnection()) {
                 pending.addLast(item.getId());
                 item.insert(ctx, conn);
-                System.err.println(this);
+                log.log(Level.FINE, "Status: {0}", this);
                 this.notifyAll();
                 return requestId;
             }
@@ -253,7 +257,7 @@ public class WorkQueue {
     }
     
     public synchronized WorkItem retrieve(long time) {
-        System.err.println("retrieve size: " + pending.size());
+        log.log(Level.FINE, "retrieve size: {0}", pending.size());
         WorkItem req = null;
         String id = pending.pollFirst();
         if (id == null) {
@@ -270,7 +274,7 @@ public class WorkQueue {
                 throw new IllegalStateException(e);
             }
         }
-        System.err.println(this);
+        log.log(Level.FINE, "Status: {0}", this);
         return req;
     }
     
@@ -293,7 +297,7 @@ public class WorkQueue {
     public synchronized WorkItem cancel(String id) {
         WorkItem item = this.status(id);
         if (item != null && item.isPending() && pending.remove(id)) {
-            System.err.println(this);
+            log.log(Level.FINE, "Status: {0}", this);
             try (Connection conn = this.ds.getConnection()) {
                 item.cancel(conn);
             } catch (SQLException e) {

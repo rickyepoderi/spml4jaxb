@@ -25,6 +25,8 @@ import javax.sql.DataSource;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hsqldb.jdbc.JDBCDataSource;
 
 /**
@@ -33,6 +35,8 @@ import org.hsqldb.jdbc.JDBCDataSource;
  */
 public class UserManager {
 
+    protected static final Logger log = Logger.getLogger(UserManager.class.getName());
+    
     protected DatatypeFactory dataTypeFactory;
     private DataSource ds = null;
 
@@ -429,7 +433,7 @@ public class UserManager {
                         .append("SELECT u.USERNAME FROM USER u LEFT OUTER JOIN USER_ROLES r ON u.USERNAME = r.USERNAME WHERE ")
                         .append(customFilter).append(")");
             }
-            System.err.println(sb.toString());
+            log.log(Level.FINE, "SQL: {0}", sb);
             try (PreparedStatement ps = conn.prepareStatement(sb.toString())) {
                 conn.setAutoCommit(false);
                 try (ResultSet rs = ps.executeQuery()) {
@@ -479,7 +483,7 @@ public class UserManager {
                         .append("SELECT u.USERNAME FROM USER u LEFT OUTER JOIN USER_ROLES r ON u.USERNAME = r.USERNAME WHERE ")
                         .append(customFilter).append(")");
             }
-            System.err.println(sb.toString());
+            log.log(Level.FINE, "SQL: {0}", sb);
             try (PreparedStatement ps = conn.prepareStatement(sb.toString())) {
                 conn.setAutoCommit(false);
                 this.auditMultiple(conn, customFilter, AuditTypeOperation.BULK_DELETE);
@@ -560,22 +564,22 @@ public class UserManager {
                     .append("SELECT u.USERNAME FROM USER u LEFT OUTER JOIN USER_ROLES r ON u.USERNAME = r.USERNAME WHERE ")
                     .append(customFilter).append(")");
         }
-        System.err.println(sb.toString());
+        log.log(Level.FINE, "SQL: {0}", sb);
         try (PreparedStatement ps = conn.prepareStatement(sb.toString())) {
             int i = 1;
             if (useCommonName) {
                 ps.setString(i, commonName);
-                System.err.println("commonName=" + commonName);
+                log.log(Level.FINE, "commonName={0}", commonName);
                 i++;
             }
             if (useDescription) {
                 ps.setString(i, description);
-                System.err.println("description=" + commonName);
+                log.log(Level.FINE, "description={0}", commonName);
                 i++;
             }
             if (usePassword) {
                 ps.setString(i, password);
-                System.err.println("password=" + commonName);
+                log.log(Level.FINE, "password={0}", commonName);
             }
             int rows = ps.executeUpdate();
             return rows;
@@ -589,7 +593,7 @@ public class UserManager {
             sb.append(" WHERE USERNAME IN (SELECT u.USERNAME FROM USER u LEFT OUTER JOIN USER_ROLES r ON u.USERNAME = r.USERNAME WHERE ")
                     .append(customFilter).append(")");
         }
-        System.err.println(sb.toString());
+        log.log(Level.FINE, "SQL: {0}", sb);
         try (PreparedStatement ps = conn.prepareStatement(sb.toString())) {
             ps.executeUpdate();
         }
@@ -603,7 +607,7 @@ public class UserManager {
                     .append(customFilter).append(") AND");
         }
         sb.append(" ROLENAME = ?");
-        System.err.println(sb.toString());
+        log.log(Level.FINE, "SQL: {0}", sb);
         try (PreparedStatement ps = conn.prepareStatement(sb.toString())) {
             for (String role : roles) {
                 ps.setString(1, role);
@@ -620,7 +624,7 @@ public class UserManager {
                     .append(customFilter).append(") AND");
         }
         sb.append(" USERNAME NOT IN (SELECT USERNAME FROM USER_ROLES WHERE ROLENAME = ?)");
-        System.err.println(sb.toString());
+        log.log(Level.FINE, "SQL: {0}", sb);
         try (PreparedStatement ps = conn.prepareStatement(sb.toString())) {
             for (String role : roles) {
                 ps.setString(1, role);
@@ -646,7 +650,7 @@ public class UserManager {
             sb.append(" WHERE USERNAME IN (SELECT u.USERNAME FROM USER u LEFT OUTER JOIN USER_ROLES r ON u.USERNAME = r.USERNAME WHERE ")
                     .append(customFilter).append(")");
         }
-        System.err.println(sb.toString());
+        log.log(Level.FINE, "SQL: {0}", sb);
         try (PreparedStatement ps = conn.prepareStatement(sb.toString())) {
             ps.setString(1, type.toString());
             ps.executeUpdate();
@@ -655,8 +659,8 @@ public class UserManager {
     
     public List<AuditEntry> searchAudit(Date since, Iterable<AuditTypeOperation> types) throws ManagerException {
         List<AuditEntry> res = new ArrayList<>();
-        System.err.println(since);
-        System.err.println(types);
+        log.log(Level.FINE, "since={0}", since);
+        log.log(Level.FINE, "types={0}", types);
         try (Connection conn = ds.getConnection()) {
             StringBuilder sb = new StringBuilder()
                     .append("SELECT USERNAME, UPDATE_TIME, UPDATE_TYPE FROM AUDIT");
@@ -675,7 +679,7 @@ public class UserManager {
                 first = false;
             }
             sb.append(" ORDER BY UPDATE_TIME");
-            System.err.println(sb.toString());
+            log.log(Level.FINE, "SQL: {0}", sb);
             try (PreparedStatement ps = conn.prepareStatement(sb.toString())) {
                 conn.setAutoCommit(false);
                 int i = 1;

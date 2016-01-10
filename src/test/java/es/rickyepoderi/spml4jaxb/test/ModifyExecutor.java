@@ -23,6 +23,8 @@ import es.rickyepoderi.spml4jaxb.user.ManagerException;
 import es.rickyepoderi.spml4jaxb.user.User;
 import es.rickyepoderi.spml4jaxb.user.UserManager;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -45,6 +47,8 @@ import org.w3c.dom.Node;
  */
 public class ModifyExecutor extends AsyncSpmlBaseExecutor {
 
+    protected static final Logger log = Logger.getLogger(ModifyExecutor.class.getName());
+    
     private UserManager um;
     private JAXBContext ctx;
     
@@ -93,17 +97,17 @@ public class ModifyExecutor extends AsyncSpmlBaseExecutor {
             // add to the current node the modification
             Node addNode = doc.getDocumentElement().cloneNode(true);
             userDoc.adoptNode(addNode);
-            System.err.println("Adding node " + addNode + " to " + xpathNode);
+            log.log(Level.FINE, "Adding node {0} to {1}", new Object[]{addNode, xpathNode});
             xpathNode.appendChild(addNode);
         } else if (req.isModeDelete(mod)) {
             // delete the node found as an xpath
             xpathNode.getParentNode().removeChild(xpathNode);
-            System.err.println("Deleting node " + xpathNode);
+            log.log(Level.FINE, "Deleting node {0}", xpathNode);
         } else if (req.isModeReplace(mod)) {
             // replace the node found as an xpath by the one sent in the modification
             Node newNode = doc.getDocumentElement().cloneNode(true);
             userDoc.adoptNode(newNode);
-            System.err.println("Replacing node " + xpathNode + " with " + newNode);
+            log.log(Level.FINE, "Replacing node {0} with {1}", new Object[]{xpathNode, newNode});
             Node parent = xpathNode.getParentNode();
             Node nextSibling = xpathNode.getNextSibling();
             parent.removeChild(xpathNode);
@@ -148,7 +152,7 @@ public class ModifyExecutor extends AsyncSpmlBaseExecutor {
                         changeNamespaces(userDoc, userDoc.getDocumentElement(), "");
                         node = (Node) xpath.evaluate(req.getModificationXPath(mod), userDoc.getDocumentElement(), XPathConstants.NODE);
                     }
-                    System.err.println("Node for modification: " + node);
+                    log.log(Level.FINE, "Node for modification: {0}", node);
                     if (node == null) {
                         throw new ManagerException("The xpath does not return a node");
                     }
@@ -172,7 +176,7 @@ public class ModifyExecutor extends AsyncSpmlBaseExecutor {
                 // after all modifications retransform dom to user
                 u = doc2User(userDoc, ctx);
             }
-            System.err.println(u);
+            log.log(Level.FINE, "User: {0}", u);
             return u;
         } catch (DOMException | JAXBException | XPathExpressionException | ParserConfigurationException e) {
             throw new ManagerException(e);

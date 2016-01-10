@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -39,6 +41,8 @@ import javax.xml.soap.SOAPMessage;
  * @author ricky
  */
 public class HandlerImpl implements HttpHandler {
+    
+    protected static final Logger log = Logger.getLogger(HandlerImpl.class.getName());
     
     protected JAXBContext ctx = null;
     protected Map<Class, SpmlExecutor> mapper = null;
@@ -92,10 +96,10 @@ public class HandlerImpl implements HttpHandler {
                 throw new IOException("Only POST is accepted.");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Error handling the request", e);
             throw e;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Error handling the request", e);
             throw new IOException(e);
         }
     }

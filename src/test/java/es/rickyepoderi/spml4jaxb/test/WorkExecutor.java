@@ -10,11 +10,17 @@
  */
 package es.rickyepoderi.spml4jaxb.test;
 
+import static es.rickyepoderi.spml4jaxb.test.ModifyExecutor.log;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ricky
  */
 public class WorkExecutor extends Thread {
+    
+    protected static final Logger log = Logger.getLogger(WorkExecutor.class.getName());
     
     private TestFactory fact;
     private boolean stop;
@@ -29,20 +35,20 @@ public class WorkExecutor extends Thread {
         while (!stop) {
             try {
                 WorkQueue.WorkItem item = fact.getWorkQueue().retrieve(5000L);
-                System.err.println("Retrieved " + item);
+                log.log(Level.FINE, "Retrieved {0}", item);
                 if (item != null) {
                     AsyncSpmlExecutor exec = (AsyncSpmlExecutor) fact.getMapper().get(item.getRequestAccessor().getRequestClass());
                     if (exec != null) {
                         // execute the request and the response builder
                         exec.realExecute(item);
-                        System.err.println("Job finished!!!");
+                        log.log(Level.FINE, "Job finished!!!");
                     } else {
                         // mark builder as error
                         throw new Exception("Operation not supported!");
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.log(Level.SEVERE, "Error processing the request", e);
             }
         }
     }

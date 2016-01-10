@@ -28,6 +28,8 @@ import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlModification;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -44,6 +46,8 @@ import org.w3c.dom.Document;
  */
 public class RequestMsgTest {
     
+    protected static final Logger log = Logger.getLogger(RequestMsgTest.class.getName());
+    
     private JAXBContext ctx = null;
     
     public RequestMsgTest() throws JAXBException {
@@ -59,7 +63,7 @@ public class RequestMsgTest {
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         marshaller.marshal(in, bos);
-        marshaller.marshal(in, System.err);
+        log.log(Level.FINE, new String(bos.toByteArray()));
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<RequestType> out = (JAXBElement<RequestType>) unmarshaller.unmarshal(bis);

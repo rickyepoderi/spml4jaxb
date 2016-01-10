@@ -26,6 +26,8 @@ import es.rickyepoderi.spml4jaxb.user.UserManager;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.namespace.NamespaceContext;
@@ -43,6 +45,8 @@ import org.w3c.dom.NodeList;
  * @author ricky
  */
 public class BulkModifyExecutor extends AsyncSpmlBaseExecutor {
+    
+    protected static final Logger log = Logger.getLogger(BulkModifyExecutor.class.getName());
     
     private UserManager um;
     private JAXBContext ctx;
@@ -104,7 +108,7 @@ public class BulkModifyExecutor extends AsyncSpmlBaseExecutor {
             node = (Node) xpath.evaluate(selector, userDoc.getDocumentElement(), XPathConstants.NODE);
             ModifyExecutor.changeNamespaces(userDoc, userDoc.getDocumentElement(), "urn:ddbb-spml-dsml:user");
         }
-        System.err.println("Node for modification: " + node);
+        log.log(Level.FINE, "Node for modification: {0}", node);
         if (node == null) {
             throw new XPathExpressionException("The xpath expression does not return a node: " + selector);
         } else {
@@ -116,10 +120,8 @@ public class BulkModifyExecutor extends AsyncSpmlBaseExecutor {
             boolean multiple) throws ManagerException {
         List<String> res = new ArrayList<>();
         NodeList nodes = fragment.getElementsByTagNameNS("urn:ddbb-spml-dsml:user", name);
-        System.err.println(nodes.getLength());
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
-            System.err.println(node.getTextContent());
             if (node.getTextContent() != null) {
                 res.add(node.getTextContent());
             }
@@ -266,7 +268,7 @@ public class BulkModifyExecutor extends AsyncSpmlBaseExecutor {
                 }
             }
         } catch (ManagerException | JAXBException | ParserConfigurationException | XPathExpressionException e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Error doing the modify", e);
             builder.failure().customError().errorMessage(e.getMessage());
         }
         queue.finish(item, builder);

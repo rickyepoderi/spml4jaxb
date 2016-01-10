@@ -52,8 +52,6 @@ public class StatusExecutor implements SpmlExecutor {
                             builder.nestedResponse(item.getResponseAccessor().toBuilder());
                         } else {
                             // just add a response with the status
-                            System.err.println("RICKY: " + item.getRequestAccessor());
-                            System.err.println("RICKY: " + item.getResponseAccessor());
                             ResponseBuilder nestedBuilder = item.getRequestAccessor().responseBuilder()
                                     .requestId(item.getId()).status(item.getResponseAccessor().getStatus());
                             return builder.nestedResponse(nestedBuilder).success();
@@ -61,7 +59,6 @@ public class StatusExecutor implements SpmlExecutor {
                         return builder.success();
                     } else {
                         // pending => create the operation is still in pending
-                        System.err.println("RICKY: " + item.getRequestAccessor().getClass());
                         ResponseBuilder nestedBuilder = item.getRequestAccessor().responseBuilder()
                                 .requestId(item.getId()).pending();
                         return builder.nestedResponse(nestedBuilder).success();

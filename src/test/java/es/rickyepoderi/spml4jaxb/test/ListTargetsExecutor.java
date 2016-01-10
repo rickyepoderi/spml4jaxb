@@ -20,6 +20,8 @@ import es.rickyepoderi.spml4jaxb.server.SpmlExecutor;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,6 +29,8 @@ import java.util.UUID;
  */
 public class ListTargetsExecutor implements SpmlExecutor {
 
+    protected static final Logger log = Logger.getLogger(ListTargetsExecutor.class.getName());
+    
     static public final String DSML_TARGET_ID = "ddbb-spml-dsml";
     
     static public final String XSD_TARGET_ID = "ddbb-spml-xsd";
@@ -82,7 +86,7 @@ public class ListTargetsExecutor implements SpmlExecutor {
                                             + "</xs:schema>").getBytes(StandardCharsets.UTF_8)))
                     );
         } catch (SpmlException e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Error initializing ListTargets", e);
         }
     }
     

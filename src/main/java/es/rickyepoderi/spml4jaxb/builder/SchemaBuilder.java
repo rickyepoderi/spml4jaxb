@@ -101,15 +101,12 @@ public class SchemaBuilder implements Builder<SchemaType, SchemaAccessor> {
         oc.setName(name);
         oc.setDescription(desc);
         dsmlSchema.getObjectClassDefinition().add(oc);
-        System.err.println("Added!!!!");
         return this;
     }
     
     protected ObjectClassDefinitionType getObjectclassDefinition(String name) {
         for (ObjectClassDefinitionType oc: dsmlSchema.getObjectClassDefinition()) {
-            System.err.println(oc.getName());
             if (oc.getName().equals(name)) {
-                System.err.println("returning...");
                 return oc;
             }
         }
@@ -135,7 +132,6 @@ public class SchemaBuilder implements Builder<SchemaType, SchemaAccessor> {
     
     public SchemaBuilder objectclassDefinitionAttrDefRequired(String ocName, String... attrName) {
         ObjectClassDefinitionType oc = getObjectclassDefinition(ocName);
-        System.err.println(oc);
         if (oc == null) {
             objectclassDefinition(ocName);
             oc = getObjectclassDefinition(ocName);

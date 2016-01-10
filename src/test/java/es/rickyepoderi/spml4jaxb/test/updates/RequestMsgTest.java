@@ -31,6 +31,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -39,6 +41,8 @@ import org.testng.annotations.Test;
  * @author ricky
  */
 public class RequestMsgTest {
+    
+    protected static final Logger log = Logger.getLogger(RequestMsgTest.class.getName());
     
     private JAXBContext ctx = null;
     
@@ -56,7 +60,7 @@ public class RequestMsgTest {
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         marshaller.marshal(in, bos);
-        marshaller.marshal(in, System.err);
+        log.log(Level.FINE, new String(bos.toByteArray()));
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<RequestType> out = (JAXBElement<RequestType>) unmarshaller.unmarshal(bis);

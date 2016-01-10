@@ -141,7 +141,6 @@ public class UpdatesExecutor extends AsyncSpmlBaseExecutor {
         Date since = req.getUpdatedSince();
         List<UserManager.AuditTypeOperation> capabilities = capabilityToUserType(req.getUpdatedByCapability());
         List<UserManager.AuditEntry> entries = um.searchAudit(since, capabilities);
-        System.err.println(entries.size());
         int i = 0;
         List<UserManager.AuditEntry> result = new ArrayList<>();
         String iterId = null;

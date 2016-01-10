@@ -20,6 +20,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,6 +45,8 @@ import javax.xml.soap.SOAPMessage;
  */
 public class ServletImpl extends HttpServlet {
 
+    protected static final Logger log = Logger.getLogger(ServletImpl.class.getName());
+    
     static public final String SPML_MAPPER_FACTORY_PROP = "es.rickyepoderi.spml4jaxb.SpmlMapperExecutorFactory";
     static public final String OBJECT_FACTORY_CLASSES_PROP = "es.rickyepoderi.spml4jaxb.ObjectFactoryClasses";
     
@@ -53,7 +57,6 @@ public class ServletImpl extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         try {
-            System.err.println("Starting...");
             this.factory = MessageFactory.newInstance();
             // create the JAXBContext
             String factoryClasses = config.getInitParameter(OBJECT_FACTORY_CLASSES_PROP);
@@ -72,7 +75,6 @@ public class ServletImpl extends HttpServlet {
             }
             SpmlMapperExecutorFactory spmlFact = (SpmlMapperExecutorFactory) Class.forName(mapperClass).newInstance();
             this.mapper = spmlFact.createMapper(ctx);
-            System.err.println("Starting...");
         } catch (JAXBException|SOAPException|ClassNotFoundException|InstantiationException|IllegalAccessException|SpmlException e) {
             throw new ServletException(e);
         }
@@ -101,10 +103,10 @@ public class ServletImpl extends HttpServlet {
                 throw new IOException("Operation not supported.");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Error handling the request", e);
             throw e;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Error handling the request", e);
             throw new ServletException(e);
         }
     }

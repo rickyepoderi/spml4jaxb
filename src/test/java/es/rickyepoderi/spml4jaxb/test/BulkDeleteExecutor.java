@@ -19,6 +19,8 @@ import es.rickyepoderi.spml4jaxb.builder.BulkDeleteResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.user.ManagerException;
 import es.rickyepoderi.spml4jaxb.user.UserManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.xpath.XPathExpressionException;
 
 /**
@@ -27,6 +29,8 @@ import javax.xml.xpath.XPathExpressionException;
  */
 public class BulkDeleteExecutor extends AsyncSpmlBaseExecutor {
 
+    protected static final Logger log = Logger.getLogger(BulkDeleteExecutor.class.getName());
+    
     private UserManager um;
     
     public BulkDeleteExecutor(UserManager um, WorkQueue queue) {
@@ -50,13 +54,13 @@ public class BulkDeleteExecutor extends AsyncSpmlBaseExecutor {
                     // DSML target
                     FilterAccessor filter = query.getQueryFilter();
                     int rows = um.bulkDelete(SearchExecutor.filter2SQL(filter));
-                    System.err.println("Deleted rows: " + rows);
+                    log.log(Level.FINE, "Deleted rows: {0}", rows);
                     builder.success();
                 } else if (query.isTargetId(ListTargetsExecutor.XSD_TARGET_ID)) {
                     String xpathString = query.getXsdXPathSelection();
                     if (xpathString != null) {
                         int rows = um.bulkDelete(SearchExecutor.xpath2SQL(xpathString));
-                        System.err.println("Deleted rows: " + rows);
+                        log.log(Level.FINE, "Deleted rows: {0}", rows);
                         builder.success();
                     } else {
                         builder.failure().malformedRequest().errorMessage("The XPath is compulsoty in a XSD searxh.");

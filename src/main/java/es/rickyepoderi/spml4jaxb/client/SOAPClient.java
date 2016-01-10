@@ -15,8 +15,11 @@ import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -34,6 +37,8 @@ import javax.xml.transform.dom.DOMSource;
  * @author ricky
  */
 public class SOAPClient extends SpmlClient {
+    
+    protected static final Logger log = Logger.getLogger(SOAPClient.class.getName());
     
     private MessageFactory mf = null;
     private SOAPConnection conn = null;
@@ -83,8 +88,12 @@ public class SOAPClient extends SpmlClient {
             Marshaller marshaller = ctx.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(request, reqBody);
-            System.err.println("REQUEST: ");
-            marshaller.marshal(request, System.err);
+            if (log.isLoggable(Level.FINE)) {
+                StringWriter sw = new StringWriter();
+                log.log(Level.FINE, "REQUEST: ");
+                marshaller.marshal(request, sw);
+                log.log(Level.FINE, sw.toString());
+            }
             message.saveChanges();
             // send the message to the server
             SOAPMessage soapResponse = conn.call(message, url);
@@ -92,8 +101,12 @@ public class SOAPClient extends SpmlClient {
             Unmarshaller unmarshaller = ctx.createUnmarshaller();
             JAXBElement<ResponseType> el = (JAXBElement<ResponseType>) unmarshaller.unmarshal(
                     new DOMSource(resBody.extractContentAsDocument()));
-            System.err.println("RESPONSE: ");
-            marshaller.marshal(el, System.err);
+            if (log.isLoggable(Level.FINE)) {
+                StringWriter sw = new StringWriter();
+                log.log(Level.FINE, "RESPONSE: ");
+                marshaller.marshal(el, sw);
+                log.log(Level.FINE, sw.toString());
+            }
             return BaseResponseAccessor.accessorForResponse(el.getValue());
         } catch (SOAPException|JAXBException e) {
             throw new SpmlException(e);
@@ -111,74 +124,4 @@ public class SOAPClient extends SpmlClient {
         }
     }
     
-    static public void main(String[] args) throws Exception {
-        try (SOAPClient client = new SOAPClient("http://localhost:8000/rpcrouter2")) {            
-            
-            System.err.println(RequestBuilder.builderForListTargets()
-                    .synchronous()
-                    .requestId()
-                    .send(client)
-                    .asListTargets());
-            
-            System.err.println(RequestBuilder.builderForAdd()
-                    .synchronous()
-                    .requestId()
-                    .targetId("ddbb-spml-dsml")
-                    .dsmlAttribute("uid", "ricky")
-                    .dsmlAttribute("objectclass", "user")
-                    .dsmlAttribute("password", "ricky")
-                    .dsmlAttribute("cn", "Ricardo Martin")
-                    .dsmlAttribute("description", "me")
-                    .dsmlAttribute("role", "Admin", "User")
-                    .send(client)
-                    .asAdd());
-            
-            System.err.println(RequestBuilder.builderForLookup()
-                    .synchronous()
-                    .requestId()
-                    .psoId("ricky")
-                    .psoTargetId("ddbb-spml-dsml")
-                    .returnData()
-                    .send(client)
-                    .asLookup());
-            
-            System.err.println(RequestBuilder.builderForModify()
-                    .synchronous()
-                    .requestId()
-                    .psoId("ricky")
-                    .psoTargetId("ddbb-spml-dsml")
-                    .dsmlDelete("description", "me")
-                    .dsmlReplace("password", "ricky123")
-                    .dsmlDelete("role", "Admin")
-                    .dsmlAdd("role", "Test")
-                    .send(client)
-                    .asModify());
-            
-            
-            System.err.println(RequestBuilder.builderForLookup()
-                    .synchronous()
-                    .requestId()
-                    .psoId("ricky")
-                    .psoTargetId("ddbb-spml-dsml")
-                    .returnData()
-                    .send(client)
-                    .asLookup());
-            
-            System.err.println(RequestBuilder.builderForDelete()
-                    .synchronous()
-                    .requestId()
-                    .psoId("ricky")
-                    .psoTargetId("ddbb-spml-dsml")
-                    .send(client));
-            
-            System.err.println(RequestBuilder.builderForLookup()
-                    .synchronous()
-                    .requestId()
-                    .psoId("ricky")
-                    .psoTargetId("ddbb-spml-dsml")
-                    .returnData()
-                    .send(client)
-                    .asLookup());
-        }
-    }
 }

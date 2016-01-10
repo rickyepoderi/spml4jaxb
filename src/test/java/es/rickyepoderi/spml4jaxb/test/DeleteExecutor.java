@@ -18,6 +18,8 @@ import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
 import es.rickyepoderi.spml4jaxb.user.ManagerException;
 import es.rickyepoderi.spml4jaxb.user.UserManager;
 import es.rickyepoderi.spml4jaxb.user.UserNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +27,8 @@ import es.rickyepoderi.spml4jaxb.user.UserNotFoundException;
  */
 public class DeleteExecutor extends AsyncSpmlBaseExecutor {
 
+    protected static final Logger log = Logger.getLogger(DeleteExecutor.class.getName());
+    
     private UserManager um = null;
     
     public DeleteExecutor(UserManager um, WorkQueue queue) {
@@ -45,7 +49,7 @@ public class DeleteExecutor extends AsyncSpmlBaseExecutor {
             if (req.isPsoTargetId(ListTargetsExecutor.DSML_TARGET_ID)
                     || req.isPsoTargetId(ListTargetsExecutor.XSD_TARGET_ID)) {
                 try {
-                    System.err.println("Deleting " + req.getPsoId());
+                    log.log(Level.FINE, "Deleting {0}", req.getPsoId());
                     um.delete(req.getPsoId());
                     builder.success();
                 } catch (UserNotFoundException e) {

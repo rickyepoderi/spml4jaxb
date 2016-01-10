@@ -20,6 +20,8 @@ import es.rickyepoderi.spml4jaxb.user.User;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -33,6 +35,8 @@ import org.testng.annotations.Test;
  * @author ricky
  */
 public class ResponseMsgTest {
+    
+    protected static final Logger log = Logger.getLogger(RequestMsgTest.class.getName());
     
     private JAXBContext ctx;
     
@@ -49,7 +53,7 @@ public class ResponseMsgTest {
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         marshaller.marshal(in, bos);
-        marshaller.marshal(in, System.err);
+        log.log(Level.FINE, new String(bos.toByteArray()));
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         Unmarshaller unmarshaller = ctx.createUnmarshaller();
         JAXBElement<ResponseType> out = (JAXBElement<ResponseType>) unmarshaller.unmarshal(bis);
