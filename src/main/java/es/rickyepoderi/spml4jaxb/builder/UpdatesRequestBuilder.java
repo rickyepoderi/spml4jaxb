@@ -12,7 +12,10 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.UpdatesRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.UpdatesResponseAccessor;
 import static es.rickyepoderi.spml4jaxb.builder.RequestBuilder.dataTypeFactory;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.updates.UpdatesRequestType;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -24,7 +27,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class UpdatesRequestBuilder extends RequestBuilder<UpdatesRequestType, UpdatesRequestBuilder, UpdatesRequestAccessor> {
+public class UpdatesRequestBuilder extends RequestBuilder<UpdatesRequestType, UpdatesRequestBuilder, 
+        UpdatesRequestAccessor, UpdatesResponseAccessor> {
 
     protected UpdatesRequestBuilder() {
         super(new UpdatesRequestType());
@@ -81,6 +85,11 @@ public class UpdatesRequestBuilder extends RequestBuilder<UpdatesRequestType, Up
     public UpdatesRequestBuilder fromRequest(UpdatesRequestType request) {
         this.request = request;
         return this;
+    }
+
+    @Override
+    public UpdatesResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asUpdates();
     }
     
 }

@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SearchRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.SearchResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.search.SearchRequestType;
 import java.util.Arrays;
 import javax.xml.bind.JAXBElement;
@@ -20,7 +23,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class SearchRequestBuilder extends RequestBuilder<SearchRequestType, SearchRequestBuilder, SearchRequestAccessor> {
+public class SearchRequestBuilder extends RequestBuilder<SearchRequestType, SearchRequestBuilder, 
+        SearchRequestAccessor, SearchResponseAccessor> {
 
     public SearchRequestBuilder() {
         super(new SearchRequestType());
@@ -58,6 +62,11 @@ public class SearchRequestBuilder extends RequestBuilder<SearchRequestType, Sear
         this.request = request;
         this.returnData = request.getReturnData();
         return this;
+    }
+
+    @Override
+    public SearchResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asSearch();
     }
     
 }

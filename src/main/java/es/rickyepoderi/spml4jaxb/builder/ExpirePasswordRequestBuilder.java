@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.ExpirePasswordRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.ExpirePasswordResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.password.ExpirePasswordRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -19,7 +22,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ExpirePasswordRequestBuilder extends RequestBuilder<ExpirePasswordRequestType, ExpirePasswordRequestBuilder, ExpirePasswordRequestAccessor> {
+public class ExpirePasswordRequestBuilder extends RequestBuilder<ExpirePasswordRequestType, ExpirePasswordRequestBuilder, 
+        ExpirePasswordRequestAccessor, ExpirePasswordResponseAccessor> {
 
     protected ExpirePasswordRequestBuilder() {
         super(new ExpirePasswordRequestType());
@@ -47,6 +51,11 @@ public class ExpirePasswordRequestBuilder extends RequestBuilder<ExpirePasswordR
         this.request = request;
         this.pso = request.getPsoID();
         return this;
+    }
+
+    @Override
+    public ExpirePasswordResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asExpirePassword();
     }
     
 }

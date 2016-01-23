@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.LookupRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.LookupResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.core.LookupRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -19,7 +22,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class LookupRequestBuilder extends RequestBuilder<LookupRequestType, LookupRequestBuilder, LookupRequestAccessor>{
+public class LookupRequestBuilder extends RequestBuilder<LookupRequestType, LookupRequestBuilder, LookupRequestAccessor, LookupResponseAccessor>{
 
     protected LookupRequestBuilder() {
         super(new LookupRequestType());
@@ -45,6 +48,11 @@ public class LookupRequestBuilder extends RequestBuilder<LookupRequestType, Look
         this.pso = request.getPsoID();
         this.returnData = request.getReturnData();
         return this;
+    }
+
+    @Override
+    public LookupResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asLookup();
     }
     
 }

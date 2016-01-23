@@ -86,8 +86,7 @@ public class RealCommTest {
                 .requestId()
                 .targetId(targetId)
                 .xsdObject(u)
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertEquals(u, ara.getXsdObject(User.class));
         // lookup
@@ -97,8 +96,7 @@ public class RealCommTest {
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isSuccess());
         Assert.assertEquals(u, lra.getXsdObject(User.class));
         // add error
@@ -107,8 +105,7 @@ public class RealCommTest {
                 .requestId()
                 .targetId(targetId)
                 .xsdObject(u)
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isFailure());
         Assert.assertTrue(ara.isAlreadyExists());
         // modify whole object
@@ -122,8 +119,7 @@ public class RealCommTest {
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
                 .xsdReplace("/user", u)
-                .send(client)
-                .asModify();
+                .send(client);
         Assert.assertTrue(mra.isSuccess());
         Assert.assertEquals(u, mra.getXsdObject(User.class));
         // lookup again
@@ -133,8 +129,7 @@ public class RealCommTest {
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isSuccess());
         Assert.assertEquals(u, lra.getXsdObject(User.class));
         // modify user in different parts
@@ -149,8 +144,7 @@ public class RealCommTest {
                 .xsdAdd("/user", "<usr:role xmlns:usr=\"urn:ddbb-spml-dsml:user\">Test</usr:role>")
                 .xsdDelete("/user/role[text()='User']")
                 .xsdReplace("/usr:user/usr:cn", "<usr:cn xmlns:usr=\"urn:ddbb-spml-dsml:user\">Ricardo Martin</usr:cn>")
-                .send(client)
-                .asModify();
+                .send(client);
         Assert.assertTrue(mra.isSuccess());
         Assert.assertEquals(u, mra.getXsdObject(User.class));
         // lookup again
@@ -160,8 +154,7 @@ public class RealCommTest {
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isSuccess());
         Assert.assertEquals(u, lra.getXsdObject(User.class));
         // delete user
@@ -170,8 +163,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(drb.isSuccess());
         // lookup again
         lra = RequestBuilder.builderForLookup()
@@ -180,8 +172,7 @@ public class RealCommTest {
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isFailure());
         Assert.assertTrue(lra.isNoSuchIdentifier());
     }
@@ -193,8 +184,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .profileDsml()
-                .send(client)
-                .asListTargets();
+                .send(client);
         Assert.assertTrue(ltra.isSuccess());
         Assert.assertEquals(ltra.getTargets().length, 1);
         Assert.assertTrue(ltra.getTargets()[0].isDsml());
@@ -211,8 +201,7 @@ public class RealCommTest {
                 .dsmlAttribute("cn", u.getCn())
                 .dsmlAttribute("description", u.getDescription())
                 .dsmlAttribute("role", u.getRole().toArray(new String[0]))
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         checkUser(u, ara.getDsmlAttributesMap());
         // lookup
@@ -222,8 +211,7 @@ public class RealCommTest {
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isSuccess());
         checkUser(u, lra.getDsmlAttributesMap());
         // add error
@@ -237,8 +225,7 @@ public class RealCommTest {
                 .dsmlAttribute("cn", u.getCn())
                 .dsmlAttribute("description", u.getDescription())
                 .dsmlAttribute("role", u.getRole().toArray(new String[0]))
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isFailure());
         Assert.assertTrue(ara.isAlreadyExists());
         // modify
@@ -255,8 +242,7 @@ public class RealCommTest {
                 .dsmlReplace("password", u.getPassword())
                 .dsmlDelete("role", "Admin")
                 .dsmlAdd("role", "Other")
-                .send(client)
-                .asModify();
+                .send(client);
         Assert.assertTrue(mra.isSuccess());
         checkUser(u, mra.getDsmlAttributesMap());
         // lookup again
@@ -266,8 +252,7 @@ public class RealCommTest {
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isSuccess());
         checkUser(u, lra.getDsmlAttributesMap());
         // delete user
@@ -276,8 +261,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(drb.isSuccess());
         // lookup again
         lra = RequestBuilder.builderForLookup()
@@ -286,8 +270,7 @@ public class RealCommTest {
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isFailure());
         Assert.assertTrue(lra.isNoSuchIdentifier());
     }

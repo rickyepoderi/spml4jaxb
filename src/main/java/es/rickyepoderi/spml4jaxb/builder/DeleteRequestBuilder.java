@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.DeleteRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.DeleteResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.core.DeleteRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -19,7 +22,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class DeleteRequestBuilder extends RequestBuilder<DeleteRequestType, DeleteRequestBuilder, DeleteRequestAccessor> {
+public class DeleteRequestBuilder extends RequestBuilder<DeleteRequestType, DeleteRequestBuilder, DeleteRequestAccessor, DeleteResponseAccessor> {
 
     protected DeleteRequestBuilder() {
         super(new DeleteRequestType());
@@ -55,6 +58,11 @@ public class DeleteRequestBuilder extends RequestBuilder<DeleteRequestType, Dele
         this.request = request;
         this.pso = request.getPsoID();
         return this;
+    }
+
+    @Override
+    public DeleteResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asDelete();
     }
     
 }

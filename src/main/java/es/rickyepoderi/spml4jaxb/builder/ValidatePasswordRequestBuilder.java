@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ValidatePasswordRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.ValidatePasswordResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -19,7 +22,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ValidatePasswordRequestBuilder extends RequestBuilder<ValidatePasswordRequestType, ValidatePasswordRequestBuilder, ValidatePasswordRequestAccessor> {
+public class ValidatePasswordRequestBuilder extends RequestBuilder<ValidatePasswordRequestType, ValidatePasswordRequestBuilder, 
+        ValidatePasswordRequestAccessor, ValidatePasswordResponseAccessor> {
 
     protected ValidatePasswordRequestBuilder() {
         super(new ValidatePasswordRequestType());
@@ -47,6 +51,11 @@ public class ValidatePasswordRequestBuilder extends RequestBuilder<ValidatePassw
         this.request = request;
         this.pso = request.getPsoID();
         return this;
+    }
+
+    @Override
+    public ValidatePasswordResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asValidatePassword();
     }
     
 }

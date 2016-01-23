@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BulkDeleteRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BulkDeleteResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.bulk.BulkDeleteRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -19,7 +22,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class BulkDeleteRequestBuilder extends RequestBuilder<BulkDeleteRequestType, BulkDeleteRequestBuilder, BulkDeleteRequestAccessor> {
+public class BulkDeleteRequestBuilder extends RequestBuilder<BulkDeleteRequestType, BulkDeleteRequestBuilder, BulkDeleteRequestAccessor, BulkDeleteResponseAccessor> {
 
     public BulkDeleteRequestBuilder() {
         super(new BulkDeleteRequestType());
@@ -57,6 +60,11 @@ public class BulkDeleteRequestBuilder extends RequestBuilder<BulkDeleteRequestTy
     public BulkDeleteRequestBuilder fromRequest(BulkDeleteRequestType request) {
         this.request = request;
         return this;
+    }
+
+    @Override
+    public BulkDeleteResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asBulkDelete();
     }
     
 }

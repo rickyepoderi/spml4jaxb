@@ -60,8 +60,7 @@ public class RealCommTest {
                 .asynchronous()
                 .targetId(targetId)
                 .xsdObject(u)
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isPending());
         String requestId = ara.getRequestId();
         // check that the request remains in pending until the worker is started
@@ -80,8 +79,7 @@ public class RealCommTest {
         CancelResponseAccessor cra = RequestBuilder.builderForCancel()
                 .requestId()
                 .asyncRequestId(requestId)
-                .send(client)
-                .asCancel();
+                .send(client);
         Assert.assertTrue(cra.isSuccess());
         Assert.assertEquals(cra.getAsyncRequestId(), requestId);
         // check noSuchRequest in status
@@ -89,31 +87,27 @@ public class RealCommTest {
                 .requestId()
                 .asyncRequestId(requestId)
                 .noReturnResults()
-                .send(client)
-                .asStatus();
+                .send(client);
         Assert.assertTrue(sra.isFailure());
         Assert.assertTrue(sra.isNoSuchRequest());
         // check noSuchRequest in cancel
         cra = RequestBuilder.builderForCancel()
                 .requestId()
                 .asyncRequestId(requestId)
-                .send(client)
-                .asCancel();
+                .send(client);
         Assert.assertTrue(cra.isFailure());
         Assert.assertTrue(cra.isNoSuchRequest());
         // check invalidIdentfier
         sra = RequestBuilder.builderForStatus()
                 .requestId()
                 .noReturnResults()
-                .send(client)
-                .asStatus();
+                .send(client);
         Assert.assertTrue(sra.isFailure());
         Assert.assertTrue(sra.isInvalidIdentifier());
         // check InvalidIdentifier
         cra = RequestBuilder.builderForCancel()
                 .requestId()
-                .send(client)
-                .asCancel();
+                .send(client);
         Assert.assertTrue(cra.isFailure());
         Assert.assertTrue(cra.isInvalidIdentifier());
     }
@@ -126,8 +120,7 @@ public class RealCommTest {
                     .requestId()
                     .asyncRequestId(requestId)
                     .returnResults(returnResults)
-                    .send(client)
-                    .asStatus();
+                    .send(client);
             executed = !sra.getNestedResponse().isPending();
         }
         Assert.assertTrue(sra.isSuccess());
@@ -143,8 +136,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .profileXsd()
-                .send(client)
-                .asListTargets();
+                .send(client);
         Assert.assertTrue(ltra.isSuccess());
         Assert.assertEquals(ltra.getTargets().length, 1);
         Assert.assertTrue(ltra.getTargets()[0].isXsd());
@@ -157,8 +149,7 @@ public class RealCommTest {
                 .asynchronous()
                 .targetId(targetId)
                 .xsdObject(u)
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isPending());
         String requestId = ara.getRequestId();
         // check without results
@@ -196,8 +187,7 @@ public class RealCommTest {
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
                 .xsdReplace("/user", u)
-                .send(client)
-                .asModify();
+                .send(client);
         Assert.assertTrue(mra.isPending());
         requestId = mra.getRequestId();
         mra = waitUntilExecuted(requestId, true).asModify();
@@ -210,8 +200,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(dra.isPending());
         requestId = dra.getRequestId();
         dra = waitUntilExecuted(requestId, true).asDelete();
@@ -224,8 +213,7 @@ public class RealCommTest {
                 .psoId(u.getUid())
                 .psoTargetId(targetId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isPending());
         requestId = lra.getRequestId();
         lra = waitUntilExecuted(requestId, true).asLookup();

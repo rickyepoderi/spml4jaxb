@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.ModifyRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.ModifyResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationModeType;
 import es.rickyepoderi.spml4jaxb.msg.core.ModificationType;
 import es.rickyepoderi.spml4jaxb.msg.core.ModifyRequestType;
@@ -23,7 +26,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ModifyRequestBuilder extends ModificationRequestBuilder<ModifyRequestType, ModifyRequestBuilder, ModifyRequestAccessor> {
+public class ModifyRequestBuilder extends ModificationRequestBuilder<ModifyRequestType, ModifyRequestBuilder, 
+        ModifyRequestAccessor, ModifyResponseAccessor> {
 
     protected  ModifyRequestBuilder() {
         super(new ModifyRequestType());
@@ -72,6 +76,11 @@ public class ModifyRequestBuilder extends ModificationRequestBuilder<ModifyReque
         this.pso = request.getPsoID();
         this.returnData = request.getReturnData();
         return this;
+    }
+
+    @Override
+    public ModifyResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asModify();
     }
     
 }

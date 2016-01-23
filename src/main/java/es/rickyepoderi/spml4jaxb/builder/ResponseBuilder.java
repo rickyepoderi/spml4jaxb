@@ -10,7 +10,6 @@
  */
 package es.rickyepoderi.spml4jaxb.builder;
 
-import es.rickyepoderi.spml4jaxb.accessor.Accessor;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
 import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import static es.rickyepoderi.spml4jaxb.builder.RequestBuilder.coreObjectFactory;

@@ -11,7 +11,10 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.AddRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.AddResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlAttr;
 import es.rickyepoderi.spml4jaxb.msg.core.AddRequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ExtensibleType;
@@ -23,7 +26,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequestBuilder, AddRequestAccessor> {
+public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequestBuilder, AddRequestAccessor, AddResponseAccessor> {
 
     protected AddRequestBuilder() {
         super(new AddRequestType());
@@ -121,4 +124,8 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
         return this;
     }
 
+    @Override
+    public AddResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asAdd();
+    }
 }

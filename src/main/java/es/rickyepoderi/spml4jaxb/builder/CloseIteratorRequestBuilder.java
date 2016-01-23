@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.CloseIteratorRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.CloseIteratorResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.search.CloseIteratorRequestType;
 import es.rickyepoderi.spml4jaxb.msg.search.ResultsIteratorType;
 import javax.xml.bind.JAXBElement;
@@ -20,7 +23,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class CloseIteratorRequestBuilder extends RequestBuilder<CloseIteratorRequestType, CloseIteratorRequestBuilder, CloseIteratorRequestAccessor> {
+public class CloseIteratorRequestBuilder extends RequestBuilder<CloseIteratorRequestType, CloseIteratorRequestBuilder, 
+        CloseIteratorRequestAccessor, CloseIteratorResponseAccessor> {
 
     public CloseIteratorRequestBuilder() {
         super(new CloseIteratorRequestType());
@@ -47,6 +51,11 @@ public class CloseIteratorRequestBuilder extends RequestBuilder<CloseIteratorReq
     public CloseIteratorRequestBuilder fromRequest(CloseIteratorRequestType request) {
         this.request = request;
         return this;
+    }
+
+    @Override
+    public CloseIteratorResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asCloseIterator();
     }
     
 }

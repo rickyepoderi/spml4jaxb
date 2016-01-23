@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.ListTargetsRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.ListTargetsResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.core.ListTargetsRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -19,7 +22,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ListTargetsRequestBuilder extends RequestBuilder<ListTargetsRequestType, ListTargetsRequestBuilder, ListTargetsRequestAccessor> {
+public class ListTargetsRequestBuilder extends RequestBuilder<ListTargetsRequestType, ListTargetsRequestBuilder, 
+        ListTargetsRequestAccessor, ListTargetsResponseAccessor> {
     
     public ListTargetsRequestBuilder() {
         super(new ListTargetsRequestType());
@@ -49,6 +53,11 @@ public class ListTargetsRequestBuilder extends RequestBuilder<ListTargetsRequest
     public ListTargetsRequestBuilder fromRequest(ListTargetsRequestType request) {
         this.request = request;
         return this;
+    }
+
+    @Override
+    public ListTargetsResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asListTargets();
     }
     
 }

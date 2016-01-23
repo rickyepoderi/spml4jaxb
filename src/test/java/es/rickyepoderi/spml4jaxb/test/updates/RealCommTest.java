@@ -105,8 +105,7 @@ public class RealCommTest {
                     .requestId()
                     .asyncRequestId(requestId)
                     .returnResults(returnResults)
-                    .send(client)
-                    .asStatus();
+                    .send(client);
             executed = !sra.getNestedResponse().isPending();
         }
         Assert.assertTrue(sra.isSuccess());
@@ -132,8 +131,7 @@ public class RealCommTest {
                 .dsmlAttribute("cn", u.getCn())
                 .dsmlAttribute("description", u.getDescription())
                 .dsmlAttribute("role", u.getRole().toArray(new String[0]))
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         checkUser(u, ara.getDsmlAttributesMap());
         // update
@@ -150,8 +148,7 @@ public class RealCommTest {
                 .dsmlReplace("password", u.getPassword())
                 .dsmlDelete("role", "Admin")
                 .dsmlAdd("role", "Other")
-                .send(client)
-                .asModify();
+                .send(client);
         Assert.assertTrue(mra.isSuccess());
         checkUser(u, mra.getDsmlAttributesMap());
         // delete
@@ -160,8 +157,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetDsmlId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(dra.isSuccess());
         // perform the updates using since and core profile => three updates
         UpdatesResponseAccessor ura = RequestBuilder.builderForUpdates()
@@ -173,8 +169,7 @@ public class RealCommTest {
                 )
                 .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_CORE_URI)
                 .updatedSince(start)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isSuccess());
         Assert.assertNotNull(ura.getIteratorId());
         String iterId = ura.getIteratorId();
@@ -194,8 +189,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isSuccess());
         Assert.assertNull(ura.getIteratorId());
         Assert.assertTrue(ura.hasNext());
@@ -209,8 +203,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdatesCloseIterator();
+                .send(client);
         Assert.assertTrue(cira.isSuccess());
     }
     
@@ -230,8 +223,7 @@ public class RealCommTest {
                 .dsmlAttribute("cn", u.getCn())
                 .dsmlAttribute("description", u.getDescription())
                 .dsmlAttribute("role", u.getRole().toArray(new String[0]))
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         checkUser(u, ara.getDsmlAttributesMap());
         // update
@@ -248,8 +240,7 @@ public class RealCommTest {
                 .dsmlReplace("password", u.getPassword())
                 .dsmlDelete("role", "Admin")
                 .dsmlAdd("role", "Other")
-                .send(client)
-                .asModify();
+                .send(client);
         Assert.assertTrue(mra.isSuccess());
         checkUser(u, mra.getDsmlAttributesMap());
         // delete
@@ -258,8 +249,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetDsmlId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(dra.isSuccess());
         // perform the updates using since and core profile => three updates
         UpdatesResponseAccessor ura = RequestBuilder.builderForUpdates()
@@ -271,8 +261,7 @@ public class RealCommTest {
                 )
                 .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_CORE_URI)
                 .updatedSince(start)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isPending());
         ura = waitUntilExecuted(ura.getRequestId(), true).asUpdates();
         Assert.assertTrue(ura.isSuccess());
@@ -294,8 +283,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isSuccess());
         Assert.assertNull(ura.getIteratorId());
         Assert.assertTrue(ura.hasNext());
@@ -309,8 +297,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdatesCloseIterator();
+                .send(client);
         Assert.assertTrue(cira.isSuccess());
     }
     
@@ -324,8 +311,7 @@ public class RealCommTest {
                 .requestId()
                 .targetId(targetXsdId)
                 .xsdObject(u)
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertEquals(u, ara.getXsdObject(User.class));
         // set a new password
@@ -338,8 +324,7 @@ public class RealCommTest {
                 .psoTargetId(targetXsdId)
                 .currentPassword(prevPasswd)
                 .password(u.getPassword())
-                .send(client)
-                .asSetPassword();
+                .send(client);
         Assert.assertTrue(spra.isSuccess());
         // reset the password
         ResetPasswordResponseAccessor rpra = RequestBuilder.builderForResetPassword()
@@ -347,8 +332,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
-                .send(client)
-                .asResetPassword();
+                .send(client);
         Assert.assertTrue(rpra.isSuccess());
         // delete 
         DeleteResponseAccessor dra = RequestBuilder.builderForDelete()
@@ -356,8 +340,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(dra.isSuccess());
         // look for the two updates
         UpdatesResponseAccessor ura = RequestBuilder.builderForUpdates()
@@ -370,8 +353,7 @@ public class RealCommTest {
                 )
                 .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI)
                 .updatedSince(start)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isSuccess());
         Assert.assertNull(ura.getIteratorId());
         Assert.assertTrue(ura.hasNext());
@@ -397,8 +379,7 @@ public class RealCommTest {
                 .requestId()
                 .targetId(targetXsdId)
                 .xsdObject(u)
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertEquals(u, ara.getXsdObject(User.class));
         // set a new password
@@ -411,8 +392,7 @@ public class RealCommTest {
                 .psoTargetId(targetXsdId)
                 .currentPassword(prevPasswd)
                 .password(u.getPassword())
-                .send(client)
-                .asSetPassword();
+                .send(client);
         Assert.assertTrue(spra.isSuccess());
         // reset the password
         ResetPasswordResponseAccessor rpra = RequestBuilder.builderForResetPassword()
@@ -420,8 +400,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
-                .send(client)
-                .asResetPassword();
+                .send(client);
         Assert.assertTrue(rpra.isSuccess());
         // delete 
         DeleteResponseAccessor dra = RequestBuilder.builderForDelete()
@@ -429,8 +408,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(dra.isSuccess());
         // look for the two updates
         UpdatesResponseAccessor ura = RequestBuilder.builderForUpdates()
@@ -443,8 +421,7 @@ public class RealCommTest {
                 )
                 .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_PASSWORD_URI)
                 .updatedSince(start)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isPending());
         ura = waitUntilExecuted(ura.getRequestId(), true).asUpdates();
         Assert.assertTrue(ura.isSuccess());
@@ -472,8 +449,7 @@ public class RealCommTest {
                 .requestId()
                 .targetId(targetXsdId)
                 .xsdObject(u)
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertEquals(u, ara.getXsdObject(User.class));
         // suspend
@@ -482,8 +458,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
-                .send(client)
-                .asSuspend();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         // resume
         ResumeResponseAccessor rra = RequestBuilder.builderForResume()
@@ -491,8 +466,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
-                .send(client)
-                .asResume();
+                .send(client);
         Assert.assertTrue(rra.isSuccess());
         // delete 
         DeleteResponseAccessor dra = RequestBuilder.builderForDelete()
@@ -500,8 +474,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(dra.isSuccess());
         // look for the two updates
         UpdatesResponseAccessor ura = RequestBuilder.builderForUpdates()
@@ -514,8 +487,7 @@ public class RealCommTest {
                 )
                 .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI)
                 .updatedSince(start)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isSuccess());
         Assert.assertNull(ura.getIteratorId());
         Assert.assertTrue(ura.hasNext());
@@ -541,8 +513,7 @@ public class RealCommTest {
                 .requestId()
                 .targetId(targetXsdId)
                 .xsdObject(u)
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertEquals(u, ara.getXsdObject(User.class));
         // suspend
@@ -551,8 +522,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
-                .send(client)
-                .asSuspend();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         // resume
         ResumeResponseAccessor rra = RequestBuilder.builderForResume()
@@ -560,8 +530,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
-                .send(client)
-                .asResume();
+                .send(client);
         Assert.assertTrue(rra.isSuccess());
         // delete 
         DeleteResponseAccessor dra = RequestBuilder.builderForDelete()
@@ -569,8 +538,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetXsdId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(dra.isSuccess());
         // look for the two updates
         UpdatesResponseAccessor ura = RequestBuilder.builderForUpdates()
@@ -583,8 +551,7 @@ public class RealCommTest {
                 )
                 .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_SUSPEND_URI)
                 .updatedSince(start)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isPending());
         ura = waitUntilExecuted(ura.getRequestId(), true).asUpdates();
         Assert.assertTrue(ura.isSuccess());
@@ -614,7 +581,6 @@ public class RealCommTest {
                     .targetId(targetXsdId)
                     .xsdObject(createSampleUser(i))
                     .send(client)
-                    .asAdd()
                     .isSuccess());
         }
         // perform bulk delete
@@ -628,8 +594,7 @@ public class RealCommTest {
                                 FilterBuilder.startsWith("uid", "ricky")
                         )
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isSuccess());
         // look for the three deleted users
         UpdatesResponseAccessor ura = RequestBuilder.builderForUpdates()
@@ -641,8 +606,7 @@ public class RealCommTest {
                 )
                 .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI)
                 .updatedSince(start)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isSuccess());
         Assert.assertNotNull(ura.getIteratorId());
         String iterId = ura.getIteratorId();
@@ -662,8 +626,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isSuccess());
         Assert.assertNull(ura.getIteratorId());
         Assert.assertTrue(ura.hasNext());
@@ -677,8 +640,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdatesCloseIterator();
+                .send(client);
         Assert.assertTrue(cira.isSuccess());
     }
     
@@ -694,7 +656,6 @@ public class RealCommTest {
                     .targetId(targetXsdId)
                     .xsdObject(createSampleUser(i))
                     .send(client)
-                    .asAdd()
                     .isSuccess());
         }
         // perform bulk delete
@@ -708,8 +669,7 @@ public class RealCommTest {
                                 FilterBuilder.startsWith("uid", "ricky")
                         )
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isSuccess());
         // look for the three deleted users
         UpdatesResponseAccessor ura = RequestBuilder.builderForUpdates()
@@ -721,8 +681,7 @@ public class RealCommTest {
                 )
                 .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI)
                 .updatedSince(start)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isPending());
         ura = waitUntilExecuted(ura.getRequestId(), true).asUpdates();
         Assert.assertTrue(ura.isSuccess());
@@ -744,8 +703,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isSuccess());
         Assert.assertNull(ura.getIteratorId());
         Assert.assertTrue(ura.hasNext());
@@ -759,8 +717,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdatesCloseIterator();
+                .send(client);
         Assert.assertTrue(cira.isSuccess());
     }
     
@@ -776,7 +733,6 @@ public class RealCommTest {
                     .targetId(targetXsdId)
                     .xsdObject(createSampleUser(i))
                     .send(client)
-                    .asAdd()
                     .isSuccess());
         }
         // perform bulk modify
@@ -792,8 +748,7 @@ public class RealCommTest {
                 )
                 .dsmlReplace("description", "new desc")
                 .dsmlReplace("password", "ricky321!")
-                .send(client)
-                .asBulkModify();
+                .send(client);
         Assert.assertTrue(bmra.isSuccess());
         // look for the three deleted users
         UpdatesResponseAccessor ura = RequestBuilder.builderForUpdates()
@@ -805,8 +760,7 @@ public class RealCommTest {
                 )
                 .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI)
                 .updatedSince(start)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isSuccess());
         Assert.assertNotNull(ura.getIteratorId());
         String iterId = ura.getIteratorId();
@@ -826,8 +780,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isSuccess());
         Assert.assertNull(ura.getIteratorId());
         Assert.assertTrue(ura.hasNext());
@@ -841,8 +794,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdatesCloseIterator();
+                .send(client);
         Assert.assertTrue(cira.isSuccess());
         // delete the users for the next test
         BulkDeleteResponseAccessor bdra = RequestBuilder.builderForBulkDelete()
@@ -855,8 +807,7 @@ public class RealCommTest {
                                 FilterBuilder.startsWith("uid", "ricky")
                         )
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isSuccess());
     }
     
@@ -872,7 +823,6 @@ public class RealCommTest {
                     .targetId(targetXsdId)
                     .xsdObject(createSampleUser(i))
                     .send(client)
-                    .asAdd()
                     .isSuccess());
         }
         // perform bulk modify
@@ -888,8 +838,7 @@ public class RealCommTest {
                 )
                 .dsmlReplace("description", "new desc")
                 .dsmlReplace("password", "ricky321!")
-                .send(client)
-                .asBulkModify();
+                .send(client);
         Assert.assertTrue(bmra.isSuccess());
         // look for the three deleted users
         UpdatesResponseAccessor ura = RequestBuilder.builderForUpdates()
@@ -901,8 +850,7 @@ public class RealCommTest {
                 )
                 .updatedByCapability(BaseRequestAccessor.SPML_CAPABILITY_BULK_URI)
                 .updatedSince(start)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isPending());
         ura = waitUntilExecuted(ura.getRequestId(), true).asUpdates();
         Assert.assertTrue(ura.isSuccess());
@@ -924,8 +872,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdates();
+                .send(client);
         Assert.assertTrue(ura.isSuccess());
         Assert.assertNull(ura.getIteratorId());
         Assert.assertTrue(ura.hasNext());
@@ -939,8 +886,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asUpdatesCloseIterator();
+                .send(client);
         Assert.assertTrue(cira.isSuccess());
         // delete the users for the next test
         BulkDeleteResponseAccessor bdra = RequestBuilder.builderForBulkDelete()
@@ -953,8 +899,7 @@ public class RealCommTest {
                                 FilterBuilder.startsWith("uid", "ricky")
                         )
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isSuccess());
     }
     
@@ -971,7 +916,6 @@ public class RealCommTest {
                 .synchronous()
                 .profileXsd()
                 .send(client)
-                .asListTargets()
                 .getTargets()[0]
                 .getTargetId();
         targetDsmlId = RequestBuilder.builderForListTargets()
@@ -979,7 +923,6 @@ public class RealCommTest {
                 .synchronous()
                 .profileDsml()
                 .send(client)
-                .asListTargets()
                 .getTargets()[0]
                 .getTargetId();
     }

@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SetPasswordRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.SetPasswordResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.password.SetPasswordRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -19,7 +22,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class SetPasswordRequestBuilder extends RequestBuilder<SetPasswordRequestType, SetPasswordRequestBuilder, SetPasswordRequestAccessor> {
+public class SetPasswordRequestBuilder extends RequestBuilder<SetPasswordRequestType, SetPasswordRequestBuilder, 
+        SetPasswordRequestAccessor, SetPasswordResponseAccessor> {
 
     protected SetPasswordRequestBuilder() {
         super(new SetPasswordRequestType());
@@ -52,5 +56,10 @@ public class SetPasswordRequestBuilder extends RequestBuilder<SetPasswordRequest
         this.request = request;
         this.pso = request.getPsoID();
         return this;
+    }
+
+    @Override
+    public SetPasswordResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asSetPassword();
     }
 }

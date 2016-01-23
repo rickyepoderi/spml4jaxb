@@ -12,7 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.SuspendRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.SuspendResponseAccessor;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.suspend.SuspendRequestType;
 import javax.xml.bind.JAXBElement;
 import java.util.Date;
@@ -23,7 +25,8 @@ import java.util.Calendar;
  *
  * @author ricky
  */
-public class SuspendRequestBuilder extends RequestBuilder<SuspendRequestType, SuspendRequestBuilder, SuspendRequestAccessor> {
+public class SuspendRequestBuilder extends RequestBuilder<SuspendRequestType, SuspendRequestBuilder, 
+        SuspendRequestAccessor, SuspendResponseAccessor> {
 
     public SuspendRequestBuilder() {
         super(new SuspendRequestType());
@@ -63,6 +66,11 @@ public class SuspendRequestBuilder extends RequestBuilder<SuspendRequestType, Su
         this.request = request;
         this.pso = request.getPsoID();
         return this;
+    }
+
+    @Override
+    public SuspendResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asSuspend();
     }
     
 }

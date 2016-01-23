@@ -71,8 +71,7 @@ public class RealCommTest {
                     .requestId()
                     .asyncRequestId(requestId)
                     .returnResults(returnResults)
-                    .send(client)
-                    .asStatus();
+                    .send(client);
             executed = !sra.getNestedResponse().isPending();
         }
         Assert.assertTrue(sra.isSuccess());
@@ -91,8 +90,7 @@ public class RealCommTest {
                 .requestId()
                 .targetId(targetXsdId)
                 .xsdObject(u)
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertEquals(u, ara.getXsdObject(User.class));
         // call the clone
@@ -106,8 +104,7 @@ public class RealCommTest {
                 .xsdObject(cloned)
                 .templateId(u.getUid())
                 .templateTargetId(targetXsdId)
-                .send(client)
-                .asAccessor(CloneResponseAccessor.emptyResponseAccessor());
+                .send(client);
         Assert.assertTrue(cra.isSuccess());
         User u2 = new User();
         u2.setUid(cloned.getUid());
@@ -123,8 +120,7 @@ public class RealCommTest {
                 .psoId(cloned.getUid())
                 .psoTargetId(targetXsdId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isSuccess());
         Assert.assertEquals(u2, lra.getXsdObject(User.class));
         // delete the users
@@ -133,16 +129,14 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetDsmlId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(drb.isSuccess());
         drb = RequestBuilder.builderForDelete()
                 .synchronous()
                 .requestId()
                 .psoId(u2.getUid())
                 .psoTargetId(targetDsmlId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(drb.isSuccess());
     }
     
@@ -155,8 +149,7 @@ public class RealCommTest {
                 .requestId()
                 .targetId(targetXsdId)
                 .xsdObject(u)
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertEquals(u, ara.getXsdObject(User.class));
         // call the clone
@@ -170,8 +163,7 @@ public class RealCommTest {
                 .xsdObject(cloned)
                 .templateId(u.getUid())
                 .templateTargetId(targetXsdId)
-                .send(client)
-                .asAccessor(CloneResponseAccessor.emptyResponseAccessor());
+                .send(client);
         Assert.assertTrue(cra.isPending());
         cra = waitUntilExecuted(cra.getRequestId(), true).asAccessor(CloneResponseAccessor.emptyResponseAccessor());
         Assert.assertTrue(cra.isSuccess());
@@ -189,8 +181,7 @@ public class RealCommTest {
                 .psoId(cloned.getUid())
                 .psoTargetId(targetXsdId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isSuccess());
         Assert.assertEquals(u2, lra.getXsdObject(User.class));
         // delete the users
@@ -199,16 +190,14 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetDsmlId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(drb.isSuccess());
         drb = RequestBuilder.builderForDelete()
                 .synchronous()
                 .requestId()
                 .psoId(u2.getUid())
                 .psoTargetId(targetDsmlId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(drb.isSuccess());
     }
     
@@ -226,8 +215,7 @@ public class RealCommTest {
                 .dsmlAttribute("cn", u.getCn())
                 .dsmlAttribute("description", u.getDescription())
                 .dsmlAttribute("role", u.getRole().toArray(new String[0]))
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         checkUser(u, ara.getDsmlAttributesMap());
         // call the clone
@@ -243,8 +231,7 @@ public class RealCommTest {
                 .dsmlAttribute("password", cloned.getPassword())
                 .templateId(u.getUid())
                 .templateTargetId(targetDsmlId)
-                .send(client)
-                .asAccessor(CloneResponseAccessor.emptyResponseAccessor());
+                .send(client);
         Assert.assertTrue(cra.isSuccess());
         User u2 = new User();
         u2.setUid(cloned.getUid());
@@ -260,8 +247,7 @@ public class RealCommTest {
                 .psoId(cloned.getUid())
                 .psoTargetId(targetDsmlId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isSuccess());
         checkUser(u2, lra.getDsmlAttributesMap());
         // delete the users
@@ -270,16 +256,14 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetDsmlId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(drb.isSuccess());
         drb = RequestBuilder.builderForDelete()
                 .synchronous()
                 .requestId()
                 .psoId(u2.getUid())
                 .psoTargetId(targetDsmlId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(drb.isSuccess());
     }
 
@@ -297,8 +281,7 @@ public class RealCommTest {
                 .dsmlAttribute("cn", u.getCn())
                 .dsmlAttribute("description", u.getDescription())
                 .dsmlAttribute("role", u.getRole().toArray(new String[0]))
-                .send(client)
-                .asAdd();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         checkUser(u, ara.getDsmlAttributesMap());
         // call the clone
@@ -314,8 +297,7 @@ public class RealCommTest {
                 .dsmlAttribute("password", cloned.getPassword())
                 .templateId(u.getUid())
                 .templateTargetId(targetDsmlId)
-                .send(client)
-                .asAccessor(CloneResponseAccessor.emptyResponseAccessor());
+                .send(client);
         Assert.assertTrue(cra.isPending());
         cra = waitUntilExecuted(cra.getRequestId(), true).asAccessor(CloneResponseAccessor.emptyResponseAccessor());
         Assert.assertTrue(cra.isSuccess());
@@ -333,8 +315,7 @@ public class RealCommTest {
                 .psoId(cloned.getUid())
                 .psoTargetId(targetDsmlId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isSuccess());
         checkUser(u2, lra.getDsmlAttributesMap());
         // delete the users
@@ -343,16 +324,14 @@ public class RealCommTest {
                 .requestId()
                 .psoId(u.getUid())
                 .psoTargetId(targetDsmlId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(drb.isSuccess());
         drb = RequestBuilder.builderForDelete()
                 .synchronous()
                 .requestId()
                 .psoId(u2.getUid())
                 .psoTargetId(targetDsmlId)
-                .send(client)
-                .asDelete();
+                .send(client);
         Assert.assertTrue(drb.isSuccess());
     }
     
@@ -371,7 +350,6 @@ public class RealCommTest {
                 .synchronous()
                 .profileXsd()
                 .send(client)
-                .asListTargets()
                 .getTargets()[0]
                 .getTargetId();
         targetDsmlId = RequestBuilder.builderForListTargets()
@@ -379,7 +357,6 @@ public class RealCommTest {
                 .synchronous()
                 .profileDsml()
                 .send(client)
-                .asListTargets()
                 .getTargets()[0]
                 .getTargetId();
     }

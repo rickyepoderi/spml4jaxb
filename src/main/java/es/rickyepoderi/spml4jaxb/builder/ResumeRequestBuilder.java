@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResumeRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.ResumeResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.suspend.ResumeRequestType;
 import javax.xml.bind.JAXBElement;
 import java.util.Date;
@@ -22,7 +25,8 @@ import java.util.GregorianCalendar;
  *
  * @author ricky
  */
-public class ResumeRequestBuilder extends RequestBuilder<ResumeRequestType, ResumeRequestBuilder, ResumeRequestAccessor> {
+public class ResumeRequestBuilder extends RequestBuilder<ResumeRequestType, ResumeRequestBuilder, 
+        ResumeRequestAccessor, ResumeResponseAccessor> {
 
     public ResumeRequestBuilder() {
         super(new ResumeRequestType());
@@ -62,6 +66,11 @@ public class ResumeRequestBuilder extends RequestBuilder<ResumeRequestType, Resu
         this.request = request;
         this.pso = request.getPsoID();
         return this;
+    }
+
+    @Override
+    public ResumeResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asResume();
     }
     
 }

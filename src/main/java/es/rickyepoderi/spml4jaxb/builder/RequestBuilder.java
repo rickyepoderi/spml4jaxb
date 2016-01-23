@@ -13,6 +13,7 @@ package es.rickyepoderi.spml4jaxb.builder;
 import es.rickyepoderi.spml4jaxb.client.SpmlException;
 import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.msg.core.ExecutionModeType;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
@@ -32,8 +33,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @param <R> The request type the builder is about
  * @param <B> The request builder we are creating
  * @param <A>
+ * @param <RA> 
  */
-public abstract class RequestBuilder<R extends RequestType, B extends RequestBuilder, A extends BaseRequestAccessor> implements Builder<JAXBElement<R>, A> {
+public abstract class RequestBuilder<R extends RequestType, B extends RequestBuilder, 
+        A extends BaseRequestAccessor, RA extends BaseResponseAccessor> implements Builder<JAXBElement<R>, A> {
     
     protected static final Logger log = Logger.getLogger(RequestBuilder.class.getName());
     
@@ -376,9 +379,11 @@ public abstract class RequestBuilder<R extends RequestType, B extends RequestBui
     @Override
     abstract public JAXBElement<R> build();
     
-    public ResponseAccessor send(SpmlRequestor client) throws SpmlException {
+    protected ResponseAccessor sendInternal(SpmlRequestor client) throws SpmlException {
         return client.send(this.build());
     }
+    
+    abstract public RA send(SpmlRequestor client) throws SpmlException;
     
     @Override
     abstract public A asAccessor();

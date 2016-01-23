@@ -11,7 +11,10 @@
 package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.ActiveRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.ActiveResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -19,7 +22,7 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ActiveRequestBuilder extends RequestBuilder<ActiveRequestType, ActiveRequestBuilder, ActiveRequestAccessor> {
+public class ActiveRequestBuilder extends RequestBuilder<ActiveRequestType, ActiveRequestBuilder, ActiveRequestAccessor, ActiveResponseAccessor> {
 
     public ActiveRequestBuilder() {
         super(new ActiveRequestType());
@@ -42,5 +45,10 @@ public class ActiveRequestBuilder extends RequestBuilder<ActiveRequestType, Acti
         this.request = request;
         this.pso = request.getPsoID();
         return this;
+    }
+
+    @Override
+    public ActiveResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asActive();
     }
 }

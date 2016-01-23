@@ -60,8 +60,7 @@ public class RealCommTest {
                     .requestId()
                     .asyncRequestId(requestId)
                     .returnResults(returnResults)
-                    .send(client)
-                    .asStatus();
+                    .send(client);
             executed = !sra.getNestedResponse().isPending();
         }
         Assert.assertTrue(sra.isSuccess());
@@ -79,8 +78,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asActive();
+                .send(client);
         Assert.assertTrue(ara.isPending());
         String requestId = ara.getRequestId();
         ara = waitUntilExecuted(requestId, true).asActive();
@@ -92,8 +90,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asSuspend();
+                .send(client);
         Assert.assertTrue(sra.isPending());
         requestId = sra.getRequestId();
         sra = waitUntilExecuted(requestId, true).asSuspend();
@@ -104,8 +101,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asActive();
+                .send(client);
         Assert.assertTrue(ara.isPending());
         requestId = ara.getRequestId();
         ara = waitUntilExecuted(requestId, true).asActive();
@@ -117,8 +113,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asResume();
+                .send(client);
         Assert.assertTrue(rra.isPending());
         requestId = rra.getRequestId();
         rra = waitUntilExecuted(requestId, true).asResume();
@@ -129,8 +124,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asActive();
+                .send(client);
         Assert.assertTrue(ara.isPending());
         requestId = ara.getRequestId();
         ara = waitUntilExecuted(requestId, true).asActive();
@@ -146,8 +140,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asActive();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertTrue(ara.isActive());
         // disable user
@@ -156,8 +149,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asSuspend();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         // check user is disabled
         ara = RequestBuilder.builderForActive()
@@ -165,8 +157,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asActive();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertFalse(ara.isActive());
         // enable user
@@ -175,8 +166,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asResume();
+                .send(client);
         Assert.assertTrue(rra.isSuccess());
         // check is again enabled
         ara = RequestBuilder.builderForActive()
@@ -184,8 +174,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asActive();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertTrue(ara.isActive());
     }
@@ -198,8 +187,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asActive();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertTrue(ara.isActive());
         // disable user (1 day ago)
@@ -209,8 +197,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .effectiveDate(new Date(System.currentTimeMillis() - 86400000L))
-                .send(client)
-                .asSuspend();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         // check user is disabled
         ara = RequestBuilder.builderForActive()
@@ -218,8 +205,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asActive();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertFalse(ara.isActive());
         // enable user (half day ago)
@@ -229,8 +215,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .effectiveDate(new Date(System.currentTimeMillis() - 43200000L))
-                .send(client)
-                .asResume();
+                .send(client);
         Assert.assertTrue(rra.isSuccess());
         // check is again enabled
         ara = RequestBuilder.builderForActive()
@@ -238,8 +223,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asActive();
+                .send(client);
         Assert.assertTrue(ara.isSuccess());
         Assert.assertTrue(ara.isActive());
     }
@@ -257,7 +241,6 @@ public class RealCommTest {
                 .synchronous()
                 .profileXsd()
                 .send(client)
-                .asListTargets()
                 .getTargets()[0]
                 .getTargetId();
         RequestBuilder.builderForAdd()
@@ -266,8 +249,7 @@ public class RealCommTest {
                 .returnIdentifier()
                 .targetId(targetId)
                 .xsdObject(user)
-                .send(client)
-                .asAdd();
+                .send(client);
     }
 
     @AfterClass

@@ -57,8 +57,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .profileDsml()
-                .send(client)
-                .asListTargets();
+                .send(client);
         Assert.assertTrue(ltra.isSuccess());
         Assert.assertEquals(ltra.getTargets().length, 1);
         Assert.assertTrue(ltra.getTargets()[0].isDsml());
@@ -92,8 +91,7 @@ public class RealCommTest {
                         .dsmlAttribute("description", u2.getDescription())
                         .dsmlAttribute("role", u2.getRole().toArray(new String[0]))
                 )
-                .send(client)
-                .asBatch();
+                .send(client);
         Assert.assertTrue(bra.isSuccess());
     }
     
@@ -106,8 +104,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .profileDsml()
-                .send(client)
-                .asListTargets();
+                .send(client);
         Assert.assertTrue(ltra.isSuccess());
         Assert.assertEquals(ltra.getTargets().length, 1);
         Assert.assertTrue(ltra.getTargets()[0].isDsml());
@@ -140,8 +137,7 @@ public class RealCommTest {
                         .dsmlAttribute("description", u1.getDescription())
                         .dsmlAttribute("role", u1.getRole().toArray(new String[0]))
                 )
-                .send(client)
-                .asBatch();
+                .send(client);
         Assert.assertTrue(bra.isFailure());
         Assert.assertEquals(bra.getNestedResponses().length, 1);
         Assert.assertTrue(bra.getNestedResponses()[0].isUnsupportedIdentifierType());
@@ -156,8 +152,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .profileDsml()
-                .send(client)
-                .asListTargets();
+                .send(client);
         Assert.assertTrue(ltra.isSuccess());
         Assert.assertEquals(ltra.getTargets().length, 1);
         Assert.assertTrue(ltra.getTargets()[0].isDsml());
@@ -190,8 +185,7 @@ public class RealCommTest {
                         .dsmlAttribute("description", u1.getDescription())
                         .dsmlAttribute("role", u1.getRole().toArray(new String[0]))
                 )
-                .send(client)
-                .asBatch();
+                .send(client);
         Assert.assertTrue(bra.isFailure());
         Assert.assertEquals(bra.getNestedResponses().length, 2);
         Assert.assertTrue(bra.getNestedResponses()[0].isUnsupportedIdentifierType());
@@ -207,8 +201,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .profileDsml()
-                .send(client)
-                .asListTargets();
+                .send(client);
         Assert.assertTrue(ltra.isSuccess());
         Assert.assertEquals(ltra.getTargets().length, 1);
         Assert.assertTrue(ltra.getTargets()[0].isDsml());
@@ -241,8 +234,7 @@ public class RealCommTest {
                         .dsmlAttribute("description", u2.getDescription())
                         .dsmlAttribute("role", u2.getRole().toArray(new String[0]))
                 )
-                .send(client)
-                .asBatch();
+                .send(client);
         Assert.assertTrue(bra.isSuccess());
         Assert.assertEquals(bra.getNestedResponses().length, 2);
     }
@@ -256,8 +248,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .profileDsml()
-                .send(client)
-                .asListTargets();
+                .send(client);
         Assert.assertTrue(ltra.isSuccess());
         Assert.assertEquals(ltra.getTargets().length, 1);
         Assert.assertTrue(ltra.getTargets()[0].isDsml());
@@ -289,8 +280,7 @@ public class RealCommTest {
                         .dsmlAttribute("description", u2.getDescription())
                         .dsmlAttribute("role", u2.getRole().toArray(new String[0]))
                 )
-                .send(client)
-                .asBatch();
+                .send(client);
         Assert.assertTrue(bra.isFailure());
         Assert.assertEquals(bra.getNestedResponses().length, 2);
         Assert.assertTrue(bra.getNestedResponses()[0].isUnsupportedIdentifierType());
@@ -309,8 +299,7 @@ public class RealCommTest {
                     .requestId()
                     .asyncRequestId(requestId)
                     .returnResults(returnResults)
-                    .send(client)
-                    .asStatus();
+                    .send(client);
             executed = !sra.getNestedResponse().isPending();
         }
         Assert.assertTrue(sra.isSuccess());
@@ -329,8 +318,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .profileDsml()
-                .send(client)
-                .asListTargets();
+                .send(client);
         Assert.assertTrue(ltra.isSuccess());
         Assert.assertEquals(ltra.getTargets().length, 1);
         Assert.assertTrue(ltra.getTargets()[0].isDsml());
@@ -364,8 +352,7 @@ public class RealCommTest {
                         .dsmlAttribute("description", u2.getDescription())
                         .dsmlAttribute("role", u2.getRole().toArray(new String[0]))
                 )
-                .send(client)
-                .asBatch();
+                .send(client);
         Assert.assertTrue(bra.isPending());
         bra = this.waitUntilExecuted(bra.getRequestId(), true).asBatch();
         Assert.assertTrue(bra.isSuccess());
@@ -381,8 +368,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .profileDsml()
-                .send(client)
-                .asListTargets();
+                .send(client);
         Assert.assertTrue(ltra.isSuccess());
         Assert.assertEquals(ltra.getTargets().length, 1);
         Assert.assertTrue(ltra.getTargets()[0].isDsml());
@@ -416,8 +402,7 @@ public class RealCommTest {
                         .dsmlAttribute("description", u2.getDescription())
                         .dsmlAttribute("role", u2.getRole().toArray(new String[0]))
                 )
-                .send(client)
-                .asBatch();
+                .send(client);
         Assert.assertTrue(bra.isPending());
         bra = this.waitUntilExecuted(bra.getRequestId(), true).asBatch();
         Assert.assertTrue(bra.isSuccess());

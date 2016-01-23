@@ -8,6 +8,8 @@ package es.rickyepoderi.spml4jaxb.test.clone;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.builder.PsoIdentifierBuilder;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.core.ExtensibleType;
 import es.rickyepoderi.spml4jaxb.msg.core.PSOIdentifierType;
 import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlAttr;
@@ -18,7 +20,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class CloneRequestBuilder extends RequestBuilder<CloneRequestType, CloneRequestBuilder, CloneRequestAccessor> {
+public class CloneRequestBuilder extends RequestBuilder<CloneRequestType, CloneRequestBuilder, 
+        CloneRequestAccessor, CloneResponseAccessor> {
 
     static protected final ObjectFactory cloneObjectFactory = new ObjectFactory();
     
@@ -158,6 +161,11 @@ public class CloneRequestBuilder extends RequestBuilder<CloneRequestType, CloneR
         this.returnData = request.getReturnData();
         this.pso = request.getPsoID();
         return this;
+    }
+
+    @Override
+    public CloneResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asAccessor(CloneResponseAccessor.emptyResponseAccessor());
     }
     
 }

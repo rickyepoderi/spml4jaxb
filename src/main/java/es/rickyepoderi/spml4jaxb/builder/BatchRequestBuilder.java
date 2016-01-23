@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BatchRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.BatchResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.async.CancelRequestType;
 import es.rickyepoderi.spml4jaxb.msg.async.StatusRequestType;
 import es.rickyepoderi.spml4jaxb.msg.batch.BatchRequestType;
@@ -30,7 +33,7 @@ import java.util.Set;
  *
  * @author ricky
  */
-public class BatchRequestBuilder extends RequestBuilder<BatchRequestType, BatchRequestBuilder, BatchRequestAccessor> {
+public class BatchRequestBuilder extends RequestBuilder<BatchRequestType, BatchRequestBuilder, BatchRequestAccessor, BatchResponseAccessor> {
 
     public static final Set<Class> NON_BATCHABLE_REQUESTS
             = new HashSet<>(Arrays.asList(new Class[]{
@@ -121,6 +124,11 @@ public class BatchRequestBuilder extends RequestBuilder<BatchRequestType, BatchR
     public BatchRequestBuilder fromRequest(BatchRequestType request) {
         this.request = request;
         return this;
+    }
+
+    @Override
+    public BatchResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asBatch();
     }
     
 }

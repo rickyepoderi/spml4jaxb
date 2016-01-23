@@ -69,8 +69,7 @@ public class RealCommTest {
                     .requestId()
                     .asyncRequestId(requestId)
                     .returnResults(returnResults)
-                    .send(client)
-                    .asStatus();
+                    .send(client);
             executed = !sra.getNestedResponse().isPending();
         }
         Assert.assertTrue(sra.isSuccess());
@@ -89,8 +88,7 @@ public class RealCommTest {
                         .targetId(targetDsmlId)
                         .dsmlAttributes("uid")
                 )
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         int n = 0;
         while (sra.hasNext()) {
@@ -102,8 +100,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(sra.getIteratorId())
-                .send(client)
-                .asSearch();
+                .send(client);
             Assert.assertTrue(sra.isSuccess());
             while (sra.hasNext()) {
                 sra.next();
@@ -128,8 +125,7 @@ public class RealCommTest {
                                 )
                         )
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isSuccess());
         Assert.assertEquals(searchAll(), 3);
         // delete the rest
@@ -143,8 +139,7 @@ public class RealCommTest {
                                 FilterBuilder.present("description")
                         )
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isSuccess());
         Assert.assertEquals(searchAll(), 0);
     }
@@ -164,8 +159,7 @@ public class RealCommTest {
                                 )
                         )
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isPending());
         bdra = waitUntilExecuted(bdra.getRequestId(), false).asBulkDelete();
         Assert.assertTrue(bdra.isSuccess());
@@ -181,8 +175,7 @@ public class RealCommTest {
                                 FilterBuilder.present("description")
                         )
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isPending());
         bdra = waitUntilExecuted(bdra.getRequestId(), false).asBulkDelete();
         Assert.assertTrue(bdra.isSuccess());
@@ -200,8 +193,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user[role='Admin']")
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isSuccess());
         Assert.assertEquals(searchAll(), 3);
         // delete the rest
@@ -213,8 +205,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user[role='User']")
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isSuccess());
         Assert.assertEquals(searchAll(), 0);
     }
@@ -230,8 +221,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user[role='Admin']")
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isPending());
         bdra = waitUntilExecuted(bdra.getRequestId(), false).asBulkDelete();
         Assert.assertTrue(bdra.isSuccess());
@@ -245,8 +235,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user[role='User']")
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isPending());
         bdra = waitUntilExecuted(bdra.getRequestId(), false).asBulkDelete();
         Assert.assertTrue(bdra.isSuccess());
@@ -260,8 +249,7 @@ public class RealCommTest {
                 .psoId(uid)
                 .psoTargetId(targetXsdId)
                 .returnData()
-                .send(client)
-                .asLookup();
+                .send(client);
         Assert.assertTrue(lra.isSuccess());
         User u = (User) lra.getXsdObject(User.class);
         Assert.assertNotNull(u);
@@ -277,8 +265,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user")
                 )
-                .send(client)
-                .asBulkDelete();
+                .send(client);
         Assert.assertTrue(bdra.isSuccess());
     }
     
@@ -297,8 +284,7 @@ public class RealCommTest {
                 .dsmlReplace("cn", "Ricardo Martin")
                 .dsmlReplace("description", "new me")
                 .dsmlDelete("role", "User")
-                .send(client)
-                .asBulkModify();
+                .send(client);
         Assert.assertTrue(bmra.isSuccess());
         User u = getUser("ricky1");
         Assert.assertTrue(u.getRole().isEmpty());
@@ -332,8 +318,7 @@ public class RealCommTest {
                 .dsmlReplace("cn", "Ricardo Martin")
                 .dsmlReplace("description", "new me")
                 .dsmlReplace("role", "Admin", "Other")
-                .send(client)
-                .asBulkModify();
+                .send(client);
         Assert.assertTrue(bmra.isPending());
         bmra = waitUntilExecuted(bmra.getRequestId(), false).asBulkModify();
         Assert.assertTrue(bmra.isSuccess());
@@ -371,8 +356,7 @@ public class RealCommTest {
                 .xsdReplace("/usr:user/usr:cn", "<usr:cn xmlns:usr=\"urn:ddbb-spml-dsml:user\">Ricardo Martin</usr:cn>")
                 .xsdReplace("/user/password", "<usr:password xmlns:usr=\"urn:ddbb-spml-dsml:user\">ricky123</usr:password>")
                 .xsdAdd("/user", "<usr:role xmlns:usr=\"urn:ddbb-spml-dsml:user\">Test</usr:role>")
-                .send(client)
-                .asBulkModify();
+                .send(client);
         Assert.assertTrue(bmra.isSuccess());
         User u = getUser("ricky1");
         Assert.assertEquals(u.getCn(), "Ricardo Martin");
@@ -402,8 +386,7 @@ public class RealCommTest {
                 .xsdReplace("/usr:user/usr:cn", "<usr:cn xmlns:usr=\"urn:ddbb-spml-dsml:user\">Ricardo Martin</usr:cn>")
                 .xsdReplace("/user/password", "<usr:password xmlns:usr=\"urn:ddbb-spml-dsml:user\">ricky123</usr:password>")
                 .xsdAdd("/user", "<usr:role xmlns:usr=\"urn:ddbb-spml-dsml:user\">Test</usr:role>")
-                .send(client)
-                .asBulkModify();
+                .send(client);
         Assert.assertTrue(bmra.isPending());
         bmra = waitUntilExecuted(bmra.getRequestId(), false).asBulkModify();
         Assert.assertTrue(bmra.isSuccess());
@@ -432,8 +415,7 @@ public class RealCommTest {
                     .returnIdentifier()
                     .targetId(targetXsdId)
                     .xsdObject(createSampleUser(i))
-                    .send(client)
-                    .asAdd();
+                    .send(client);
         }
     }
     
@@ -450,7 +432,6 @@ public class RealCommTest {
                 .synchronous()
                 .profileXsd()
                 .send(client)
-                .asListTargets()
                 .getTargets()[0]
                 .getTargetId();
         targetDsmlId = RequestBuilder.builderForListTargets()
@@ -458,7 +439,6 @@ public class RealCommTest {
                 .synchronous()
                 .profileDsml()
                 .send(client)
-                .asListTargets()
                 .getTargets()[0]
                 .getTargetId();
     }

@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.StatusRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.StatusResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.async.StatusRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -19,7 +22,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class StatusRequestBuilder extends RequestBuilder<StatusRequestType, StatusRequestBuilder, StatusRequestAccessor> {
+public class StatusRequestBuilder extends RequestBuilder<StatusRequestType, StatusRequestBuilder, 
+        StatusRequestAccessor, StatusResponseAccessor> {
 
     protected StatusRequestBuilder() {
         super(new StatusRequestType());
@@ -59,6 +63,11 @@ public class StatusRequestBuilder extends RequestBuilder<StatusRequestType, Stat
     public StatusRequestBuilder fromRequest(StatusRequestType request) {
         this.request = request;
         return this;
+    }
+
+    @Override
+    public StatusResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asStatus();
     }
     
 }

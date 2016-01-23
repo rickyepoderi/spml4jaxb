@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.UpdatesIterateRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.UpdatesResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.updates.IterateRequestType;
 import es.rickyepoderi.spml4jaxb.msg.updates.ResultsIteratorType;
 import javax.xml.bind.JAXBElement;
@@ -20,7 +23,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class UpdatesIterateRequestBuilder extends RequestBuilder<IterateRequestType, UpdatesIterateRequestBuilder, UpdatesIterateRequestAccessor> {
+public class UpdatesIterateRequestBuilder extends RequestBuilder<IterateRequestType, UpdatesIterateRequestBuilder, 
+        UpdatesIterateRequestAccessor, UpdatesResponseAccessor> {
 
     public UpdatesIterateRequestBuilder() {
         super(new IterateRequestType());
@@ -47,6 +51,11 @@ public class UpdatesIterateRequestBuilder extends RequestBuilder<IterateRequestT
     public UpdatesIterateRequestBuilder fromRequest(IterateRequestType request) {
         this.request = request;
         return this;
+    }
+
+    @Override
+    public UpdatesResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asUpdates();
     }
     
 }

@@ -69,8 +69,7 @@ public class RealCommTest {
                     .requestId()
                     .asyncRequestId(requestId)
                     .returnResults(returnResults)
-                    .send(client)
-                    .asStatus();
+                    .send(client);
             executed = !sra.getNestedResponse().isPending();
         }
         Assert.assertTrue(sra.isSuccess());
@@ -96,8 +95,7 @@ public class RealCommTest {
                                 )
                         )
                 )
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNotNull(sra.getIteratorId());
         String iterId = sra.getIteratorId();
@@ -113,8 +111,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNull(sra.getIteratorId());
         Assert.assertTrue(sra.hasNext());
@@ -127,8 +124,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asCloseIterator();
+                .send(client);
         Assert.assertTrue(cira.isSuccess());
     }
     
@@ -144,8 +140,7 @@ public class RealCommTest {
                         .targetId(targetDsmlId)
                         .dsmlAttributes("uid")
                 )
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNotNull(sra.getIteratorId());
         String iterId = sra.getIteratorId();
@@ -161,8 +156,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNotNull(sra.getIteratorId());
         iterId = sra.getIteratorId();
@@ -178,8 +172,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNull(sra.getIteratorId());
         Assert.assertTrue(sra.hasNext());
@@ -195,16 +188,14 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asCloseIterator();
+                .send(client);
         Assert.assertTrue(cira.isSuccess());
         // check the iterator no longer exists
         cira = RequestBuilder.builderForCloseIterator()
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asCloseIterator();
+                .send(client);
         Assert.assertFalse(cira.isSuccess());
         Assert.assertTrue(cira.isInvalidIdentifier());
     }
@@ -221,8 +212,7 @@ public class RealCommTest {
                         .targetId(targetDsmlId)
                         .dsmlAttributes("uid")
                 )
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isPending());
         String requestId = sra.getRequestId();
         sra = waitUntilExecuted(requestId, true).asSearch();
@@ -241,8 +231,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNotNull(sra.getIteratorId());
         iterId = sra.getIteratorId();
@@ -258,8 +247,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNull(sra.getIteratorId());
         Assert.assertTrue(sra.hasNext());
@@ -275,16 +263,14 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asCloseIterator();
+                .send(client);
         Assert.assertTrue(cira.isSuccess());
         // check the iterator no longer exists
         cira = RequestBuilder.builderForCloseIterator()
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asCloseIterator();
+                .send(client);
         Assert.assertFalse(cira.isSuccess());
         Assert.assertTrue(cira.isInvalidIdentifier());
     }
@@ -313,8 +299,7 @@ public class RealCommTest {
                                 )
                         )
                 )
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNull(sra.getIteratorId());
         Assert.assertTrue(sra.hasNext());
@@ -335,8 +320,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user[role='Admin']")
                 )
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNotNull(sra.getIteratorId());
         String iterId = sra.getIteratorId();
@@ -352,8 +336,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNull(sra.getIteratorId());
         Assert.assertTrue(sra.hasNext());
@@ -366,8 +349,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asCloseIterator();
+                .send(client);
         Assert.assertTrue(cira.isSuccess());
     }
     
@@ -385,8 +367,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user")
                 )
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNotNull(sra.getIteratorId());
         String iterId = sra.getIteratorId();
@@ -402,8 +383,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNotNull(sra.getIteratorId());
         iterId = sra.getIteratorId();
@@ -419,8 +399,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNull(sra.getIteratorId());
         Assert.assertTrue(sra.hasNext());
@@ -436,16 +415,14 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asCloseIterator();
+                .send(client);
         Assert.assertTrue(cira.isSuccess());
         // check the iterator no longer exists
         cira = RequestBuilder.builderForCloseIterator()
                 .synchronous()
                 .requestId()
                 .iteratorId(iterId)
-                .send(client)
-                .asCloseIterator();
+                .send(client);
         Assert.assertFalse(cira.isSuccess());
         Assert.assertTrue(cira.isInvalidIdentifier());
     }
@@ -461,8 +438,7 @@ public class RealCommTest {
                         .targetId(targetXsdId)
                         .xsdXPathSelection("//user[uid='ricky2' and (description='description1' or role='User')]")
                 )
-                .send(client)
-                .asSearch();
+                .send(client);
         Assert.assertTrue(sra.isSuccess());
         Assert.assertNull(sra.getIteratorId());
         Assert.assertTrue(sra.hasNext());
@@ -487,7 +463,6 @@ public class RealCommTest {
                 .synchronous()
                 .profileXsd()
                 .send(client)
-                .asListTargets()
                 .getTargets()[0]
                 .getTargetId();
         targetDsmlId = RequestBuilder.builderForListTargets()
@@ -495,7 +470,6 @@ public class RealCommTest {
                 .synchronous()
                 .profileDsml()
                 .send(client)
-                .asListTargets()
                 .getTargets()[0]
                 .getTargetId();
         for (int i = 1; i <= 6; i++) {
@@ -505,8 +479,7 @@ public class RealCommTest {
                     .returnIdentifier()
                     .targetId(targetXsdId)
                     .xsdObject(createSampleUser(i))
-                    .send(client)
-                    .asAdd();
+                    .send(client);
         }
     }
 

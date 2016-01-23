@@ -5,6 +5,7 @@
  */
 package es.rickyepoderi.spml4jaxb.test.sim;
 
+import es.rickyepoderi.spml4jaxb.accessor.ListTargetsResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
 import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.client.SOAPClient;
@@ -36,7 +37,7 @@ public class SIMClient extends SOAPClient {
         OperationalNameValuePair pass = new OperationalNameValuePair();
         pass.setName(OP_PASSWORD);
         pass.setValue(password);
-        ResponseAccessor ltra = RequestBuilder.builderForListTargets()
+        ListTargetsResponseAccessor ltra = RequestBuilder.builderForListTargets()
                 .synchronous()
                 .operationalObject(user)
                 .operationalObject(pass)
@@ -44,7 +45,7 @@ public class SIMClient extends SOAPClient {
         if (!ltra.isSuccess()) {
             throw new SpmlException(ltra.getErrorMessagesInOne());
         }
-        return ltra;
+        return ltra.asUnknown();
     }
     
     protected final void refreshSession(ResponseAccessor res) {

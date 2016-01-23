@@ -12,7 +12,6 @@ package es.rickyepoderi.spml4jaxb.client;
 
 import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
-import es.rickyepoderi.spml4jaxb.builder.RequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import java.io.IOException;
 import java.io.StringWriter;

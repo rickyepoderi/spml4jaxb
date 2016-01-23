@@ -12,6 +12,9 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResetPasswordRequestAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.ResetPasswordResponseAccessor;
+import es.rickyepoderi.spml4jaxb.client.SpmlException;
+import es.rickyepoderi.spml4jaxb.client.SpmlRequestor;
 import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordRequestType;
 import javax.xml.bind.JAXBElement;
 
@@ -19,7 +22,8 @@ import javax.xml.bind.JAXBElement;
  *
  * @author ricky
  */
-public class ResetPasswordRequestBuilder extends RequestBuilder<ResetPasswordRequestType, ResetPasswordRequestBuilder, ResetPasswordRequestAccessor> {
+public class ResetPasswordRequestBuilder extends RequestBuilder<ResetPasswordRequestType, ResetPasswordRequestBuilder, 
+        ResetPasswordRequestAccessor, ResetPasswordResponseAccessor> {
 
     protected ResetPasswordRequestBuilder() {
         super(new ResetPasswordRequestType());
@@ -42,6 +46,11 @@ public class ResetPasswordRequestBuilder extends RequestBuilder<ResetPasswordReq
         this.request = request;
         this.pso = request.getPsoID();
         return this;
+    }
+
+    @Override
+    public ResetPasswordResponseAccessor send(SpmlRequestor client) throws SpmlException {
+        return this.sendInternal(client).asResetPassword();
     }
     
 }

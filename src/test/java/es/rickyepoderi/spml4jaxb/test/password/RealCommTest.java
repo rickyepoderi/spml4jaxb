@@ -60,8 +60,7 @@ public class RealCommTest {
                     .requestId()
                     .asyncRequestId(requestId)
                     .returnResults(returnResults)
-                    .send(client)
-                    .asStatus();
+                    .send(client);
             executed = !sra.getNestedResponse().isPending();
         }
         Assert.assertTrue(sra.isSuccess());
@@ -83,8 +82,7 @@ public class RealCommTest {
                 .psoTargetId(targetId)
                 .currentPassword(previousPassword)
                 .password(user.getPassword())
-                .send(client)
-                .asSetPassword();
+                .send(client);
         Assert.assertTrue(spra.isPending());
         String requestId = spra.getRequestId();
         spra = waitUntilExecuted(requestId, true).asSetPassword();
@@ -96,8 +94,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(user.getPassword())
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isPending());
         requestId = vpra.getRequestId();
         vpra = waitUntilExecuted(requestId, true).asValidatePassword();
@@ -110,8 +107,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(previousPassword)
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isPending());
         requestId = vpra.getRequestId();
         vpra = waitUntilExecuted(requestId, true).asValidatePassword();
@@ -129,8 +125,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asResetPassword();
+                .send(client);
         Assert.assertTrue(rpra.isPending());
         String requestId = rpra.getRequestId();
         rpra = waitUntilExecuted(requestId, true).asResetPassword();
@@ -144,8 +139,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(user.getPassword())
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isPending());
         requestId = vpra.getRequestId();
         vpra = waitUntilExecuted(requestId, true).asValidatePassword();
@@ -158,8 +152,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(previousPassword)
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isPending());
         requestId = vpra.getRequestId();
         vpra = waitUntilExecuted(requestId, true).asValidatePassword();
@@ -176,8 +169,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .remainingLoggings(0)
-                .send(client)
-                .asExpirePassword();
+                .send(client);
         Assert.assertTrue(epra.isPending());
         String requestId = epra.getRequestId();
         epra = waitUntilExecuted(requestId, true).asExpirePassword();
@@ -189,8 +181,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(user.getPassword())
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isPending());
         requestId = vpra.getRequestId();
         vpra = waitUntilExecuted(requestId, true).asValidatePassword();
@@ -203,8 +194,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .remainingLoggings(1)
-                .send(client)
-                .asExpirePassword();
+                .send(client);
         Assert.assertTrue(epra.isPending());
         requestId = epra.getRequestId();
         epra = waitUntilExecuted(requestId, true).asExpirePassword();
@@ -216,8 +206,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(user.getPassword())
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isPending());
         requestId = vpra.getRequestId();
         vpra = waitUntilExecuted(requestId, true).asValidatePassword();
@@ -230,8 +219,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(user.getPassword())
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isPending());
         requestId = vpra.getRequestId();
         vpra = waitUntilExecuted(requestId, true).asValidatePassword();
@@ -243,8 +231,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asResetPassword();
+                .send(client);
         Assert.assertTrue(rpra.isPending());
         requestId = rpra.getRequestId();
         rpra = waitUntilExecuted(requestId, true).asResetPassword();
@@ -265,8 +252,7 @@ public class RealCommTest {
                 .psoTargetId(targetId)
                 .currentPassword(previousPassword)
                 .password(user.getPassword())
-                .send(client)
-                .asSetPassword();
+                .send(client);
         Assert.assertTrue(spra.isSuccess());
         // validate the new password
         ValidatePasswordResponseAccessor vpra = RequestBuilder.builderForValidatePassword()
@@ -275,8 +261,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(user.getPassword())
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isSuccess());
         Assert.assertTrue(vpra.isValid());
         // previous password is wrong
@@ -286,8 +271,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(previousPassword)
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isSuccess());
         Assert.assertFalse(vpra.isValid());
     }
@@ -301,8 +285,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asResetPassword();
+                .send(client);
         Assert.assertTrue(rpra.isSuccess());
         Assert.assertNotNull(rpra.getPassword());
         user.setPassword(rpra.getPassword());
@@ -313,8 +296,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(user.getPassword())
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isSuccess());
         Assert.assertTrue(vpra.isValid());
         // previous password is wrong
@@ -324,8 +306,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(previousPassword)
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isSuccess());
         Assert.assertFalse(vpra.isValid());
     }
@@ -339,8 +320,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .remainingLoggings(0)
-                .send(client)
-                .asExpirePassword();
+                .send(client);
         Assert.assertTrue(epra.isSuccess());
         // good password does not work
          ValidatePasswordResponseAccessor vpra = RequestBuilder.builderForValidatePassword()
@@ -349,8 +329,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(user.getPassword())
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isSuccess());
         Assert.assertFalse(vpra.isValid());
         // expire with one attempt
@@ -360,8 +339,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .remainingLoggings(1)
-                .send(client)
-                .asExpirePassword();
+                .send(client);
         Assert.assertTrue(epra.isSuccess());
         vpra = RequestBuilder.builderForValidatePassword()
                 .synchronous()
@@ -369,8 +347,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(user.getPassword())
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isSuccess());
         Assert.assertTrue(vpra.isValid());
         vpra = RequestBuilder.builderForValidatePassword()
@@ -379,8 +356,7 @@ public class RealCommTest {
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
                 .password(user.getPassword())
-                .send(client)
-                .asValidatePassword();
+                .send(client);
         Assert.assertTrue(vpra.isSuccess());
         Assert.assertFalse(vpra.isValid());
         // reset the password to disable expiration
@@ -389,8 +365,7 @@ public class RealCommTest {
                 .requestId()
                 .psoId(user.getUid())
                 .psoTargetId(targetId)
-                .send(client)
-                .asResetPassword();
+                .send(client);
         Assert.assertTrue(rpra.isSuccess());
         Assert.assertNotNull(rpra.getPassword());
         user.setPassword(rpra.getPassword());
@@ -409,7 +384,6 @@ public class RealCommTest {
                 .synchronous()
                 .profileXsd()
                 .send(client)
-                .asListTargets()
                 .getTargets()[0]
                 .getTargetId();
         RequestBuilder.builderForAdd()
@@ -418,8 +392,7 @@ public class RealCommTest {
                 .returnIdentifier()
                 .targetId(targetId)
                 .xsdObject(user)
-                .send(client)
-                .asAdd();
+                .send(client);
     }
 
     @AfterClass
