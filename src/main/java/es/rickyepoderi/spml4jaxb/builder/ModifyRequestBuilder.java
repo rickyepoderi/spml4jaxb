@@ -23,16 +23,26 @@ import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlModification;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the modify request. The modify operation is a function in the core
+ * capability as defined in SPMLv2. This method modifies an existing object from
+ * the target. The modification uses an intermediate class to manage the
+ * different modifications can be sent (DSML and XSD).</p>
+ * 
  * @author ricky
  */
 public class ModifyRequestBuilder extends ModificationRequestBuilder<ModifyRequestType, ModifyRequestBuilder, 
         ModifyRequestAccessor, ModifyResponseAccessor> {
 
+    /**
+     * Constructor for an empty modify request builder.
+     */
     protected  ModifyRequestBuilder() {
         super(new ModifyRequestType());
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ModifyRequestBuilder dsmlModification(DsmlModification dsmlMod) {
         ModificationType spmlMod = new ModificationType();
@@ -41,6 +51,9 @@ public class ModifyRequestBuilder extends ModificationRequestBuilder<ModifyReque
         return this;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ModifyRequestBuilder xsdModification(ModificationModeType type, String xpath, Object o) {
         ModificationType mod = new ModificationType();
@@ -56,6 +69,9 @@ public class ModifyRequestBuilder extends ModificationRequestBuilder<ModifyReque
         return this;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<ModifyRequestType> build() {
         request.setPsoID(pso);
@@ -63,6 +79,9 @@ public class ModifyRequestBuilder extends ModificationRequestBuilder<ModifyReque
         return getCoreObjectFactory().createModifyRequest(request);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ModifyRequestAccessor asAccessor() {
         request.setPsoID(pso);
@@ -70,6 +89,9 @@ public class ModifyRequestBuilder extends ModificationRequestBuilder<ModifyReque
         return BaseRequestAccessor.accessorForRequest(request).asModify();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ModifyRequestBuilder fromRequest(ModifyRequestType request) {
         this.request = request;
@@ -78,9 +100,12 @@ public class ModifyRequestBuilder extends ModificationRequestBuilder<ModifyReque
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ModifyResponseAccessor send(SpmlRequestor client) throws SpmlException {
-        return this.sendInternal(client).asModify();
+        return this.sendGeneric(client).asModify();
     }
     
 }

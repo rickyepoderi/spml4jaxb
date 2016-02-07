@@ -12,31 +12,46 @@ package es.rickyepoderi.spml4jaxb.builder;
 
 import es.rickyepoderi.spml4jaxb.accessor.ModifyResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
-import es.rickyepoderi.spml4jaxb.msg.core.LookupResponseType;
 import es.rickyepoderi.spml4jaxb.msg.core.ModifyResponseType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the modify response. The modify operation is a function in the core
+ * capability as defined in SPMLv2. This method modifies an existing object from
+ * the target. The response has no special properties because it just manages 
+ * the return data whose methods are inherited from the base response builder.</p>
+ * 
  * @author ricky
  */
 public class ModifyResponseBuilder extends ResponseBuilder<ModifyResponseType, ModifyResponseBuilder, ModifyResponseAccessor> {
 
+    /**
+     * Constructor for an empty modify response builder.
+     */
     protected ModifyResponseBuilder() {
         super(new ModifyResponseType());
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<ModifyResponseType> build() {
         response.setPso(pso);
         return getCoreObjectFactory().createModifyResponse(response);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ModifyResponseAccessor asAccessor() {
         return BaseResponseAccessor.accessorForResponse(response).asModify();
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ModifyResponseBuilder fromResponse(ModifyResponseType response) {
         this.response = response;

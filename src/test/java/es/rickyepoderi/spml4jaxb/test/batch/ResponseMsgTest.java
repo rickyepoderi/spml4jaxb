@@ -14,6 +14,7 @@ import es.rickyepoderi.spml4jaxb.accessor.AddResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BatchResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.BaseResponseAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.ResponseAccessor;
+import es.rickyepoderi.spml4jaxb.accessor.SetPasswordResponseAccessor;
 import es.rickyepoderi.spml4jaxb.builder.AddResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.BatchResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
@@ -104,11 +105,11 @@ public class ResponseMsgTest {
         User other = (User) add.getXsdObject(User.class);
         Assert.assertEquals(other, u);
         // password
-        BaseResponseAccessor pass = res.getNestedResponses()[1];
+        SetPasswordResponseAccessor pass = res.getNestedResponse("set-password-id").asSetPassword();
         Assert.assertTrue(pass.isSuccess());
         Assert.assertEquals(pass.getRequestId(), "set-password-id");
         // suspend
-        BaseResponseAccessor sus = res.getNestedResponses()[2];
+        BaseResponseAccessor sus = res.getNestedResponse("suspend-id");
         Assert.assertTrue(sus.isSuccess());
         Assert.assertEquals(sus.getRequestId(), "suspend-id");
     }

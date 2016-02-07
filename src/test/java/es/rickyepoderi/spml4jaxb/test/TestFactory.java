@@ -21,6 +21,7 @@ import es.rickyepoderi.spml4jaxb.msg.core.DeleteRequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ListTargetsRequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.LookupRequestType;
 import es.rickyepoderi.spml4jaxb.msg.core.ModifyRequestType;
+import es.rickyepoderi.spml4jaxb.msg.core.RequestType;
 import es.rickyepoderi.spml4jaxb.msg.password.ExpirePasswordRequestType;
 import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordRequestType;
 import es.rickyepoderi.spml4jaxb.msg.password.SetPasswordRequestType;
@@ -49,10 +50,10 @@ public class TestFactory implements SpmlMapperExecutorFactory {
 
     private UserManager um;
     private WorkQueue queue;
-    private Map<Class, SpmlExecutor> mapper;
+    private Map<Class<? extends RequestType>, SpmlExecutor> mapper;
     
     @Override
-    public Map<Class, SpmlExecutor> createMapper(JAXBContext ctx) throws SpmlException {
+    public Map<Class<? extends RequestType>, SpmlExecutor> createMapper(JAXBContext ctx) throws SpmlException {
         try {
             JDBCDataSource dataSource = new JDBCDataSource();
             dataSource.setDatabase("jdbc:hsqldb:mem:mydb");
@@ -109,7 +110,7 @@ public class TestFactory implements SpmlMapperExecutorFactory {
         return queue;
     }
     
-    public Map<Class, SpmlExecutor> getMapper() {
+    public Map<Class<? extends RequestType>, SpmlExecutor> getMapper() {
         return mapper;
     }
     

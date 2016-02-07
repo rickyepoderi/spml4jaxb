@@ -22,45 +22,78 @@ import java.util.GregorianCalendar;
 import java.util.Calendar;
 
 /**
- *
+ * <p>Builder for the SPMLv2 Suspend operation request. The suspend
+ * operation is defined inside the suspend capability (capability to
+ * enable and disable objects in the target). The suspend operation
+ * is used to disable an object. The suspend request besides the PSO identifier 
+ * to disable can send the effective date of the action (the date-time when the
+ * object will be definitely suspended).</p>
+ * 
  * @author ricky
  */
 public class SuspendRequestBuilder extends RequestBuilder<SuspendRequestType, SuspendRequestBuilder, 
         SuspendRequestAccessor, SuspendResponseAccessor> {
 
+    /**
+     * Constructor for a new suspend request builder.
+     */
     public SuspendRequestBuilder() {
         super(new SuspendRequestType());
     }
     
-    public SuspendRequestBuilder effectiveDate(Date effectiveDate) throws SpmlException {
+    /**
+     * Setter for the effective date of teh operation using a date.
+     * @param effectiveDate The date when the operation will be effective
+     * @return The same builder
+     */
+    public SuspendRequestBuilder effectiveDate(Date effectiveDate) {
         GregorianCalendar c = new GregorianCalendar();
         c.setTime(effectiveDate);
         return effectiveDate(c);
     }
     
+    /**
+     * Setter for the effective date of teh operation using a calendar.
+     * @param effectiveDate The date when the operation will be effective
+     * @return The same builder
+     */
     public SuspendRequestBuilder effectiveDate(Calendar effectiveDate) {
         GregorianCalendar c = new GregorianCalendar();
         c.setTime(effectiveDate.getTime());
         return effectiveDate(c);
     }
     
+    /**
+     * Setter for the effective date of teh operation using a gregorian calendar.
+     * @param effectiveDate The date when the operation will be effective
+     * @return The same builder
+     */
     public SuspendRequestBuilder effectiveDate(GregorianCalendar effectiveDate) {
         request.setEffectiveDate(dataTypeFactory.newXMLGregorianCalendar(effectiveDate));
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<SuspendRequestType> build() {
         request.setPsoID(pso);
         return getSuspendObjectFactory().createSuspendRequest(request);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SuspendRequestAccessor asAccessor() {
         request.setPsoID(pso);
         return BaseRequestAccessor.accessorForRequest(request).asSuspend();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SuspendRequestBuilder fromRequest(SuspendRequestType request) {
         this.request = request;
@@ -68,9 +101,12 @@ public class SuspendRequestBuilder extends RequestBuilder<SuspendRequestType, Su
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SuspendResponseAccessor send(SpmlRequestor client) throws SpmlException {
-        return this.sendInternal(client).asSuspend();
+        return this.sendGeneric(client).asSuspend();
     }
     
 }

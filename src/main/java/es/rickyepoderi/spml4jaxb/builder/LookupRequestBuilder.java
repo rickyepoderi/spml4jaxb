@@ -19,15 +19,26 @@ import es.rickyepoderi.spml4jaxb.msg.core.LookupRequestType;
 import javax.xml.bind.JAXBElement;
 
 /**
+ * <p>Builder for the Lookup request. The Lookup operation is a function in the core
+ * capability as defined in SPMLv2. This method retrieves a new object from
+ * the target. The request builder just needs the PSO identifier to retrieve
+ * and some other data like how to return the data. Those methods are derived
+ * from the Base parent class.</p>
  *
  * @author ricky
  */
 public class LookupRequestBuilder extends RequestBuilder<LookupRequestType, LookupRequestBuilder, LookupRequestAccessor, LookupResponseAccessor>{
 
+    /**
+     * Constructor for an empty lookup request builder.
+     */
     protected LookupRequestBuilder() {
         super(new LookupRequestType());
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<LookupRequestType> build() {
         request.setPsoID(pso);
@@ -35,6 +46,9 @@ public class LookupRequestBuilder extends RequestBuilder<LookupRequestType, Look
         return getCoreObjectFactory().createLookupRequest(request);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LookupRequestAccessor asAccessor() {
         request.setPsoID(pso);
@@ -42,6 +56,9 @@ public class LookupRequestBuilder extends RequestBuilder<LookupRequestType, Look
         return BaseRequestAccessor.accessorForRequest(request).asLookup();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LookupRequestBuilder fromRequest(LookupRequestType request) {
         this.request = request;
@@ -50,9 +67,12 @@ public class LookupRequestBuilder extends RequestBuilder<LookupRequestType, Look
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LookupResponseAccessor send(SpmlRequestor client) throws SpmlException {
-        return this.sendInternal(client).asLookup();
+        return this.sendGeneric(client).asLookup();
     }
     
 }

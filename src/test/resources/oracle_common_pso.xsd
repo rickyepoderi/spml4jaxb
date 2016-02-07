@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema elementFormDefault="qualified" jaxb:extensionBindingPrefixes="xjc" jaxb:version="1.0" targetNamespace="http://xmlns.oracle.com/idm/identity/PSO"
+     xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pso="http://xmlns.oracle.com/idm/identity/PSO"
+     xmlns:spml="urn:oasis:names:tc:SPML:2:0" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:import namespace="urn:oasis:names:tc:SPML:2:0" schemaLocation="pstc_spmlv2_core.xsd"/>
+    <xs:annotation>
+        <xs:appinfo>
+            <jaxb:schemaBindings>
+                <jaxb:package name="oracle.iam.wsschema.model.common.pso"/>
+            </jaxb:schemaBindings>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:complexType name="localizedString">
+        <xs:annotation>
+            <xs:documentation>A type that contains a string that has been expressed in the
+                language indicated by its language attribute (an empty language
+                attribute indicates that the language is either unknown or is
+                the system default).</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="locale" type="xs:language" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="localizedStrings">
+        <xs:annotation>
+            <xs:documentation>A type that contains one or more strings that have all been
+                expressed in the language indicated by its language attribute
+                (an empty language attribute indicates that the language is
+                either unknown or is the system default).</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="value" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="locale" type="xs:language" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="localizedSingleValuedString">
+        <xs:annotation>
+            <xs:documentation>A type that contains a single string value which may have one
+                or more localized representations.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="value" type="pso:localizedString"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="localizedMultiValuedString">
+        <xs:annotation>
+            <xs:documentation>A type that contains one or more string values, each of which
+                may have one or more localized representations.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="values" type="pso:localizedStrings"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="multiValuedString">
+        <xs:annotation>
+            <xs:documentation>A type that contains one or more string values.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="value" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="multiValuedBinary">
+        <xs:annotation>
+            <xs:documentation>A type that contains one or more binary values.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="value" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="telephoneNumbers">
+        <xs:annotation>
+            <xs:documentation source="http://www.itu.int/rec/T-REC-E.123/en">A type that contains one or more telephone numbers.  Each
+                telephone number value SHOULD conform to the Notation for
+                National and International Telephone Numbers specification
+                E.123.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="number" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="DsmlValue">
+        <xs:annotation>
+            <xs:documentation source="http://www.oasis-open.org/specs/index.php#dsmlv2">A type that models a single value of an LDAP attribute.</xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="xs:string xs:base64Binary xs:anyURI"/>
+    </xs:simpleType>
+    <xs:simpleType name="AttributeDescriptionValue">
+        <xs:annotation>
+            <xs:documentation source="http://www.oasis-open.org/specs/index.php#dsmlv2">A type that models the name of an LDAP attribute.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="((([0-2](\.[0-9]+)+)|([a-zA-Z]+([a-zA-Z0-9\s]|[\-])*))(;([a-zA-Z0-9]|[\-])+)*)"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="DsmlAttr">
+        <xs:annotation>
+            <xs:documentation source="http://www.oasis-open.org/specs/index.php#dsmlv2">A type that models an LDAP attribute with multiple values.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="pso:DsmlValue"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="pso:AttributeDescriptionValue" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="unboundedAttributes">
+        <xs:annotation>
+            <xs:documentation>A type that contains one or more unbounded attributes, each
+                with one or more values.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="attr" type="pso:DsmlAttr"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="identity">
+        <xs:annotation>
+            <xs:documentation>A type that represents an Identity entity (typically backed by
+                an LDAP object that includes the inetOrgPerson objectclass).</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="attributes" type="pso:unboundedAttributes"/>
+            <xs:element default="1970-01-01T00:00:00.0-00:00" minOccurs="0" name="activeEndDate" type="xs:dateTime"/>
+            <xs:element default="1970-01-01T00:00:00.0-00:00" minOccurs="0" name="activeStartDate"
+                 type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="commonName" type="pso:localizedMultiValuedString"/>
+            <xs:element minOccurs="0" name="countryName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation source="http://www.iso.org/iso/country_codes/iso_3166_code_lists/english_country_names_and_code_elements.htm">A type that contains a two-letter ISO-3166 country code.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="departmentNumber" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="description" type="pso:localizedMultiValuedString"/>
+            <xs:element minOccurs="0" name="displayName" type="pso:localizedSingleValuedString"/>
+            <xs:element minOccurs="0" name="employeeNumber" type="xs:string"/>
+            <xs:element minOccurs="0" name="employeeType" type="pso:localizedMultiValuedString"/>
+            <xs:element minOccurs="0" name="facsimileTelephoneNumber" type="pso:telephoneNumbers"/>
+            <xs:element minOccurs="0" name="generationQualifier" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="givenName" type="pso:multiValuedString"/>
+            <xs:element default="1970-01-01T00:00:00.0-00:00" minOccurs="0" name="hireDate" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="homePhone" type="pso:telephoneNumbers"/>
+            <xs:element minOccurs="0" name="homePostalAddress" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="initials" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="localityName" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="manager" type="xs:string"/>
+            <xs:element minOccurs="0" name="mail" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="middleName" type="xs:string"/>
+            <xs:element minOccurs="0" name="mobile" type="pso:telephoneNumbers"/>
+            <xs:element minOccurs="0" name="organization" type="pso:localizedMultiValuedString"/>
+            <xs:element minOccurs="0" name="organizationUnit" type="pso:localizedMultiValuedString"/>
+            <xs:element minOccurs="0" name="pager" type="pso:telephoneNumbers"/>
+            <xs:element minOccurs="0" name="password" type="pso:multiValuedBinary"/>
+            <xs:element minOccurs="0" name="postalAddress" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="postalCode" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="postOfficeBox" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="preferredLanguage" type="xs:string"/>
+            <xs:element minOccurs="0" name="state" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="street" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="surname" type="pso:localizedMultiValuedString"/>
+            <xs:element minOccurs="0" name="telephoneNumber" type="pso:telephoneNumbers"/>
+            <xs:element minOccurs="0" name="title" type="pso:localizedMultiValuedString"/>
+            <xs:element minOccurs="0" name="userId" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="username" type="pso:multiValuedString"/>
+            <xs:element minOccurs="0" name="userType" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="role">
+        <xs:annotation>
+            <xs:documentation>A type that represents a Role entity (typically backed by an
+                LDAP object that includes the groupOfUniqueNames or groupOfNames
+                objectclass).</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="attributes" type="pso:unboundedAttributes"/>
+            <xs:element name="commonName" type="pso:localizedMultiValuedString"/>
+            <xs:element minOccurs="0" name="description" type="pso:localizedMultiValuedString"/>
+            <xs:element minOccurs="0" name="displayName" type="pso:localizedSingleValuedString"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="member">
+        <xs:annotation>
+            <xs:documentation>A type that represents a Role to which an Identity belongs.
+                Physically, this is mapped to the role&apos;s (unique)member
+                attribute.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="identityPSOID" type="xs:string"/>
+            <xs:element name="rolePSOID" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="identityWithRelations">
+        <xs:annotation>
+            <xs:documentation>A type that represents an identity entity and its relationships
+                to other identities and roles.  This representation is used
+                internally by IDx, but is not exposed in SPMLv2.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="identity" type="pso:identity"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="managerGUID" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="roleGUID" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="roleWithRelations">
+        <xs:annotation>
+            <xs:documentation>A type that represents a role entity and its relationships to
+                other identities and roles.  This representation is used
+                internally by IDx, but is not exposed in SPMLv2.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="role" type="pso:role"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="ownerIdentityGUID" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="ownerRoleGUID" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="inheritFromRoleGUID" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="inheritByRoleGUID" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ProvisioningObjectType">
+        <xs:complexContent>
+            <xs:extension base="spml:ExtensibleType">
+                <xs:choice>
+                    <xs:element name="identity" type="pso:identity"/>
+                    <xs:element name="role" type="pso:role"/>
+                    <xs:element name="member" type="pso:member"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="identity" type="pso:identity"/>
+    <xs:element name="role" type="pso:role"/>
+    <xs:element name="identityWithRelations" type="pso:identityWithRelations"/>
+    <xs:element name="roleWithRelations" type="pso:roleWithRelations"/>
+    <xs:element name="member" type="pso:member"/>
+</xs:schema>

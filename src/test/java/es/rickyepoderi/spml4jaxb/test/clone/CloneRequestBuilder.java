@@ -165,7 +165,7 @@ public class CloneRequestBuilder extends RequestBuilder<CloneRequestType, CloneR
 
     @Override
     public CloneResponseAccessor send(SpmlRequestor client) throws SpmlException {
-        return this.sendInternal(client).asAccessor(CloneResponseAccessor.emptyResponseAccessor());
+        return this.sendGeneric(client).asAccessor(CloneResponseAccessor.emptyResponseAccessor());
     }
     
 }

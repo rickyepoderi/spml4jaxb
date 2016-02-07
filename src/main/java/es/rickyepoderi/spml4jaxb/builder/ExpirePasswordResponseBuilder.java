@@ -16,20 +16,33 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the SPMLv2 ExpirePassword operation response. The ExpirePassword
+ * operation is defined inside the password capability (capability to perform
+ * password management). The ExpirePassword method is used to expire a user
+ * password. The response has no extra properties.</p>
+ * 
  * @author ricky
  */
 public class ExpirePasswordResponseBuilder extends ResponseBuilder<ResponseType, ExpirePasswordResponseBuilder, ExpirePasswordResponseAccessor> {
 
+    /**
+     * Constructor for an empty ExpirePassword response builder.
+     */
     protected ExpirePasswordResponseBuilder() {
         super(new ResponseType());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<ResponseType> build() {
         return getPasswordObjectFactory().createExpirePasswordResponse(response);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ExpirePasswordResponseAccessor asAccessor() {
         return BaseResponseAccessor.accessorForResponse(response).asExpirePassword();

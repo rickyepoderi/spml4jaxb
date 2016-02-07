@@ -19,33 +19,54 @@ import es.rickyepoderi.spml4jaxb.msg.password.ExpirePasswordRequestType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the SPMLv2 ExpirePassword operation request. The ExpirePassword
+ * operation is defined inside the password capability (capability to perform
+ * password management). The ExpirePassword method is used to expire a user
+ * password (the standard gives the possibility of giving some extra tries).</p>
+ * 
  * @author ricky
  */
 public class ExpirePasswordRequestBuilder extends RequestBuilder<ExpirePasswordRequestType, ExpirePasswordRequestBuilder, 
         ExpirePasswordRequestAccessor, ExpirePasswordResponseAccessor> {
 
+    /**
+     * Constructor for an empty ExpirePassword request builder.
+     */
     protected ExpirePasswordRequestBuilder() {
         super(new ExpirePasswordRequestType());
     }
     
+    /**
+     * Setter for the remaining loggings in the request.
+     * @param remainingLoggings The remaining loggings to set in the request
+     * @return The same builder
+     */
     public ExpirePasswordRequestBuilder remainingLoggings(int remainingLoggings) {
         request.setRemainingLogins(remainingLoggings);
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<ExpirePasswordRequestType> build() {
         request.setPsoID(pso);
         return getPasswordObjectFactory().createExpirePasswordRequest(request);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ExpirePasswordRequestAccessor asAccessor() {
         request.setPsoID(pso);
         return BaseRequestAccessor.accessorForRequest(request).asExpirePassword();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ExpirePasswordRequestBuilder fromRequest(ExpirePasswordRequestType request) {
         this.request = request;
@@ -53,9 +74,12 @@ public class ExpirePasswordRequestBuilder extends RequestBuilder<ExpirePasswordR
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ExpirePasswordResponseAccessor send(SpmlRequestor client) throws SpmlException {
-        return this.sendInternal(client).asExpirePassword();
+        return this.sendGeneric(client).asExpirePassword();
     }
     
 }

@@ -13,34 +13,46 @@ package es.rickyepoderi.spml4jaxb.client;
 import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 
 /**
- *
+ * <p>SpmlException to be used inside clients. The idea of the exception is
+ * making the client as generic as possible.</p>
+ * 
  * @author ricky
  */
 public class SpmlException extends Exception {
     
-    private ResponseType response = null;
-    
+    /**
+     * Empty constructor.
+     */
     public SpmlException() {
         super();
     }
     
+    /**
+     * Constructor using the message.
+     * 
+     * @param message The message for the exception
+     */
     public SpmlException(String message) {
         super(message);
     }
     
+    /**
+     * Constructor with a cause.
+     * 
+     * @param t The cause exception
+     */
     public SpmlException(Throwable t) {
         super(t);
     }
     
+    /**
+     * Constructor with a cause but using another message.
+     * 
+     * @param message The message for the exception
+     * @param t The cause exception
+     */
     public SpmlException(String message, Throwable t) {
         super(message, t);
     }
     
-    public SpmlException(ResponseType response) {
-        this.response = response;
-    }
-    
-    public boolean hasResponse() {
-        return this.response != null;
-    }
 }

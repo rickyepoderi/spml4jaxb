@@ -65,6 +65,7 @@
           <parallel>false</parallel>
           <excludes>
             <exclude>es.rickyepoderi.spml4jaxb.test.sim.*</exclude>
+            <exclude>es.rickyepoderi.spml4jaxb.test.oim.*</exclude>
           </excludes>
         </configuration>
       </plugin>

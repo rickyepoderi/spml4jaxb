@@ -16,20 +16,34 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the SPMLv2 SetPassword operation response. The SetPassword
+ * operation is defined inside the password capability (capability to perform
+ * password management). This operation is used to change the password
+ * of an object (user) passing the password. The response has no special
+ * properties.</p>
+ * 
  * @author ricky
  */
 public class SetPasswordResponseBuilder extends ResponseBuilder<ResponseType, SetPasswordResponseBuilder, SetPasswordResponseAccessor> {
 
+    /**
+     * Constructor for a new set password response builder.
+     */
     protected SetPasswordResponseBuilder() {
         super(new ResponseType());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<ResponseType> build() {
          return getPasswordObjectFactory().createSetPasswordResponse(response);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SetPasswordResponseAccessor asAccessor() {
         return BaseResponseAccessor.accessorForResponse(response).asSetPassword();

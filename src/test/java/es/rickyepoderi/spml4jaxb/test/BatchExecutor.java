@@ -15,6 +15,7 @@ import es.rickyepoderi.spml4jaxb.accessor.BaseRequestAccessor;
 import es.rickyepoderi.spml4jaxb.accessor.RequestAccessor;
 import es.rickyepoderi.spml4jaxb.builder.BatchResponseBuilder;
 import es.rickyepoderi.spml4jaxb.builder.ResponseBuilder;
+import es.rickyepoderi.spml4jaxb.msg.core.RequestType;
 import es.rickyepoderi.spml4jaxb.server.SpmlExecutor;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,9 +29,9 @@ import java.util.UUID;
  */
 public class BatchExecutor extends AsyncSpmlBaseExecutor {
 
-    private Map<Class, SpmlExecutor> mapper = null;
+    private Map<Class<? extends RequestType>, SpmlExecutor> mapper = null;
     
-    public BatchExecutor(WorkQueue queue, Map<Class, SpmlExecutor> mapper) {
+    public BatchExecutor(WorkQueue queue, Map<Class<? extends RequestType>, SpmlExecutor> mapper) {
         super(queue);
         this.mapper = mapper;
     }

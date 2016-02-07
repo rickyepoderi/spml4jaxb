@@ -16,20 +16,34 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the SPMLv2 Suspend operation response. The suspend
+ * operation is defined inside the suspend capability (capability to
+ * enable and disable objects in the target). The suspend operation
+ * is used to disable an object. The suspend response has no special 
+ * properties.<p>
+ * 
  * @author ricky
  */
 public class SuspendResponseBuilder extends ResponseBuilder<ResponseType, SuspendResponseBuilder, SuspendResponseAccessor> {
 
+    /**
+     * Constructor for a new suspend response builder.
+     */
     protected SuspendResponseBuilder() {
         super(new ResponseType());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<ResponseType> build() {
         return getSuspendObjectFactory().createSuspendResponse(response);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SuspendResponseAccessor asAccessor() {
         return BaseResponseAccessor.accessorForResponse(response).asSuspend();

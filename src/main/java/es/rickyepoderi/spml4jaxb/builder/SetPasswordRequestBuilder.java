@@ -19,38 +19,67 @@ import es.rickyepoderi.spml4jaxb.msg.password.SetPasswordRequestType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the SPMLv2 SetPassword operation request. The SetPassword
+ * operation is defined inside the password capability (capability to perform
+ * password management). This operation is used to change the password
+ * of an object (user) passing the password. The request just needs the PSO 
+ * (object to set) and the password (current password can also be sent).</p>
+ * 
  * @author ricky
  */
 public class SetPasswordRequestBuilder extends RequestBuilder<SetPasswordRequestType, SetPasswordRequestBuilder, 
         SetPasswordRequestAccessor, SetPasswordResponseAccessor> {
 
+    /**
+     * Constructor for a new set password request builder.
+     */
     protected SetPasswordRequestBuilder() {
         super(new SetPasswordRequestType());
     }
     
+    /**
+     * Setter for the password field.
+     * 
+     * @param password The new password to send
+     * @return The same builder
+     */
     public SetPasswordRequestBuilder password(String password) {
         request.setPassword(password);
         return this;
     }
     
+    /**
+     * Setter for the current password field.
+     * 
+     * @param password The current password to send
+     * @return The same builder
+     */
     public SetPasswordRequestBuilder currentPassword(String password) {
         request.setCurrentPassword(password);
         return this;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<SetPasswordRequestType> build() {
         request.setPsoID(pso);
         return getPasswordObjectFactory().createSetPasswordRequest(request);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SetPasswordRequestAccessor asAccessor() {
         request.setPsoID(pso);
         return BaseRequestAccessor.accessorForRequest(request).asSetPassword();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SetPasswordRequestBuilder fromRequest(SetPasswordRequestType request) {
         this.request = request;
@@ -58,8 +87,11 @@ public class SetPasswordRequestBuilder extends RequestBuilder<SetPasswordRequest
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SetPasswordResponseAccessor send(SpmlRequestor client) throws SpmlException {
-        return this.sendInternal(client).asSetPassword();
+        return this.sendGeneric(client).asSetPassword();
     }
 }

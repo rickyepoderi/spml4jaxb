@@ -16,35 +16,61 @@ import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveResponseType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder fo the SPMLv2 Active operation response. The active operation
+ * is defined inside the suspend capability (capability to enable, disable
+ * and know the status of an object in the repository). The Active operation
+ * id the one to know the status (enabled/active or disabled/unactive). The
+ * response only has a specific attribute <em>isActive</em> to identify
+ * if the requested PSO is currently active / enabled.</p>
+ * 
  * @author ricky
  */
 public class ActiveResponseBuilder extends ResponseBuilder<ActiveResponseType, ActiveResponseBuilder, ActiveResponseAccessor> {
     
+    /**
+     * constructor for an empty active response buidler.
+     */
     protected ActiveResponseBuilder() {
         super(new ActiveResponseType());
     }
     
+    /**
+     * Sets the active property.
+     * @param active the new status of the PSO
+     * @return The same builder
+     */
     public ActiveResponseBuilder active(boolean active) {
         response.setActive(active);
         return this;
     }
     
+    /**
+     * Sets the active property to false.
+     * @return The same builder
+     */
     public ActiveResponseBuilder active() {
-        response.setActive(true);
-        return this;
+        return this.active(true);
     }
     
+    /**
+     * Sets the active property to false.
+     * @return The same builder
+     */
     public ActiveResponseBuilder notActive() {
-        response.setActive(false);
-        return this;
+        return this.active(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<ActiveResponseType> build() {
         return getSuspendObjectFactory().createActiveResponse(response);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ActiveResponseAccessor asAccessor() {
         return BaseResponseAccessor.accessorForResponse(response).asActive();

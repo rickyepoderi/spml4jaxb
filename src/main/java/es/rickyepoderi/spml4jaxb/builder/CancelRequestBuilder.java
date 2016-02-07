@@ -19,39 +19,65 @@ import es.rickyepoderi.spml4jaxb.msg.async.CancelRequestType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the SPMLv2 Cancel operation request. The cancel modify
+ * operation is defined inside the asynchronous capability (capability to
+ * manage other previous methods sent asynchronously). The cancel operation
+ * is used to stop/cancel a previous asynch request. The cancel request
+ * just manages an extra request id that corresponds to the previous
+ * asynch operation to cancel.</p>
+ * 
  * @author ricky
  */
 public class CancelRequestBuilder extends RequestBuilder<CancelRequestType, CancelRequestBuilder, CancelRequestAccessor, CancelResponseAccessor> {
 
+    /**
+     * Constructor for an empty cancel requets builder.
+     */
     protected CancelRequestBuilder() {
         super(new CancelRequestType());
     }
     
+    /**
+     * Setter for the previous asynch request id to cancel.
+     * @param asyncRequestId The request id of the previous asynch operation to cancel
+     * @return The same builder
+     */
     public CancelRequestBuilder asyncRequestId(String asyncRequestId) {
         request.setAsyncRequestID(asyncRequestId);
         return this;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<CancelRequestType> build() {
         return getAsyncObjectFactory().createCancelRequest(request);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CancelRequestAccessor asAccessor() {
         return BaseRequestAccessor.accessorForRequest(request).asCancel();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CancelRequestBuilder fromRequest(CancelRequestType request) {
         this.request = request;
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CancelResponseAccessor send(SpmlRequestor client) throws SpmlException {
-        return this.sendInternal(client).asCancel();
+        return this.sendGeneric(client).asCancel();
     }
     
 }

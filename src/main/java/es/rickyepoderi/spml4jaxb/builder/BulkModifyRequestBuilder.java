@@ -23,16 +23,35 @@ import es.rickyepoderi.spml4jaxb.msg.dsmlv2.DsmlModification;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the SPMLv2 Bulk Modify operation request. The bulk modify
+ * operation is defined inside the bulk capability (capability to perform
+ * massive deletes or modifies based on a search condition). The bulk
+ * modify performs the modify of a bunch of objects that honors a 
+ * specific search criteria using always the same modifications. The search 
+ * criteria used is the same as defined in the search capability. The 
+ * modifications are passed exactly in the same way as in the core modify
+ * operation, that is why there is a parent class for both types of 
+ * requests.</p>
+ * 
  * @author ricky
  */
 public class BulkModifyRequestBuilder extends ModificationRequestBuilder<BulkModifyRequestType, BulkModifyRequestBuilder, 
         BulkModifyRequestAccessor, BulkModifyResponseAccessor> {
 
+    /**
+     * Builder for an empty bulk modify request builder.
+     */
     public BulkModifyRequestBuilder() {
         super(new BulkModifyRequestType());
     }
 
+    /**
+     * Adds a new DSML modification to the modification list. This method will
+     * be used when using a DSML profile target.
+     * 
+     * @param dsmlMod The DSML modification to add
+     * @return The same builder
+     */
     @Override
     public BulkModifyRequestBuilder dsmlModification(DsmlModification dsmlMod) {
         ModificationType spmlMod = new ModificationType();
@@ -41,6 +60,15 @@ public class BulkModifyRequestBuilder extends ModificationRequestBuilder<BulkMod
         return this;
     }
 
+    /**
+     * Adds a new XSD modification to the list. This method will be used when
+     * using a XSD profile target.
+     * 
+     * @param type The modification type (add, replace, delete)
+     * @param xpath The XPATH where the modification applies
+     * @param o The object to add, delete or replace
+     * @return The same builder
+     */
     @Override
     public BulkModifyRequestBuilder xsdModification(ModificationModeType type, String xpath, Object o) {
         ModificationType mod = new ModificationType();
@@ -56,30 +84,50 @@ public class BulkModifyRequestBuilder extends ModificationRequestBuilder<BulkMod
         return this;
     }
     
+    /**
+     * Setter for the query that applies in the request. The query is exactly the
+     * same format of the one used in the search operation. So a query builder
+     * is used.
+     * 
+     * @param query The query builder that is used to construct the query
+     * @return The same builder
+     */
     public BulkModifyRequestBuilder query(SearchQueryBuilder query) {
         request.setQuery(query.build());
         return this;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<BulkModifyRequestType> build() {
         return getBulkObjectFactory().createBulkModifyRequest(request);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BulkModifyRequestAccessor asAccessor() {
         return BaseRequestAccessor.accessorForRequest(request).asBulkModify();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BulkModifyRequestBuilder fromRequest(BulkModifyRequestType request) {
         this.request = request;
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BulkModifyResponseAccessor send(SpmlRequestor client) throws SpmlException {
-        return this.sendInternal(client).asBulkModify();
+        return this.sendGeneric(client).asBulkModify();
     }
     
 }

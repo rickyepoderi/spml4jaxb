@@ -16,20 +16,34 @@ import es.rickyepoderi.spml4jaxb.msg.core.ResponseType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the SPMLv2 Resume operation response. The resume
+ * operation is defined inside the suspend capability (capability to
+ * enable and disable objects in the target). The resume operation
+ * is used to enable an object previously disabled (suspended). The resume 
+ * response has no special properties.<p>
+ * 
  * @author ricky
  */
 public class ResumeResponseBuilder extends ResponseBuilder<ResponseType, ResumeResponseBuilder, ResumeResponseAccessor> {
     
+    /**
+     * Constructor for a new resume response builder.
+     */
     protected ResumeResponseBuilder() {
         super(new ResponseType());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<ResponseType> build() {
         return getSuspendObjectFactory().createResumeResponse(response);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResumeResponseAccessor asAccessor() {
         return BaseResponseAccessor.accessorForResponse(response).asResume();

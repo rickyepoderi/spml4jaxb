@@ -37,21 +37,52 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 /**
- *
+ * <p>This is a server implementation using the Java7 HTTP server. This is 
+ * mainly used to perform the unit tests.</p>
+ * 
  * @author ricky
  */
 public class HandlerImpl implements HttpHandler {
     
+    /**
+     * Logger of the class.
+     */
     protected static final Logger log = Logger.getLogger(HandlerImpl.class.getName());
     
+    /**
+     * The JAXBContext to use for parsing requests and constructing responses.
+     */
     protected JAXBContext ctx = null;
-    protected Map<Class, SpmlExecutor> mapper = null;
+    
+    /**
+     * The mapper to link SPMLv2 requests and executors.
+     */
+    protected Map<Class<? extends RequestType>, SpmlExecutor> mapper = null;
+    
+    /**
+     * The SOAP message factory.
+     */
     protected MessageFactory factory = null;
     
+    /**
+     * Constructor using just the mapper and default object factories.
+     * 
+     * @param fact The mapper factory that links requests and executors.
+     * @throws SpmlException Some error
+     */
     public HandlerImpl(SpmlMapperExecutorFactory fact) throws SpmlException {
         this(fact, true);
     }
     
+    /**
+     * Constructor using the mapper and the JAXB factories.
+     * 
+     * @param fact The mapper factory that links requests and executors.
+     * @param append if true the specified object factories are appended
+     *               to the default ones, if false only the argument factories are used.
+     * @param factories The JAXB object factories for marshalling and unmarshalling
+     * @throws SpmlException Some error
+     */
     public HandlerImpl(SpmlMapperExecutorFactory fact, boolean append, Class... factories) throws SpmlException {
         try {
             this.factory = MessageFactory.newInstance();
@@ -69,6 +100,13 @@ public class HandlerImpl implements HttpHandler {
         }
     }
     
+    /**
+     * Implement the post method to execute the executor defined by the 
+     * request sent (using the mapper).
+     * 
+     * @param he The http exchange object that represents the request
+     * @throws IOException Some error
+     */
     @Override
     public void handle(HttpExchange he) throws IOException {
         try {

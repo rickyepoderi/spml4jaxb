@@ -32,17 +32,40 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.transform.dom.DOMSource;
 
 /**
- *
+ * <p>Simple class that uses SOAP to connect to the server. This class has no
+ * methods to do a wsse security login (although it means necessary because 
+ * SPMLv2 standard comments to use it to login).</p>
+ * 
  * @author ricky
  */
 public class SOAPClient extends SpmlClient {
     
+    /**
+     * logger for the class.
+     */
     protected static final Logger log = Logger.getLogger(SOAPClient.class.getName());
     
+    /**
+     * SOAP message factory.
+     */
     private MessageFactory mf = null;
+    
+    /**
+     * SOAP connection.
+     */
     private SOAPConnection conn = null;
+    
+    /**
+     * Server URL to connect to.
+     */
     private URL url;
     
+    /**
+     * Initialize the SOAP factory and connection to reuse it.
+     * 
+     * @param url The URL of the server to connect
+     * @throws SpmlException Some error creating the client
+     */
     private void init(String url) throws SpmlException {
         try {
             SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
@@ -54,34 +77,42 @@ public class SOAPClient extends SpmlClient {
         }
     }
     
+    /**
+     * Complex constructor that lets define the factories to be used.
+     * 
+     * @param url The URL of the server to connect
+     * @param appendFactories if true the factories are appended to the default ones, 
+     *               if false just the passed as argument are used
+     * @param factories The factories to use in JAXB (appended or alone)
+     * @throws SpmlException 
+     */
     public SOAPClient(String url, boolean appendFactories, Class... factories) throws SpmlException {
         super(appendFactories, factories);
         init(url);
     }
     
+    /**
+     * Constructor using default SPMLv2 factories and URL.
+     * 
+     * @param url The URL of the server to connect
+     * @throws SpmlException Some error creating the client
+     */
     public SOAPClient(String url) throws SpmlException {
         super();
         init(url);
     }
     
-    @Override
-    public ResponseAccessor send(Object request) throws SpmlException {
+    /**
+     * Method to create the SOAP message before sending to the URL. The method
+     * uses JAXB in order to create the internal body with the SPMLv2 message.
+     * 
+     * @param request The request to send
+     * @return The soap message created with that request
+     * @throws SpmlException Some error creating the message
+     */
+    protected SOAPMessage createSoapMessage(Object request) throws SpmlException {
         try {
-            // create the message
             SOAPMessage message = mf.createMessage();
-            /*// add a user and password using WSS
-            // https://www.oasis-open.org/committees/download.php/13392/wss-v1.1-spec-pr-UsernameTokenProfile-01.htm#_Toc104276211
-            SOAPEnvelope envelope = message.getSOAPPart().getEnvelope();
-            SOAPHeader header = envelope.getHeader();
-            SOAPElement security = header.addChildElement("Security", "wsse", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd");
-            SOAPElement usernameToken = security.addChildElement("UsernameToken", "wsse");
-            usernameToken.addAttribute(new QName("xmlns:wsu"), "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
-            SOAPElement username = usernameToken.addChildElement("Username", "wsse");
-            username.addTextNode("TestUser");
-            SOAPElement password = usernameToken.addChildElement("Password", "wsse");
-            password.setAttribute("Type", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText");
-            password.addTextNode("TestPassword");*/
-            // add the body
             SOAPBody reqBody = message.getSOAPBody();
             // create the marshaller for the SPML request
             Marshaller marshaller = ctx.createMarshaller();
@@ -93,8 +124,32 @@ public class SOAPClient extends SpmlClient {
                 marshaller.marshal(request, sw);
                 log.log(Level.FINE, sw.toString());
             }
+            return message;
+        } catch (JAXBException | SOAPException e) {
+            throw new SpmlException(e);
+        }
+    }
+    
+    /**
+     * The send method in SOAP creates a SOAP message and set the SPMLv2
+     * request as the SOAP body. As it is said before no wsse is used
+     * right now (although it is recommended in the standard). The SOAP
+     * message is sent through the connection and the response is
+     * received. The body of the SOAP response is the SPMLv2 response
+     * which is used to construct a generic accessor.
+     * 
+     * @param request The SPML request type to send (JAXB)
+     * @return The response received as an accessor
+     * @throws SpmlException Some error sending the request or receiving the 
+     *         response
+     */
+    @Override
+    public ResponseAccessor send(Object request) throws SpmlException {
+        try {
+            // create the message
+            SOAPMessage message = this.createSoapMessage(request);
+            // save changes and send the message
             message.saveChanges();
-            // send the message to the server
             SOAPMessage soapResponse = conn.call(message, url);
             SOAPBody resBody = soapResponse.getSOAPBody();
             Unmarshaller unmarshaller = ctx.createUnmarshaller();
@@ -103,6 +158,8 @@ public class SOAPClient extends SpmlClient {
             if (log.isLoggable(Level.FINE)) {
                 StringWriter sw = new StringWriter();
                 log.log(Level.FINE, "RESPONSE: ");
+                Marshaller marshaller = ctx.createMarshaller();
+                marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
                 marshaller.marshal(el, sw);
                 log.log(Level.FINE, sw.toString());
             }
@@ -112,6 +169,11 @@ public class SOAPClient extends SpmlClient {
         }
     }
     
+    /**
+     * Close SOAP connection.
+     * 
+     * @throws IOException Some error
+     */
     @Override
     public void close() throws IOException {
         try {

@@ -38,22 +38,63 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 /**
- * es.rickyepoderi.spml4jaxb.SpmlMapperExecutorFactory
- * es.rickyepoderi.spml4jaxb.ObjectFactoryClasses
+ * <p>The servlet implementation is just a HttpServlet that uses the idea
+ * of the SpmlExecutor and the SpmlMapperExecutorFactory to create a 
+ * set of executors capable to deal with SPMLv2 requests.</p>
+ * 
+ * <p>The servlet implementation uses two config parameters to initialize
+ * the servlet:</p>
+ * 
+ * <ul>
+ * <li>es.rickyepoderi.spml4jaxb.SpmlMapperExecutorFactory:
+ *     The factory that is going to create the set of executor the servlet 
+ *     uses to answer SPMLv2 requests.</li>
+ * <li>es.rickyepoderi.spml4jaxb.ObjectFactoryClasses:
+ *     The factory classes to use in JAXB to marshall and unmarshall
+ *     requests and responses. Comma separated list of classes.</li>
+ * </ul>
  * 
  * @author ricky
  */
 public class ServletImpl extends HttpServlet {
 
+    /**
+     * Logger for the class.
+     */
     protected static final Logger log = Logger.getLogger(ServletImpl.class.getName());
     
+    /**
+     * Property to specify the mapper factory to use: es.rickyepoderi.spml4jaxb.SpmlMapperExecutorFactory
+     */
     static public final String SPML_MAPPER_FACTORY_PROP = "es.rickyepoderi.spml4jaxb.SpmlMapperExecutorFactory";
+    
+    /**
+     * Property to specify the the object factories (comma separated): es.rickyepoderi.spml4jaxb.ObjectFactoryClasses
+     */
     static public final String OBJECT_FACTORY_CLASSES_PROP = "es.rickyepoderi.spml4jaxb.ObjectFactoryClasses";
     
+    /**
+     * The JAXBContext to use for JAXB.
+     */
     protected JAXBContext ctx = null;
-    protected Map<Class, SpmlExecutor> mapper = null;
+    
+    /**
+     * The mapper that joins request types and executors.
+     */
+    protected Map<Class<? extends RequestType>, SpmlExecutor> mapper = null;
+    
+    /**
+     * The factory for SOAP messages.
+     */
     protected MessageFactory factory = null;
 
+    /**
+     * The method initializes the servlets. The idea is reading the two properties
+     * and constructing the JAXBContext and the mapper to attend the requests.
+     * 
+     * @param config The Servlet configuration as defined in the Servlet specification
+     * @throws ServletException Some error initializing the servlet
+     */
     @Override
     public void init(ServletConfig config) throws ServletException {
         try {
@@ -80,6 +121,16 @@ public class ServletImpl extends HttpServlet {
         }
     }
 
+    /**
+     * The post method receives the request type and, depending the mapper,
+     * the executor is used to create the response. If the mapper that not
+     * maps a specified request a ServletException is thrown.
+     * 
+     * @param req The servlet request to attend (contains the SOAP request)
+     * @param res The servlet response
+     * @throws ServletException Some error
+     * @throws IOException Some error
+     */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         try {

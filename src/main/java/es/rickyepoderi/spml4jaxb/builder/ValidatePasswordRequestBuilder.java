@@ -19,33 +19,55 @@ import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordRequestType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the SPMLv2 ValidatePassword operation request. The validate password
+ * operation is defined inside the password capability (capability to perform
+ * password management). This operation is used to verify the value of an object
+ * that supports the password capability (user). The request just needs the PSO 
+ * (object to validate) and the password to be checked.</p>
+ * 
  * @author ricky
  */
 public class ValidatePasswordRequestBuilder extends RequestBuilder<ValidatePasswordRequestType, ValidatePasswordRequestBuilder, 
         ValidatePasswordRequestAccessor, ValidatePasswordResponseAccessor> {
 
+    /**
+     * Constructor for a new validate password request builder.
+     */
     protected ValidatePasswordRequestBuilder() {
         super(new ValidatePasswordRequestType());
     }
     
+    /**
+     * Setter for the password to send for validating.
+     * @param password The password to check
+     * @return The same builder
+     */
     public ValidatePasswordRequestBuilder password(String password) {
         request.setPassword(password);
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<ValidatePasswordRequestType> build() {
         request.setPsoID(pso);
         return getPasswordObjectFactory().createValidatePasswordRequest(request);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ValidatePasswordRequestAccessor asAccessor() {
         request.setPsoID(pso);
         return BaseRequestAccessor.accessorForRequest(request).asValidatePassword();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ValidatePasswordRequestBuilder fromRequest(ValidatePasswordRequestType request) {
         this.request = request;
@@ -53,9 +75,12 @@ public class ValidatePasswordRequestBuilder extends RequestBuilder<ValidatePassw
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ValidatePasswordResponseAccessor send(SpmlRequestor client) throws SpmlException {
-        return this.sendInternal(client).asValidatePassword();
+        return this.sendGeneric(client).asValidatePassword();
     }
     
 }

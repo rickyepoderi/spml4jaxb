@@ -25,21 +25,49 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 /**
- *
+ * <p>SpmlResponder for the HTTP framework inside Java7. It just writes the 
+ * response into the Exchange response output stream. This responder
+ * is mainly used for the unit tests.</p>
+ * 
  * @author ricky
  */
 public class HttpExchangeResponder implements SpmlResponder {
 
+    /**
+     * The exchange used in Java7 HTTP server implementation.
+     */
     private HttpExchange he = null;
+    
+    /**
+     * The JAXB context to use.
+     */
     private JAXBContext ctx = null;
+    
+    /**
+     * The message factory to create SOAP messages.
+     */
     private MessageFactory factory = null;
 
+    /**
+     * Constructor using the three elements.
+     * 
+     * @param he The http exchange object of the Java7 HTTP server framework
+     * @param ctx The JAXB context to use
+     * @param factory The SOAP factory to use
+     */
     public HttpExchangeResponder(HttpExchange he, JAXBContext ctx, MessageFactory factory) {
         this.he = he;
         this.ctx = ctx;
         this.factory = factory;
     }
 
+    /**
+     * Method that writes the response as a SOAP response and the argument
+     * is placed in the body. It writes it to the exchange object.
+     * 
+     * @param response The response to write
+     * @throws SpmlException Some error
+     */
     @Override
     public void write(Object response) throws SpmlException {
         try {

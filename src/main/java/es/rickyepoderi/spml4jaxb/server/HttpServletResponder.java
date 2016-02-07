@@ -23,21 +23,49 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 /**
- *
+ * <p>SpmlResponder for the Servlet framework. It just writes the response
+ * into the servlet response output stream.</p>
+ * 
  * @author ricky
  */
 public class HttpServletResponder implements SpmlResponder {
 
+    /**
+     * The Http Servlet response to writeto.
+     */
     private HttpServletResponse servletRes = null;
+    
+    /**
+     * The JAXB context to use.
+     */
     private JAXBContext ctx = null;
+    
+    /**
+     * The message factory to use.
+     */
     private MessageFactory factory = null;
 
+    /**
+     * Constructor using the three elements.
+     * 
+     * @param servletRes The servlet response
+     * @param ctx The JAXB context
+     * @param factory The message factory
+     */
     public HttpServletResponder(HttpServletResponse servletRes, JAXBContext ctx, MessageFactory factory) {
         this.servletRes = servletRes;
         this.ctx = ctx;
         this.factory = factory;
     }
     
+    /**
+     * It writes the response object (using JAXB) inside the servlet response.
+     * It sets the content type to "text/xml" and then writes the SOAP
+     * response with the response argument as the body.
+     * 
+     * @param response The response to write in the SOAP.
+     * @throws SpmlException Some error
+     */
     @Override
     public void write(Object response) throws SpmlException {
         try {

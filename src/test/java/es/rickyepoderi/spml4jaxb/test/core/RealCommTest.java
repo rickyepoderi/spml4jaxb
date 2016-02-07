@@ -73,8 +73,7 @@ public class RealCommTest {
                 .synchronous()
                 .requestId()
                 .profileXsd()
-                .send(client)
-                .asListTargets();
+                .send(client);
         Assert.assertTrue(ltra.isSuccess());
         Assert.assertEquals(ltra.getTargets().length, 1);
         Assert.assertTrue(ltra.getTargets()[0].isXsd());

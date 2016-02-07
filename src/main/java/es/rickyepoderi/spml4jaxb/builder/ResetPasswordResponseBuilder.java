@@ -16,25 +16,45 @@ import es.rickyepoderi.spml4jaxb.msg.password.ResetPasswordResponseType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the SPMLv2 ResetPassword operation response. The ResetPassword
+ * operation is defined inside the password capability (capability to perform
+ * password management). This operation is used to change the password
+ * without sending a new password, the system chooses one password and that
+ * is returned in the response. The response contains the new password
+ * selected and assigned by the system to the user if success.</p>
+ * 
  * @author ricky
  */
 public class ResetPasswordResponseBuilder extends ResponseBuilder<ResetPasswordResponseType, ResetPasswordResponseBuilder, ResetPasswordResponseAccessor> {
 
+    /**
+     * Constructor for an empty reset password response builder.
+     */
     protected ResetPasswordResponseBuilder() {
         super(new ResetPasswordResponseType());
     }
     
+    /**
+     * Setter for the password assigned by the system in the response.
+     * @param password The new password of the object / user
+     * @return The same builder
+     */
     public ResetPasswordResponseBuilder password(String password) {
         response.setPassword(password);
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<ResetPasswordResponseType> build() {
         return getPasswordObjectFactory().createResetPasswordResponse(response);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResetPasswordResponseAccessor asAccessor() {
         return BaseResponseAccessor.accessorForResponse(response).asResetPassword();

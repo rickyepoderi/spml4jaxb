@@ -16,38 +16,66 @@ import es.rickyepoderi.spml4jaxb.builder.ValidatePasswordRequestBuilder;
 import es.rickyepoderi.spml4jaxb.msg.password.ValidatePasswordRequestType;
 
 /**
- *
+ * <p>Accessor for the SPMLv2 ValidatePassword operation request. The validate password
+ * operation is defined inside the password capability (capability to perform
+ * password management). This operation is used to verify the value of an object
+ * that supports the password capability (user). The request just needs the PSO 
+ * (object to validate) and the password to be checked.</p>
+ * 
  * @author ricky
  */
 public class ValidatePasswordRequestAccessor extends BaseRequestAccessor<ValidatePasswordRequestType, ValidatePasswordRequestAccessor, ValidatePasswordRequestBuilder> {
 
+    /**
+     * Constructor for a new validate password request accessor.
+     */
     protected ValidatePasswordRequestAccessor() {
         this(new ValidatePasswordRequestType());
     }
     
+    /**
+     * Constructor for a validate password request accessor using the internal type.
+     * @param request The validate password request type as defined in the standard
+     */
     protected ValidatePasswordRequestAccessor(ValidatePasswordRequestType request) {
         super(request, request.getPsoID(), null);
     }
     
+    /**
+     * Getter for the password to check.
+     * @return The password set in the request
+     */
     public String getPassword() {
         return request.getPassword();
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseBuilder responseBuilder() {
         return ResponseBuilder.builderForValidatePassword();
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ValidatePasswordRequestBuilder toBuilder() {
         return RequestBuilder.builderForValidatePassword().fromRequest(this.request);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ValidatePasswordRequestAccessor asAccessor(ValidatePasswordRequestType request) {
         return new ValidatePasswordRequestAccessor(request);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         String nl = System.getProperty("line.separator");

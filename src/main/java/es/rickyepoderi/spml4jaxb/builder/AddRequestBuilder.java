@@ -23,11 +23,18 @@ import java.util.Arrays;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder for the Add request. The Add request is a function in the core
+ * capability as defined in SPMLv2. This method adds / creates a new PSO inside
+ * the repository. The builder gives methods to construct easily attributes
+ * if using the DSML profile or the object itself if using the XSD profile.</p>
+ * 
  * @author ricky
  */
 public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequestBuilder, AddRequestAccessor, AddResponseAccessor> {
 
+    /**
+     * Constructor for the empty add request builder.
+     */
     protected AddRequestBuilder() {
         super(new AddRequestType());
     }
@@ -36,6 +43,12 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
     // TARGETID
     //
     
+    /**
+     * Sets the target ID in the response.
+     * 
+     * @param targetId The new target id used in the response
+     * @return The same builder
+     */
     public AddRequestBuilder targetId(String targetId) {
         request.setTargetID(targetId);
         return this;
@@ -45,6 +58,11 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
     // ContainerID
     //
     
+    /**
+     * Sets the container ID in the response.
+     * @param containerId The new container ID
+     * @return The same builder
+     */
     public AddRequestBuilder containerId(String containerId) {
         PSOIdentifierType container = request.getContainerID();
         if (container == null) {
@@ -55,6 +73,11 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
         return this;
     }
     
+    /**
+     * Sets the container target ID in the response.
+     * @param containerTargetId The new container target ID
+     * @return The same builder
+     */
     public AddRequestBuilder containerTargetId(String containerTargetId) {
         PSOIdentifierType container = request.getContainerID();
         if (container == null) {
@@ -65,6 +88,11 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
         return this;
     }
     
+    /**
+     * Sets the container identifier using the builder.
+     * @param builder The PSO builder for the container
+     * @return The same builder
+     */
     public AddRequestBuilder container(PsoIdentifierBuilder builder) {
         request.setContainerID(builder.build());
         return this;
@@ -74,6 +102,13 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
     // DATA
     //
     
+    /**
+     * Sets a new DSML attribute in the data (data that forms the new PSO
+     * to create in the DSML profile). 
+     * 
+     * @param attr The new DsmlAttr to add in the data
+     * @return The same builder
+     */
     public AddRequestBuilder dsmlAttribute(DsmlAttr attr) {
         ExtensibleType ext = request.getData();
         if (ext == null) {
@@ -84,6 +119,13 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
         return this;
     }
     
+    /**
+     * Sets a new DSML attribute but giving the attribute name and the values
+     * instead the real DsmlAttr object.
+     * @param name The name of the attribute to add
+     * @param values The values of that attribute
+     * @return The same builder
+     */
     public AddRequestBuilder dsmlAttribute(String name, String... values) {
         DsmlAttr attr = new DsmlAttr();
         attr.setName(name);
@@ -92,6 +134,14 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
         return this;
     }
     
+    /**
+     * Sets the object to add but receiving the real object (it should be used
+     * in the XSD profile). The object should be generated using JAXB and
+     * the factory for that class added to the server and client.
+     * 
+     * @param o The object to set in the request to be added
+     * @return The same builder
+     */
     public AddRequestBuilder xsdObject(Object o) {
         ExtensibleType ext = request.getData();
         if (ext == null) {
@@ -102,6 +152,9 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<AddRequestType> build() {
         request.setReturnData(returnData);
@@ -109,6 +162,9 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
         return getCoreObjectFactory().createAddRequest(request);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AddRequestAccessor asAccessor() {
         request.setReturnData(returnData);
@@ -116,6 +172,9 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
         return BaseRequestAccessor.accessorForRequest(request).asAdd();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AddRequestBuilder fromRequest(AddRequestType request) {
         this.request = request;
@@ -124,8 +183,11 @@ public class AddRequestBuilder extends RequestBuilder<AddRequestType, AddRequest
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AddResponseAccessor send(SpmlRequestor client) throws SpmlException {
-        return this.sendInternal(client).asAdd();
+        return this.sendGeneric(client).asAdd();
     }
 }

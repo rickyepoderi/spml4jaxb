@@ -19,27 +19,45 @@ import es.rickyepoderi.spml4jaxb.msg.suspend.ActiveRequestType;
 import javax.xml.bind.JAXBElement;
 
 /**
- *
+ * <p>Builder fo the SPMLv2 Active operation request. The active operation
+ * is defined inside the suspend capability (capability to enable, disable
+ * and know the status of an object in the repository). The Active operation
+ * id the one to know the status (enabled/active or disabled/disactived). The
+ * request just uses the PSO ID to identify over what object the request
+ * is sent.</p>
+ * 
  * @author ricky
  */
 public class ActiveRequestBuilder extends RequestBuilder<ActiveRequestType, ActiveRequestBuilder, ActiveRequestAccessor, ActiveResponseAccessor> {
 
-    public ActiveRequestBuilder() {
+    /**
+     * Protected method to construct an empty active request buidler.
+     */
+    protected ActiveRequestBuilder() {
         super(new ActiveRequestType());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JAXBElement<ActiveRequestType> build() {
         request.setPsoID(pso);
         return getSuspendObjectFactory().createActiveRequest(request);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ActiveRequestAccessor asAccessor() {
         request.setPsoID(pso);
         return BaseRequestAccessor.accessorForRequest(request).asActive();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ActiveRequestBuilder fromRequest(ActiveRequestType request) {
         this.request = request;
@@ -47,8 +65,11 @@ public class ActiveRequestBuilder extends RequestBuilder<ActiveRequestType, Acti
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ActiveResponseAccessor send(SpmlRequestor client) throws SpmlException {
-        return this.sendInternal(client).asActive();
+        return this.sendGeneric(client).asActive();
     }
 }
